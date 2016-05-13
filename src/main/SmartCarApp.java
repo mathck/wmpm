@@ -18,6 +18,7 @@ package main;
 
 import camel.config.SmartCarConfig;
 import org.apache.camel.spring.Main;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ public class SmartCarApp extends Main {
     }
 
     public void run() {
+        BasicConfigurator.configure();
         super.enableHangupSupport();
         try {
             LOGGER.info("Server is running!");
