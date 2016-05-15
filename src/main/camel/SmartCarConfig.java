@@ -1,4 +1,4 @@
-package camel.config;
+package main.camel;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;

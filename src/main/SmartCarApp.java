@@ -16,22 +16,40 @@
  */
 package main;
 
-import camel.config.SmartCarConfig;
+import main.camel.SmartCarConfig;
+import main.model.Customer;
+import main.model.Order;
+import main.model.enums.CarModel;
+import main.model.enums.OrderStatus;
+import main.utils.HibernateUtil;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class SmartCarApp extends Main {
 
     private static final Logger LOGGER = Logger.getLogger(SmartCarApp.class);
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
+
     public static void main(String... args) throws Exception {
+        BasicConfigurator.configure();
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
         SmartCarApp smartCarApp = new SmartCarApp();
         smartCarApp.setApplicationContext(context);
+        smartCarApp.testHSQLDB();
         smartCarApp.run();
     }
 
@@ -46,5 +64,55 @@ public class SmartCarApp extends Main {
         }
     }
 
+    public void testHSQLDB() {
+        LOGGER.info("in test");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        LOGGER.info(session.isConnected());
+        LOGGER.info(session.toString());
+        // Add new Customer object
+        Customer customer = new Customer();
+        //customer.setId(1);
+        customer.setEmail("demo-user@mail.com");
+        customer.setFirstName("demo");
+        customer.setLastName("user");
+        customer.setAddress("test address");
+        customer.setPhone("+43888888888");
+        session.save(customer);
+
+        Order order = new Order();
+        order.setId(2);
+        LOGGER.info(order.getId());
+
+        order.setCustomerFK(customer);
+        LOGGER.info(order.getCustomerFK());
+
+        order.setOrderDate(new java.sql.Timestamp(System.currentTimeMillis()));
+        LOGGER.info(order.getOrderDate());
+
+        order.setStatus(OrderStatus.NEW);
+        LOGGER.info(order.getStatus());
+
+        order.setCreditNeeded(true);
+        LOGGER.info(order.getCreditNeeded());
+
+        order.setColor("red");
+        LOGGER.info(order.getColor());
+
+        order.setHorsepower(200);
+        LOGGER.info(order.getHorsepower());
+
+        order.setModel(CarModel.VAN);
+        LOGGER.info(order.getModel());
+
+        session.save(order);
+        session.getTransaction().commit();
+
+        /*Customer customerRetrieved = new Customer();
+        customerRetrieved = (Customer)session().createQuery("from Customer where id = :id")
+                .setParameter("id", 1).uniqueResult();
+        LOGGER.info(customerRetrieved.toString());*/
+        HibernateUtil.shutdown();
+    }
 
 }
