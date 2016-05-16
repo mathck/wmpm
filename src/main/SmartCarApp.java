@@ -16,7 +16,7 @@
  */
 package main;
 
-import main.camel.SmartCarConfig;
+import main.config.SmartCarConfig;
 import main.dao.CustomerDao;
 import main.dao.OrderDao;
 import main.model.Customer;

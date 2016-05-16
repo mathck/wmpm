@@ -1,4 +1,4 @@
-package main.camel;
+package main.config;
 
 import main.dao.CustomerDao;
 import main.dao.CustomerDaoImpl;
