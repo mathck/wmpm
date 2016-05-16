@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
 public class Customer implements Serializable
 {

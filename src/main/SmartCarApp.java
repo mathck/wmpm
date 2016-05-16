@@ -17,16 +17,12 @@
 package main;
 
 import main.camel.SmartCarConfig;
+import main.dao.CustomerDao;
+import main.dao.OrderDao;
 import main.model.Customer;
-import main.model.Order;
-import main.model.enums.CarModel;
-import main.model.enums.OrderStatus;
-import main.utils.HibernateUtil;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -38,14 +34,14 @@ public class SmartCarApp extends Main {
     private static final Logger LOGGER = Logger.getLogger(SmartCarApp.class);
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private OrderDao orderDao;
 
-    public Session session() {
-        return sessionFactory.getCurrentSession();
-    }
+    @Autowired
+    private CustomerDao customerDao;
 
     public static void main(String... args) throws Exception {
         BasicConfigurator.configure();
+
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
         SmartCarApp smartCarApp = new SmartCarApp();
         smartCarApp.setApplicationContext(context);
@@ -66,21 +62,25 @@ public class SmartCarApp extends Main {
 
     public void testHSQLDB() {
         LOGGER.info("in test");
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        LOGGER.info(session.isConnected());
-        LOGGER.info(session.toString());
-        // Add new Customer object
+
         Customer customer = new Customer();
-        //customer.setId(1);
+        customer.setId(1);
         customer.setEmail("demo-user@mail.com");
         customer.setFirstName("demo");
         customer.setLastName("user");
         customer.setAddress("test address");
         customer.setPhone("+43888888888");
-        session.save(customer);
+        LOGGER.info(customer.toString());
 
-        Order order = new Order();
+        //TODO: this customerDao is throwing NullPointerException, it shouldn't!
+        LOGGER.info(customerDao.toString());
+        customerDao.insertCustomer(customer);
+
+        Customer customerRetrieved = new Customer();
+        customerRetrieved = customerDao.getCustomer(1);
+        LOGGER.info(customerRetrieved.toString());
+
+        /*Order order = new Order();
         order.setId(2);
         LOGGER.info(order.getId());
 
@@ -106,13 +106,8 @@ public class SmartCarApp extends Main {
         LOGGER.info(order.getModel());
 
         session.save(order);
-        session.getTransaction().commit();
+        session.getTransaction().commit();*/
 
-        /*Customer customerRetrieved = new Customer();
-        customerRetrieved = (Customer)session().createQuery("from Customer where id = :id")
-                .setParameter("id", 1).uniqueResult();
-        LOGGER.info(customerRetrieved.toString());*/
-        HibernateUtil.shutdown();
     }
 
 }
