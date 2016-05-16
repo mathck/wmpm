@@ -37,16 +37,7 @@
 
 
   <dependencies>
-
-
-    <!-- HyperSQL DB -->
-    <dependency>
-        <groupId>hsqldb</groupId>
-        <artifactId>hsqldb</artifactId>
-        <version>1.8.0.10</version>
-    </dependency>
-
-      <!-- http://mvnrepository.com/artifact/com.h2database/h2 -->
+    <!-- H2 DB -->
       <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
@@ -276,11 +267,13 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <version>LATEST</version>
     </dependency>
+
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-dbcp2</artifactId>
           <version>2.0</version>
       </dependency>
+
       <dependency>
           <groupId>org.apache.tiles</groupId>
           <artifactId>tiles-jsp</artifactId>
@@ -293,6 +286,7 @@
       <version>LATEST</version>
       <type>maven-plugin</type>
     </dependency>
+
     <dependency>
       <groupId>org.codehaus.mojo</groupId>
       <artifactId>exec-maven-plugin</artifactId>
@@ -334,7 +328,6 @@
     </dependency>
 
     <!-- logger -->
-
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
@@ -361,7 +354,6 @@
           <target>1.7</target>
         </configuration>
       </plugin>
-      <!--test-->
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.6</version>
@@ -373,7 +365,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <!--test-->
 
     </plugins>
   </build>

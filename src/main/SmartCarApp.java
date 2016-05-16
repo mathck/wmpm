@@ -45,7 +45,7 @@ public class SmartCarApp extends Main {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
         SmartCarApp smartCarApp = new SmartCarApp();
         smartCarApp.setApplicationContext(context);
-        smartCarApp.testHSQLDB();
+        smartCarApp.testH2();
         smartCarApp.run();
     }
 
@@ -60,7 +60,7 @@ public class SmartCarApp extends Main {
         }
     }
 
-    public void testHSQLDB() {
+    public void testH2() {
         LOGGER.info("in test");
 
         Customer customer = new Customer();
