@@ -24,6 +24,7 @@ import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +44,10 @@ public class SmartCarApp extends Main {
         BasicConfigurator.configure();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
-        SmartCarApp smartCarApp = new SmartCarApp();
+        SmartCarApp smartCarApp = context.getBean(SmartCarApp.class); // new
+        //SmartCarApp smartCarApp = new SmartCarApp();
+        // the above line was bad see:
+        // http://stackoverflow.com/questions/3659720/using-spring-3-autowire-in-a-standalone-java-application
         smartCarApp.setApplicationContext(context);
         smartCarApp.testH2();
         smartCarApp.run();
