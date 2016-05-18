@@ -4,6 +4,7 @@ import main.dao.CustomerDao;
 import main.dao.CustomerDaoImpl;
 import main.dao.OrderDao;
 import main.dao.OrderDaoImpl;
+import main.model.Customer;
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
@@ -53,7 +54,7 @@ public class SmartCarConfig extends CamelConfiguration {
         LOGGER.info("in datasource");
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:smartcar");
+        dataSource.setUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;DATABASE_TO_UPPER=false");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
 
@@ -73,7 +74,7 @@ public class SmartCarConfig extends CamelConfiguration {
         LOGGER.info("in sessionFactory");
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
         sessionBuilder.addProperties(getHibernateProperties());
-        //sessionBuilder.addAnnotatedClasses(Customer.class);
+        sessionBuilder.addAnnotatedClasses(Customer.class);
         sessionBuilder.scanPackages("main.model");
         return sessionBuilder.buildSessionFactory();
     }

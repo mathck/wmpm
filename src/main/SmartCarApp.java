@@ -24,7 +24,6 @@ import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -68,7 +67,7 @@ public class SmartCarApp extends Main {
         LOGGER.info("in test");
 
         Customer customer = new Customer();
-        customer.setId(1);
+        //customer.setId(1);
         customer.setEmail("demo-user@mail.com");
         customer.setFirstName("demo");
         customer.setLastName("user");
@@ -76,7 +75,6 @@ public class SmartCarApp extends Main {
         customer.setPhone("+43888888888");
         LOGGER.info(customer.toString());
 
-        //TODO: this customerDao is throwing NullPointerException, it shouldn't!
         LOGGER.info(customerDao.toString());
         customerDao.insertCustomer(customer);
 
