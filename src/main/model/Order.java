@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Order", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 public class Order {
 
@@ -22,7 +21,7 @@ public class Order {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne (fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "CUSTOMER_FK", columnDefinition = "INT(11)")
     private Customer customerFK;
 
