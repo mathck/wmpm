@@ -1,16 +1,18 @@
 package main.camel;
-
-import main.camel.routes.produceRoute;
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * Created by Polina on 11/05/2016.
  */
+@Configuration
+@ComponentScan("main.camel")
 public class SmartCarConfig extends CamelConfiguration {
 
     private static final Logger LOGGER = Logger
@@ -23,7 +25,7 @@ public class SmartCarConfig extends CamelConfiguration {
 
     @Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
-        camelContext.addRoutes(new produceRoute());
+
     }
 
     @Bean

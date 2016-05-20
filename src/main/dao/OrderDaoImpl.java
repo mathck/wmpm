@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 @Component("orderDao")
-public class OrderDaoImpl {
+public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private SessionFactory sessionFactory;
