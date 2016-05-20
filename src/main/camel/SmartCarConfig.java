@@ -1,5 +1,6 @@
 package main.camel;
 
+import main.camel.routes.produceRoute;
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
@@ -22,7 +23,7 @@ public class SmartCarConfig extends CamelConfiguration {
 
     @Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
-        //camelContext.addRoutes(new produceRoute());
+        camelContext.addRoutes(new produceRoute());
     }
 
     @Bean

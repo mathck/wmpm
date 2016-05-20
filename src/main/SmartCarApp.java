@@ -80,7 +80,7 @@ public class SmartCarApp extends Main {
         customer.setPhone("+43888888888");
         session.save(customer);
 
-        /*
+
         Order order = new Order();
         order.setId(2);
         LOGGER.info(order.getId());

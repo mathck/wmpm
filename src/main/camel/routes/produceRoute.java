@@ -1,5 +1,8 @@
 package main.camel.routes;
 
+import main.beans.buildCar;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
@@ -9,6 +12,14 @@ import org.apache.camel.builder.RouteBuilder;
 public class produceRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("file:C:\\del\\input?noop=true").to("file:C:\\del\\output");
+        from("file:C:\\del\\input?noop=true")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println("processing... " + exchange.getIn().getBody(String.class));
+                    }
+                })
+                .bean(buildCar.class, "buildCar")
+                .to("seda: finalize.queque");
     }
 }

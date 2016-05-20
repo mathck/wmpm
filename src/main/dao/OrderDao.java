@@ -1,7 +1,6 @@
 package main.dao;
 
 import main.model.Order;
-
 /**
  * Created by Polina on 15/05/2016.
  */
