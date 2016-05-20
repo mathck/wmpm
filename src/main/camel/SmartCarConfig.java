@@ -22,7 +22,7 @@ public class SmartCarConfig extends CamelConfiguration {
 
     @Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
-
+        //camelContext.addRoutes(new produceRoute());
     }
 
     @Bean
