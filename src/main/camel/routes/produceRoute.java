@@ -13,7 +13,8 @@ public class produceRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("file:C:\\del\\input?noop=true")
-               .bean(ProduceBean.class, "doSomething")
-                .to("file:C:\\del\\input");
+               .bean(ProduceBean.class)
+                .bean(ProduceBean.class, "waitforAssembling")
+                .to("seda: finalize.queque");
     }
 }

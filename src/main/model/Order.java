@@ -28,6 +28,9 @@ public class Order {
     @Column(name = "ORDER_DATE", unique = false, nullable = false)
     private Timestamp orderDate;
 
+    @Column(name = "DELIVERY_DATE", unique = false, nullable = false)
+    private Timestamp deliveryDate;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", unique = false, nullable = false, length = 100)
     private OrderStatus status;
@@ -65,8 +68,16 @@ public class Order {
         return orderDate;
     }
 
+    public Timestamp getDeliveryDate() {
+        return deliveryDate;
+    }
+
     public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public void setDeliveryDate(Timestamp deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public OrderStatus getStatus() {
@@ -115,6 +126,7 @@ public class Order {
                 "id=" + id +
                 ", customerFK=" + customerFK +
                 ", orderDate=" + orderDate +
+                ", deliveryDate=" + deliveryDate +
                 ", status=" + status +
                 ", creditNeeded=" + creditNeeded +
                 ", color='" + color + '\'' +
