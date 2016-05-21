@@ -21,7 +21,6 @@ import main.model.Customer;
 import main.model.Order;
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
-import main.utils.HibernateUtil;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -66,10 +65,6 @@ public class SmartCarApp extends Main {
 
     public void testHSQLDB() {
         LOGGER.info("in test");
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        LOGGER.info(session.isConnected());
-        LOGGER.info(session.toString());
         // Add new Customer object
         Customer customer = new Customer();
         //customer.setId(1);
@@ -78,7 +73,6 @@ public class SmartCarApp extends Main {
         customer.setLastName("user");
         customer.setAddress("test address");
         customer.setPhone("+43888888888");
-        session.save(customer);
 
 
         Order order = new Order();
@@ -106,14 +100,11 @@ public class SmartCarApp extends Main {
         order.setModel(CarModel.VAN);
         LOGGER.info(order.getModel());
 
-        session.save(order);
-        session.getTransaction().commit();
 
         /*Customer customerRetrieved = new Customer();
         customerRetrieved = (Customer)session().createQuery("from Customer where id = :id")
                 .setParameter("id", 1).uniqueResult();
         LOGGER.info(customerRetrieved.toString());*/
-        HibernateUtil.shutdown();
     }
 
 }
