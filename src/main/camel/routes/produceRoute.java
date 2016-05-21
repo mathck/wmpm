@@ -1,7 +1,7 @@
 package main.camel.routes;
 
 
-
+import main.camel.beans.ProduceBean;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ public class produceRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("file:C:\\del\\input?noop=true")
-               // .bean(, "doSomething")
-                .to("seda: finalize.queque");
+               .bean(ProduceBean.class, "doSomething")
+                .to("file:C:\\del\\input");
     }
 }
