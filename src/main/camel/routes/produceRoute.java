@@ -1,6 +1,7 @@
 package main.camel.routes;
 
-import main.beans.buildCar;
+
+import main.camel.beans.buildCar;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;

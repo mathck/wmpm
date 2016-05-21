@@ -1,6 +1,7 @@
 package main.camel.routes;
 
-import main.beans.finalizeOrder;
+
+import main.camel.beans.finalizeOrder;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
