@@ -1,9 +1,5 @@
 package main.model;
 
-/**
- * Created by Polina on 14/05/2016.
- */
-
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 import org.hibernate.annotations.GenericGenerator;

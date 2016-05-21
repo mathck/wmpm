@@ -1,20 +1,14 @@
 package main.dao;
 
 import main.model.Customer;
-import org.apache.camel.processor.LoggingErrorHandler;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by Polina on 15/05/2016.
- */
 @Repository
-//@Component("customerDao")
 public class CustomerDaoImpl implements CustomerDao {
 
     private static final Logger LOGGER = Logger.getLogger(CustomerDaoImpl.class);

@@ -24,14 +24,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by Polina on 11/05/2016.
- */
-
 @Configuration
 @ComponentScan("main")
-/*@ImportResource({"classpath:META-INF/cxf/cxf.xml"})
-@PropertySource({"classpath:mongo_db.properties", "mail.properties", "facebook.properties"})*/
 @EnableScheduling
 @EnableTransactionManagement
 public class SmartCarConfig extends CamelConfiguration {

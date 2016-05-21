@@ -3,9 +3,6 @@ package main.model;
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 
-/**
- * Created by Polina on 15/05/2016.
- */
 public class TestData {
 
     Customer customer;

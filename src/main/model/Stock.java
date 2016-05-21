@@ -1,9 +1,5 @@
 package main.model;
 
-/**
- * Created by Polina on 15/05/2016.
- */
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
