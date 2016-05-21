@@ -70,7 +70,7 @@ public class SmartCarApp extends Main {
         LOGGER.info("in test");
 
         Customer customer = new Customer();
-        //customer.setId(1);
+        customer.setId(1);
         customer.setEmail("demo-user@mail.com");
         customer.setFirstName("demo");
         customer.setLastName("user");
