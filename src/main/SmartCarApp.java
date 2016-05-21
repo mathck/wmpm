@@ -20,6 +20,9 @@ import main.config.SmartCarConfig;
 import main.dao.CustomerDao;
 import main.dao.OrderDao;
 import main.model.Customer;
+import main.model.Order;
+import main.model.enums.CarModel;
+import main.model.enums.OrderStatus;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -82,7 +85,7 @@ public class SmartCarApp extends Main {
         customerRetrieved = customerDao.getCustomer(1);
         LOGGER.info(customerRetrieved.toString());
 
-        /*Order order = new Order();
+        Order order = new Order();
         order.setId(2);
         LOGGER.info(order.getId());
 
@@ -106,7 +109,7 @@ public class SmartCarApp extends Main {
 
         order.setModel(CarModel.VAN);
         LOGGER.info(order.getModel());
-
+/*
         session.save(order);
         session.getTransaction().commit();*/
 
