@@ -21,9 +21,6 @@ public class SmartCarApp extends Main {
     private static final Logger LOGGER = Logger.getLogger(SmartCarApp.class);
 
     @Autowired
-    private OrderDao orderDao;
-
-    @Autowired
     private CustomerDao customerDao;
 
     public static void main(String... args) throws Exception {
@@ -35,7 +32,7 @@ public class SmartCarApp extends Main {
         // the above line was bad see:
         // http://stackoverflow.com/questions/3659720/using-spring-3-autowire-in-a-standalone-java-application
         smartCarApp.setApplicationContext(context);
-        smartCarApp.testH2();
+        //smartCarApp.testH2();
         smartCarApp.run();
     }
 
@@ -68,7 +65,7 @@ public class SmartCarApp extends Main {
         Customer customerRetrieved = new Customer();
         customerRetrieved = customerDao.getCustomer(1);
         LOGGER.info(customerRetrieved.toString());
-
+/*
         Order order = new Order();
         order.setId(2);
         LOGGER.info(order.getId());
@@ -93,7 +90,7 @@ public class SmartCarApp extends Main {
 
         order.setModel(CarModel.VAN);
         LOGGER.info(order.getModel());
-/*
+
         session.save(order);
         session.getTransaction().commit();*/
 
