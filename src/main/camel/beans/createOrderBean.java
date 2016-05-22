@@ -1,11 +1,13 @@
 package main.camel.beans;
 
 import main.dao.CustomerDao;
+import main.dao.OrderDao;
 import main.model.Customer;
 import main.model.Order;
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Handler;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,31 +19,40 @@ import java.util.Random;
 @Component
 public class CreateOrderBean {
 
+    private static final Logger LOGGER = Logger.getLogger(CreateOrderBean.class);
+
     @Autowired
     private CustomerDao customerDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
     @Handler
-    public Order process()
+    public String process()
     {
-        Customer customer = new Customer();
-        customer.setEmail("mathck@mail.com");
-        customer.setFirstName("Matthew");
-        customer.setLastName("Gren");
-        customer.setAddress("Karlsplatz 13, 1040 Wien");
-        customer.setPhone("+4369915000596");
+//        Customer customer = new Customer();
+//        customer.setEmail("mathck@mail.com");
+//        customer.setFirstName("Matthew");
+//        customer.setLastName("Gren");
+//        customer.setAddress("Karlsplatz 13, 1040 Wien");
+//        customer.setPhone("+4369915000596");
+//
+//        customerDao.insertCustomer(customer);
 
-        customerDao.insertCustomer(customer);
+//        Order order = new Order();
+//        order.setCustomerFK(customer);
+//        order.setOrderDate(getOrderTime());
+//        order.setStatus(OrderStatus.NEW);
+//        order.setCreditNeeded(getRandomCreditNeeded());
+//        order.setColor(getRandomColor());
+//        order.setHorsepower(getRandomHorsepower());
+//        order.setModel(getRandomCarModel());
+//
+//        orderDao.insertOrder(order);
 
-        Order order = new Order();
-        order.setCustomerFK(customer);
-        order.setOrderDate(getOrderTime());
-        order.setStatus(OrderStatus.NEW);
-        order.setCreditNeeded(getRandomCreditNeeded());
-        order.setColor(getRandomColor());
-        order.setHorsepower(getRandomHorsepower());
-        order.setModel(getRandomCarModel());
+        LOGGER.debug(this.getClass().getName());
 
-        return order;
+        return "foo";
     }
 
     private java.sql.Timestamp getOrderTime() {

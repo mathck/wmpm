@@ -33,20 +33,22 @@ public class InformCustomerBean {
     private SimpleMailMessage confirmationMail = new SimpleMailMessage();
 
     @Handler
-    public void process(@Body Order order)
+    public String process(@Body String order)
     {
-        Customer customer = order.getCustomerFK();
+//        Customer customer = order.getCustomerFK();
+//
+//        LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
+//
+//        this.confirmationMail.setTo(customer.getEmail());
+//        this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
+//        this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
+//                                        order.toString() + "\n\n" +
+//                                        "Smart Car Company GmbH");
+//
+//        this.mailSender.send(this.confirmationMail);
+//
+//        LOGGER.debug("E-Mail sent ...");
 
-        LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
-
-        this.confirmationMail.setTo(customer.getEmail());
-        this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
-        this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
-                                        order.toString() + "\n\n" +
-                                        "Smart Car Company GmbH");
-
-        this.mailSender.send(this.confirmationMail);
-
-        LOGGER.debug("E-Mail sent ...");
+        return "blup";
     }
 }

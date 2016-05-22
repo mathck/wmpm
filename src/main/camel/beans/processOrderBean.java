@@ -4,6 +4,7 @@ import main.dao.OrderDao;
 import main.model.Order;
 import org.apache.camel.Body;
 import org.apache.camel.Handler;
+import org.apache.camel.Header;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,8 +27,12 @@ public class ProcessOrderBean {
     private OrderDao orderDao;
 
     @Handler
-    public void process (@Body Order order)
+    public String process (@Body String order)
     {
-        orderDao.insertOrder(order);
+        LOGGER.debug(this.getClass().getName());
+        LOGGER.debug(order + "bar");
+        return order + "bar";
+
+        //orderDao.insertOrder(order);
     }
 }
