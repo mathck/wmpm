@@ -27,10 +27,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by Polina on 11/05/2016.
- */
-
 @Configuration
 @ComponentScan("main")
 @PropertySource({"mail.properties"})
