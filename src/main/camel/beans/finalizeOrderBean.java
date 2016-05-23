@@ -26,8 +26,9 @@ public class finalizeOrderBean {
 
     @Handler
     public void finalizeOrder (@Body String order)throws Exception {
+        System.out.print("HUI!!!");
         this.confirmationMail.setFrom("smart.car@bk.ru");
-        this.confirmationMail.setTo("smart.car@bk.ru");//order.getCustomerFK().getEmail());
+        this.confirmationMail.setTo("ser_m@inbox.ru");//order.getCustomerFK().getEmail());
         this.confirmationMail.setSubject("Confirmation: Congratulations with the new purchase!");
 //        this.confirmationMail.setText("Your car: " + order.getModel() + " "
 //                                        + order.getHorsepower() + " " + order.getColor()
