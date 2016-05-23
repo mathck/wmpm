@@ -15,6 +15,11 @@ public class QueryStockRoute extends RouteBuilder {
         LOGGER.info("taking route: queryStock -> planProduction");
 
         from("direct:queryStock")
-            .to("direct:planProduction");
+            .choice()
+                .when(header("enoughElements"))
+                .to("direct:planProduction")
+                //.otherwise()
+                //.to("direct:orderElements") //TODO OrderElementsRoute
+                .endChoice();
     }
 }
