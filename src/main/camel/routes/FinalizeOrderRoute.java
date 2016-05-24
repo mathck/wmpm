@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Mnishko Sergei on 20.05.2016.
  1.	Starting condition: Production finished an order
- 2.	Process: Information on finished orders is received from production planning node. Payment will be requested using SOAP interface of invoice department.If successful, order will be dispatched.
+ 2.	Process: Information on finished orders is received from production planning node.
+             Payment will be requested using SOAP interface of invoice department.If successful, order will be dispatched.
  3.	Result: Payment will be requested. If successful, order will be dispatched
 
  */
@@ -23,16 +24,20 @@ public class FinalizeOrderRoute extends RouteBuilder {
         this.finalizeOrderBean = finalizeOrderBean;
     }
 
-//    @Autowired
-//    public finalizeRoute(finalizeOrderBean finalizeOrderBean){
-//        this.finalizeOrderBean = finalizeOrderBean;
-//    }
 
     @Override
     public void configure() throws Exception {
-        from("file:C:\\del\\output")// from("direct:finalizeOrder")
+        from("file:C:\\del\\input?noop=true")// from("direct:finalizeOrder")
+        .to("jms:queue:dispatch");
+
+        from("jms:queue:dispatch")
                 .bean(finalizeOrderBean)
-                .to("file:C:\\del\\output2")
-                .to("file:C:\\del\\output3");
+                .choice()
+                .when(header("paid").isEqualTo(false))
+                .to("jms:queue:dispatch")
+                .otherwise()
+                .multicast()
+                .to("file:C:\\del\\output1")// .to("seda:informCustomer")
+                .to("file:C:\\del\\output2");// .to("direct:accept70percent");
     }
 }

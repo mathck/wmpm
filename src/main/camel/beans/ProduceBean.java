@@ -19,9 +19,9 @@ public class ProduceBean {
 
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {
+
+//        Integer id = Integer.parseInt(exchange.getIn().getHeader("id").toString());
 //        Calendar calendar = Calendar.getInstance();
-//        int id = 1;
-//        //int id = (int) exchange.getIn().getBody().toString();
 //        if (orderDao.getOrder(id).getColor() =="red"){
 //            calendar.add(Calendar.DATE, 15);
 //         }else {
@@ -39,6 +39,7 @@ public class ProduceBean {
 //        }
 //        orderDao.getOrder(id).setDeliveryDate(new Timestamp(calendar.getTimeInMillis()));
 //        orderDao.getOrder(id).setStatus(OrderStatus.ASSEMBLING);
-        System.out.println("TEST 1");
+//        LOGGER.debug("The delivery time is set: " + calendar.getTime());
+
     }
 }

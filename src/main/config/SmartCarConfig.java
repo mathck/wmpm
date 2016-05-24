@@ -5,7 +5,9 @@ import main.dao.CustomerDaoImpl;
 import main.dao.OrderDao;
 import main.dao.OrderDaoImpl;
 import main.model.Customer;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
+import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -24,9 +26,9 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.jms.ConnectionFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
-
 /**
  * Created by Polina on 11/05/2016.
  */
@@ -50,7 +52,8 @@ public class SmartCarConfig extends CamelConfiguration {
 
     @Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
-
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
+        camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
     }
 
     @Bean
