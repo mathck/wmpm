@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class OrderElementsRoute extends RouteBuilder {
 
 
-    private static final Logger LOGGER = Logger.getLogger(TestRoute.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderElementsRoute.class);
 
     private OrderElementsBean orderElementsBean;
 
