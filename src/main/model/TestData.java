@@ -10,7 +10,7 @@ public class TestData {
 
     Customer customer;
     Order order;
-    Stock stock;
+//    Stock stock;
 
     public Customer createCustomer () {
         customer = new Customer();
@@ -41,14 +41,14 @@ public class TestData {
         return order;
     }
 
-    public Stock createTestStock () {
-        stock = new Stock();
-
-        stock.setId(3);
-        stock.setAvailableElementsForCabrio(5);
-        stock.setAvailableElementsForCoupe(7);
-        stock.setAvailableElementsForVan(3);
-        stock.setTimestamp(new java.sql.Timestamp(System.currentTimeMillis()));
-        return stock;
-    }
+//    public Stock createTestStock () {
+//        stock = new Stock();
+//
+//        stock.setId(3);
+//        stock.setAvailableElementsForCabrio(5);
+//        stock.setAvailableElementsForCoupe(7);
+//        stock.setAvailableElementsForVan(3);
+//        stock.setTimestamp(new java.sql.Timestamp(System.currentTimeMillis()));
+//        return stock;
+//    }
 }

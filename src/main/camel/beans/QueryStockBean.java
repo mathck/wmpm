@@ -26,13 +26,10 @@ public class QueryStockBean {
         Random random = new Random();
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("enoughElements",random.nextBoolean());
+        exchange.getOut().setHeader("enoughElements", random.nextBoolean());
 
         LOGGER.debug(this.getClass().getName());
         LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
 
-        //return order + "bar";
-
-        //orderDao.insertOrder(order);
     }
 }
