@@ -26,10 +26,19 @@ public class CreateOrderRoute extends RouteBuilder {
 
         LOGGER.info("taking route: CreateOrder -> ProcessOrder");
 
-        from("timer:start?period=3s")
+        //my_comm
+//        from("timer:start?period=3s")
+//            .bean(createOrderBean)
+//            //.bean(processOrderBean)
+//            .to("direct:processOrder");
+
+
+
+        from("timer:start?period=10s")
             .bean(createOrderBean)
             //.bean(processOrderBean)
-            .to("direct:processOrder");
+            .to("direct:queryStock");
+
 
 //        LOGGER.debug("Starting Jetty server...");
 //

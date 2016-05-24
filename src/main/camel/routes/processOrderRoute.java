@@ -13,7 +13,6 @@ public class ProcessOrderRoute extends RouteBuilder {
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderRoute.class);
 
     private ProcessOrderBean processOrderBean;
-
     private InformCustomerBean informCustomerBean;
 
     @Autowired
