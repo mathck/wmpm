@@ -1,6 +1,6 @@
 package main.dao;
 
-import main.model.Customer;
+import main.model.Stock;
 import org.apache.camel.processor.LoggingErrorHandler;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -10,14 +10,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-//@Component("customerDao")
-public class CustomerDaoImpl implements CustomerDao {
+//@Component("stockDao")
+public class StockDaoImpl implements StockDao {
 
     private static final Logger LOGGER = Logger.getLogger(CustomerDaoImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
-
 
     public Session session() {
         LOGGER.info("in session");
@@ -25,37 +24,38 @@ public class CustomerDaoImpl implements CustomerDao {
         return sessionFactory.getCurrentSession();
     }
 
-    public CustomerDaoImpl() {
+    public StockDaoImpl() {
 
     }
 
-    public CustomerDaoImpl(SessionFactory sessionFactory) {
+    public StockDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     @Transactional
-    public void insertCustomer(Customer customer) {
-        LOGGER.info("in insertCustomer " + customer.toString());
-        session().save(customer);
+    public void insertStock(Stock stock) {
+        LOGGER.info("in insertStock " + stock.toString());
+        session().save(stock);
     }
 
     @Override
     @Transactional
-    public Customer getCustomer(int id) {
-        return (Customer) session().createQuery("from Customer where id = :id")
+    public Stock getStock(int id) {
+        return (Stock) session().createQuery("from Stock where id = :id")
                 .setParameter("id", id).uniqueResult();
     }
 
+
     @Override
     @Transactional
-    public void updateUser(Customer customer) {
-        session().update(customer);
+    public void updateStock(Stock stock) {
+        session().update(stock);
     }
 
     @Override
     @Transactional
-    public void deleteCustomer(Customer customer) {
-        session().delete(customer);
+    public void deleteStock(Stock stock) {
+        session().delete(stock);
     }
 }

@@ -24,7 +24,6 @@
   <name>SmartCar</name>
   <description>SmartCar application</description>
 
-
   <properties>
     <spring.version>4.1.6.RELEASE</spring.version>
     <camel.version>2.15.2</camel.version>
@@ -34,15 +33,13 @@
     <dbh2.version>1.4.187</dbh2.version>
   </properties>
 
-
-
   <dependencies>
     <!-- H2 DB -->
-      <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-          <version>1.4.191</version>
-      </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.191</version>
+    </dependency>
 
     <!-- Hibernate -->
     <dependency>
@@ -50,16 +47,16 @@
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate.version}</version>
     </dependency>
-      <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>${hibernate.version}</version>
-      </dependency>
-      <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-annotations</artifactId>
-          <version>3.5.6-Final</version>
-      </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <version>3.5.6-Final</version>
+    </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
@@ -80,81 +77,83 @@
         <artifactId>hibernate-osgi</artifactId>
         <version>${hibernate.version}</version>
     </dependency>
-      <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-proxool</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-infinispan</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-      <dependency>
-          <groupId>xalan</groupId>
-          <artifactId>xalan</artifactId>
-          <version>2.7.2</version>
-      </dependency>
-      <dependency>
-          <groupId>xerces</groupId>
-          <artifactId>xercesImpl</artifactId>
-          <version>2.11.0</version>
-      </dependency>
-      <dependency>
-          <groupId>cglib</groupId>
-          <artifactId>cglib</artifactId>
-          <version>3.2.2</version>
-      </dependency>
-            <dependency>
-                <groupId>antlr</groupId>
-                <artifactId>antlr</artifactId>
-                <version>2.7.6</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.1</version>
-            </dependency>
-            <dependency>
-                <groupId>dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-                <version>1.6.1</version>
-            </dependency>
-            <dependency>
-                <groupId>javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>3.4.GA</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                <version>1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.21</version>
-            </dependency>
-            <!--<dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.5.6</version>
-            </dependency>-->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-envers</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-c3p0</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-proxool</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-infinispan</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-ehcache</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>3.2.2</version>
+    </dependency>
+    <dependency>
+        <groupId>antlr</groupId>
+        <artifactId>antlr</artifactId>
+        <version>2.7.6</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.1</version>
+    </dependency>
+    <dependency>
+        <groupId>dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <version>1.6.1</version>
+    </dependency>
+    <dependency>
+        <groupId>javassist</groupId>
+        <artifactId>javassist</artifactId>
+        <version>3.4.GA</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.transaction</groupId>
+        <artifactId>jta</artifactId>
+        <version>1.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.16</version>
+    </dependency>
+    <!--
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.16</version>
+    </dependency>
+    -->
 
     <!-- apache CXF -->
     <dependency>
@@ -181,7 +180,29 @@
       <artifactId>camel-core</artifactId>
       <version>${camel.version}</version>
     </dependency>
-
+      <!-- begin -->
+      <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-jms</artifactId>
+          <version>${camel.version}</version>
+          <!-- use the same version as your Camel core version -->
+      </dependency>
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-broker</artifactId>
+          <version>LATEST</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-client</artifactId>
+          <version>LATEST</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-camel</artifactId>
+          <version>LATEST</version>
+      </dependency>
+      <!-- end -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring</artifactId>
@@ -224,6 +245,16 @@
       <version>${camel.version}</version>
     </dependency>
 
+    <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-twitter</artifactId>
+        <version>${camel.version}</version>
+    </dependency>
+      <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-websocket</artifactId>
+          <version>${camel.version}</version>
+      </dependency>
     <!-- spring -->
 
     <dependency>
@@ -332,6 +363,11 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
+      <version>2.4.3</version>
     </dependency>
   </dependencies>
 

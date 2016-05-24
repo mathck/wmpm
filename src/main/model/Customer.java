@@ -1,8 +1,5 @@
 package main.model;
 
-/**
- * Created by Polina on 14/05/2016.
- */
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
