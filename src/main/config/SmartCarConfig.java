@@ -1,9 +1,6 @@
 package main.config;
 
-import main.dao.CustomerDao;
-import main.dao.CustomerDaoImpl;
-import main.dao.OrderDao;
-import main.dao.OrderDaoImpl;
+import main.dao.*;
 import main.model.Customer;
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;
@@ -124,11 +121,20 @@ public class SmartCarConfig extends CamelConfiguration {
     }
 
     @Autowired
+
     @Bean(name = "orderDao")
     public OrderDao getOrderDao(SessionFactory sessionFactory) {
         LOGGER.info("in orderDao bean");
         return new OrderDaoImpl(sessionFactory);
     }
+
+    @Autowired
+    @Bean(name = "stockDao")
+    public StockDao getStockDao(SessionFactory sessionFactory) {
+        LOGGER.info("in stockDao bean");
+        return new StockDaoImpl(sessionFactory);
+    }
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
