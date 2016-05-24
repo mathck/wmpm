@@ -16,5 +16,6 @@ public class HandOverRoute extends RouteBuilder {
 
         from("direct:handOverOrder")
             .to("direct:informCustomer");
+        //And that's it.
     }
 }

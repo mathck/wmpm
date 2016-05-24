@@ -25,10 +25,12 @@ public class QueryStockRoute extends RouteBuilder {
 
         from("direct:queryStock")
                 .routeId("QueryStockRoute")
-                .bean(queryStockBean).choice()
+                .bean(queryStockBean)
+                .choice()
                 .when(header("enoughElements").isEqualTo(true))
-                .to("direct:planProduction")
+                    .to("seda:planProduction")
                 .otherwise()
-                .to("direct:orderElements").endChoice(); //TODO OrderElementsRoute
+                    .to("direct:orderElements")
+                .endChoice(); //TODO OrderElementsRoute
     }
 }

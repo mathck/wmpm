@@ -37,7 +37,7 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
         from("direct:solvencyApproval")
                 .choice()
                 .when(header("solvencyApproval"))
-                .to("direct:accept30percent")
+                    .to("direct:accept30percent")
                 .endChoice();
 
 

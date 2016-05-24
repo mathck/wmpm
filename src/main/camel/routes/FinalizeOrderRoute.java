@@ -36,6 +36,9 @@ public class FinalizeOrderRoute extends RouteBuilder {
                 .when(header("paid").isEqualTo(false))
                 .to("jms:queue:dispatch")
                 .otherwise()
+                .to("direct:informCustomerAndAccept70Percent");
+
+        from("direct:informCustomerAndAccept70Percent")
                 .multicast()
                 .to("seda:informCustomer")
                 .to("direct:accept70percent");
