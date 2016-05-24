@@ -15,6 +15,6 @@ public class PlanProductionRoute extends RouteBuilder {
         LOGGER.info("taking route: planProduction -> finalizeOrder");
 
         from("direct:planProduction")
-            .to("direct:testOrder");
+            .to("direct:finalizeOrder");
     }
 }
