@@ -30,7 +30,6 @@ public class CheckFinancialSolvencyBean {
         LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
 
         //return order + "bar";
-
         //carOrderDao.insertOrder(order);
     }
 }

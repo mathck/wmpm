@@ -29,7 +29,7 @@ public class CreateOrderBean {
     public String process(Exchange exchange)
     {
         Customer customer = new Customer();
-        customer.setEmail("mathck@mail.com");
+        customer.setEmail("mathck@gmail.com");
         customer.setFirstName("Matthew");
         customer.setLastName("Gren");
         customer.setAddress("Karlsplatz 13, 1040 Wien");

@@ -15,13 +15,8 @@ public class FinalizeOrderBean {
 
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(FinalizeOrderBean.class);
 
-    @Autowired
-    private JavaMailSender mailSender;
-
-    private SimpleMailMessage confirmationMail = new SimpleMailMessage();
-
     @Handler
-    public void finalizeOrder (Exchange exchange)throws Exception {
+    public void process(Exchange exchange) throws Exception {
         //getting information about payment
         Random random = new Random();
         exchange.getIn().setHeader("Paid", random.nextBoolean());

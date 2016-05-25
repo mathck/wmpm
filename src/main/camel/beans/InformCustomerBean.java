@@ -2,8 +2,10 @@ package main.camel.beans;
 
 import main.dao.CarOrderDao;
 import main.dao.CustomerDao;
+import main.model.CarOrder;
 import main.model.Customer;
 import org.apache.camel.Body;
+import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,13 @@ public class InformCustomerBean {
     private SimpleMailMessage confirmationMail = new SimpleMailMessage();
 
     @Handler
-    public void process(@Body String orderId)
+    public void process(Exchange exchange)
     {
-        /*
+        int orderId = (int) exchange.getIn().getHeader("orderID");
+
+        CarOrder order = carOrderDao.getOrder(orderId);
+        Customer customer = order.getCustomerFK();
+
         LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
 
         this.confirmationMail.setTo(customer.getEmail());
@@ -50,6 +56,6 @@ public class InformCustomerBean {
         this.mailSender.send(this.confirmationMail);
 
         LOGGER.debug("E-Mail sent ...");
-        */
+
     }
 }
