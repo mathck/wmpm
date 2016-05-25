@@ -148,5 +148,4 @@ public class SmartCarConfig extends CamelConfiguration {
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
 }
