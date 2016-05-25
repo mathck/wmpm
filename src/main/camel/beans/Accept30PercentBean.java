@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-/**
- * Created by maland on 24.05.2016.
- */
 @Component
 public class Accept30PercentBean {
 

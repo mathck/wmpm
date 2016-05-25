@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-/**
- * Created by Michael on 23.05.2016.
- */
 @Component
 public class QueryStockBean {
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderBean.class);
