@@ -2,6 +2,8 @@
 
 The purpose of this project is to create the connection between different departments of the company “SmartCar inc.”. The main business of the company “SmartCar inc.” is car production. The firm has five departments (sales, finance, accounting, production and stock), which are strongly interconnected. All processes of buying and getting information about the production execution are supported by web application.
 
+**Tutor**: contact [Christian Ohrfandl](mailto:christian.ohrfandl@tuwien.ac.at) in case of fire :fire:
+
 | Organisational                                                                                                                       | Headlines                                                             |
 |--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
 | [:open_file_folder: Project Folder](https://drive.google.com/folderview?id=0ByYSCn1MSy8pUVlmdXZ5eU80eFk&usp=sharing)                 | [:page_facing_up: BPMN](#bpmn)                                        |
