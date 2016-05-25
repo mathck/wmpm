@@ -24,7 +24,7 @@ public class CreateOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: CreateOrder -> ProcessOrder");
+        //LOGGER.info("taking route: CreateOrder -> ProcessOrder");
 
           from("timer:start?period=10s")
             .bean(createOrderBean)

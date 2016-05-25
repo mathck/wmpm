@@ -27,8 +27,8 @@ public class QueryStockBean {
         exchange.getOut().setHeader("enoughElements", random.nextBoolean());
         carOrderDao.getOrder(orderId);
 
-        LOGGER.debug(this.getClass().getName());
-        LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
+        LOGGER.info(this.getClass().getName());
+        LOGGER.info("New Header:" + exchange.getOut().getHeaders().toString());
 
     }
 }

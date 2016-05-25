@@ -18,6 +18,7 @@ public class FinalizeOrderBean {
     @Handler
     public void process(Exchange exchange) throws Exception {
         //getting information about payment
+        LOGGER.info(this.getClass().getName());
         Random random = new Random();
         exchange.getIn().setHeader("Paid", random.nextBoolean());
     }

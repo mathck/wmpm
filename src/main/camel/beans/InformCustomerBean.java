@@ -45,8 +45,6 @@ public class InformCustomerBean {
         CarOrder order = carOrderDao.getOrder(orderId);
         Customer customer = order.getCustomerFK();
 
-        LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
-
         this.confirmationMail.setTo(customer.getEmail());
         this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
         this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
@@ -54,8 +52,9 @@ public class InformCustomerBean {
         "Smart Car Company GmbH");
 
         this.mailSender.send(this.confirmationMail);
-
-        LOGGER.debug("E-Mail sent ...");
+        LOGGER.info(this.getClass().getName());
+        LOGGER.info("E-Mail sent ...");
+        LOGGER.info("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
 
     }
 }

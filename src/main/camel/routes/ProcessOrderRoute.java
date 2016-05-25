@@ -24,7 +24,7 @@ public class ProcessOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: ProcessOrder -> checkFinancialSolvency");
+        //LOGGER.info("taking route: ProcessOrder -> checkFinancialSolvency");
 
         from("direct:processOrder")
             .bean(processOrderBean)

@@ -12,7 +12,7 @@ public class Accept70PercentRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: accept70percent -> handOverOrder");
+        //LOGGER.info("taking route: accept70percent -> handOverOrder");
 
         from("direct:accept70percent")
             .to("direct:handOverOrder");

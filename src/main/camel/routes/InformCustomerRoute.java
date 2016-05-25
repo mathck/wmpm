@@ -22,7 +22,7 @@ public class InformCustomerRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: InformCustomer -> Mail");
+        //LOGGER.info("taking route: InformCustomer -> Mail");
 
         from("direct:informCustomer")
             .bean(informCustomerBean);

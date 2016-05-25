@@ -18,6 +18,7 @@ public class TestCustomerBean {
     @Handler
     public String process(@Body String order)
     {
+        LOGGER.info(this.getClass().getName());
         return "TestCustomerBean - OK!";
     }
 }

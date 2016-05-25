@@ -21,7 +21,7 @@ public class QueryStockRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: queryStock -> planProduction");
+        //LOGGER.info("taking route: queryStock -> planProduction");
 
         from("direct:queryStock")
                 .routeId("QueryStockRoute")

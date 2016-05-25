@@ -32,7 +32,7 @@ public class Accept30PercentRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: accept30percent -> queryStock");
+        //LOGGER.info("taking route: accept30percent -> queryStock");
 
         from("direct:accept30percent")
                 .bean(accept30PercentBean)

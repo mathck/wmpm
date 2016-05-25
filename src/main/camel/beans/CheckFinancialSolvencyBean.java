@@ -26,8 +26,8 @@ public class CheckFinancialSolvencyBean {
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("solvencyApproval",random.nextBoolean());
 
-        LOGGER.debug(this.getClass().getName());
-        LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
+        LOGGER.info(this.getClass().getName());
+        LOGGER.info("New Header:" + exchange.getOut().getHeaders().toString());
 
         //return order + "bar";
         //carOrderDao.insertOrder(order);

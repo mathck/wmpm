@@ -26,7 +26,7 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: checkFinancialSolvency -> accept30percent + informCustomer");
+        //LOGGER.info("taking route: checkFinancialSolvency -> accept30percent + informCustomer");
 
         from("direct:checkFinancialSolvency")
                 .bean(checkFinancialSolvencyBean) //TODO Implement FinancialSolvencyBean

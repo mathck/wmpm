@@ -26,6 +26,7 @@ public class OrderElementsBean {
     @Handler
     public String process(@Body String order, Exchange exchange)
     {
+        LOGGER.info(this.getClass().getName());
         return "New ELEMENTS WERE ORDERED - OK!";
     }
 }

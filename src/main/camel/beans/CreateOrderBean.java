@@ -26,7 +26,7 @@ public class CreateOrderBean {
     private CarOrderDao carOrderDao;
 
     @Handler
-    public String process(Exchange exchange)
+    public void process(Exchange exchange)
     {
         Customer customer = new Customer();
         customer.setEmail("mathck@gmail.com");
@@ -47,15 +47,13 @@ public class CreateOrderBean {
 
         carOrderDao.insertOrder(order);
 
-        LOGGER.debug(this.getClass().getName());
+        LOGGER.info(this.getClass().getName());
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("orderID", order.getId());
 
-        LOGGER.debug(this.getClass().getName());
-        LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
-
-        return "foo";
+        LOGGER.info(this.getClass().getName());
+        LOGGER.info("New Header:" + exchange.getOut().getHeaders().toString());
     }
 
     private java.sql.Timestamp getOrderTime() {

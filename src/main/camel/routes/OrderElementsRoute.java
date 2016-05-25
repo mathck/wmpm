@@ -23,7 +23,7 @@ public class OrderElementsRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: orderElements -> planProduction");
+        //LOGGER.info("taking route: orderElements -> planProduction");
 
         from("direct:orderElements")
                 .bean(orderElementsBean)

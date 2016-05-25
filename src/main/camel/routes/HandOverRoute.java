@@ -12,7 +12,7 @@ public class HandOverRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("taking route: handOverOrder -> informCustomer");
+        //LOGGER.info("taking route: handOverOrder -> informCustomer");
 
         from("direct:handOverOrder")
             .to("direct:informCustomer");

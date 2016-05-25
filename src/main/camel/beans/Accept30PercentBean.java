@@ -18,6 +18,8 @@ public class Accept30PercentBean {
     @Handler
     public String process (@Body String order)
     {
+
+        LOGGER.info(this.getClass().getName());
         return "New ELEMENTS WERE ORDERED - OK!";
     }
 
