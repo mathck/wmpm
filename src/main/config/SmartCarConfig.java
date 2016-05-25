@@ -37,8 +37,7 @@ import java.util.logging.FileHandler;
 @EnableTransactionManagement
 public class SmartCarConfig extends CamelConfiguration {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(SmartCarConfig.class);
+    private static final Logger LOGGER = Logger.getLogger(SmartCarConfig.class);
 
     @Override
     protected CamelContext createCamelContext() throws Exception {

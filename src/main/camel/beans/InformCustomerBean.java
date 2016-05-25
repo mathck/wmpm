@@ -1,6 +1,8 @@
 package main.camel.beans;
 
+import main.dao.CarOrderDao;
 import main.dao.CustomerDao;
+import main.model.Customer;
 import org.apache.camel.Body;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -28,25 +30,26 @@ public class InformCustomerBean {
     @Autowired
     CustomerDao customerDao;
 
+    @Autowired
+    CarOrderDao carOrderDao;
+
     private SimpleMailMessage confirmationMail = new SimpleMailMessage();
 
     @Handler
-    public String process(@Body String order)
+    public void process(@Body String orderId)
     {
-//        Customer customer = order.getCustomerFK();
-//
-//        LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
-//
-//        this.confirmationMail.setTo(customer.getEmail());
-//        this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
-//        this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
-//                                        order.toString() + "\n\n" +
-//                                        "Smart Car Company GmbH");
-//
-//        this.mailSender.send(this.confirmationMail);
-//
-//        LOGGER.debug("E-Mail sent ...");
+        /*
+        LOGGER.debug("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
 
-        return "blup";
+        this.confirmationMail.setTo(customer.getEmail());
+        this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
+        this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
+        order.toString() + "\n\n" +
+        "Smart Car Company GmbH");
+
+        this.mailSender.send(this.confirmationMail);
+
+        LOGGER.debug("E-Mail sent ...");
+        */
     }
 }

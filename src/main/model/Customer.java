@@ -6,18 +6,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
+@Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 public class Customer implements Serializable
 {
-    //private static final long serialVersionUID = -1798070786993154676L;
-
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
+    @Column(name = "EMAIL", unique = false, nullable = false, length = 100)
     private String email;
 
     @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)

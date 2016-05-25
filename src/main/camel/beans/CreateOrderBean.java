@@ -2,7 +2,10 @@ package main.camel.beans;
 
 import main.dao.CustomerDao;
 import main.dao.CarOrderDao;
+import main.model.CarOrder;
+import main.model.Customer;
 import main.model.enums.CarModel;
+import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -11,14 +14,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-/**
- * Creates the customer and the order randomly
- */
 @Component
 public class CreateOrderBean {
 
     private static final Logger LOGGER = Logger.getLogger(CreateOrderBean.class);
-    private int runningOrderID=0;
 
     @Autowired
     private CustomerDao customerDao;
@@ -29,34 +28,32 @@ public class CreateOrderBean {
     @Handler
     public String process(Exchange exchange)
     {
-        Random random = new Random();
+        Customer customer = new Customer();
+        customer.setEmail("mathck@mail.com");
+        customer.setFirstName("Matthew");
+        customer.setLastName("Gren");
+        customer.setAddress("Karlsplatz 13, 1040 Wien");
+        customer.setPhone("+4369915000596");
+
+        customerDao.insertCustomer(customer);
+        CarOrder order = new CarOrder();
+        order.setCustomerFK(customer);
+        order.setOrderDate(getOrderTime());
+        order.setStatus(OrderStatus.NEW);
+        order.setCreditNeeded(getRandomCreditNeeded());
+        order.setColor(getRandomColor());
+        order.setHorsepower(getRandomHorsepower());
+        order.setModel(getRandomCarModel());
+
+        carOrderDao.insertOrder(order);
+
+        LOGGER.debug(this.getClass().getName());
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("orderID",runningOrderID++);
+        exchange.getOut().setHeader("orderID", order.getId());
 
         LOGGER.debug(this.getClass().getName());
         LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
-//        Customer customer = new Customer();
-//        customer.setEmail("mathck@mail.com");
-//        customer.setFirstName("Matthew");
-//        customer.setLastName("Gren");
-//        customer.setAddress("Karlsplatz 13, 1040 Wien");
-//        customer.setPhone("+4369915000596");
-//
-//        customerDao.insertCustomer(customer);
-
-//        CarOrder order = new CarOrder();
-//        order.setCustomerFK(customer);
-//        order.setOrderDate(getOrderTime());
-//        order.setStatus(OrderStatus.NEW);
-//        order.setCreditNeeded(getRandomCreditNeeded());
-//        order.setColor(getRandomColor());
-//        order.setHorsepower(getRandomHorsepower());
-//        order.setModel(getRandomCarModel());
-//
-//        carOrderDao.insertOrder(order);
-
-        LOGGER.debug(this.getClass().getName());
 
         return "foo";
     }

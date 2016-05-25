@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 public class Stock {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 

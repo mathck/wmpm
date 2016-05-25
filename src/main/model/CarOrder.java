@@ -12,8 +12,7 @@ import java.sql.Timestamp;
 public class CarOrder {
 
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
@@ -24,7 +23,7 @@ public class CarOrder {
     @Column(name = "ORDER_DATE", unique = false, nullable = false)
     private Timestamp orderDate;
 
-    @Column(name = "DELIVERY_DATE", unique = false, nullable = false)
+    @Column(name = "DELIVERY_DATE", unique = false, nullable = true)
     private Timestamp deliveryDate;
 
     @Enumerated(EnumType.STRING)
