@@ -9,9 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by maland on 24.05.2016.
- */
 @Component
 public class OrderElementsBean {
 

@@ -19,9 +19,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by maland on 24.05.2016.
- */
 @Component
 public class TestCustomerBean {
 

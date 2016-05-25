@@ -7,9 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Mnishko Sergei on 20.05.2016.
- */
 @Component
 public class ProduceBean {
     private static final Logger LOGGER = Logger.getLogger(ProduceBean.class);

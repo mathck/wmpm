@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by Polina on 15/05/2016.
- */
 @Repository
 @Transactional
 //@Component("orderDao")

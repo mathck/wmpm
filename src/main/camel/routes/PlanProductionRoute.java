@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Mnishko Sergei on 20.05.2016.
  a.	Starting conditions: Processor receives message containing the exact order.
                          All machine elements have been reserved for production prior to message dispatch.
  b.	Process: Extract order information. Schedule machine time using a FIFO approach.
