@@ -18,12 +18,14 @@ public class QueryStockBean {
     private CarOrderDao carOrderDao;
 
     @Handler
-    public void process (@Body String order, Exchange exchange)
+    public void process (Exchange exchange)
     {
-        Random random = new Random();
 
+        int orderId=(int)exchange.getIn().getHeader("orderID");
+        Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("enoughElements", random.nextBoolean());
+        carOrderDao.getOrder(orderId);
 
         LOGGER.debug(this.getClass().getName());
         LOGGER.debug("New Header:" + exchange.getOut().getHeaders().toString());
