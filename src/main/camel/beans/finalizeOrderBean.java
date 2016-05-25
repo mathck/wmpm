@@ -10,13 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-/**
- * Created by Mnishko Sergei on 20.05.2016.
- */
 @Component
-public class finalizeOrderBean {
+public class FinalizeOrderBean {
 
-    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(finalizeOrderBean.class);
+    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(FinalizeOrderBean.class);
 
     @Autowired
     private JavaMailSender mailSender;

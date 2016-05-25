@@ -28,7 +28,16 @@ public class ProcessOrderRoute extends RouteBuilder {
 
         from("direct:processOrder")
             .bean(processOrderBean)
+            .multicast()
             .to("direct:informCustomer")
-            .to("direct:checkFinancialSolvency");
+            .to("direct:creditRouter");
+
+        from("direct:creditRouter")
+            .choice()
+                .when(header("creditNeeded"))
+                    .to("direct:checkFinancialSolvency")
+                .otherwise()
+                    .to("direct:accept30percent")
+            .endChoice();
     }
 }

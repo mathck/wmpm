@@ -1,13 +1,12 @@
 package main.camel.routes;
 
 
-import main.camel.beans.finalizeOrderBean;
+import main.camel.beans.FinalizeOrderBean;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Mnishko Sergei on 20.05.2016.
  1.	Starting condition: Production finished an order
  2.	Process: Information on finished orders is received from production planning node.
              Payment will be requested using SOAP interface of invoice department.If successful, order will be dispatched.
@@ -17,10 +16,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class FinalizeOrderRoute extends RouteBuilder {
 
-    private finalizeOrderBean finalizeOrderBean;
+    private FinalizeOrderBean finalizeOrderBean;
 
     @Autowired
-    public FinalizeOrderRoute(finalizeOrderBean finalizeOrderBean) {
+    public FinalizeOrderRoute(FinalizeOrderBean finalizeOrderBean) {
         this.finalizeOrderBean = finalizeOrderBean;
     }
 

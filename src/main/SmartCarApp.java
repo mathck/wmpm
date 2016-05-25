@@ -1,15 +1,9 @@
 package main;
 
 import main.config.SmartCarConfig;
+import main.dao.CarOrderDao;
 import main.dao.CustomerDao;
-import main.dao.OrderDao;
 import main.dao.StockDao;
-import main.model.Customer;
-import main.model.Order;
-import main.model.Stock;
-import main.model.enums.CarModel;
-import main.model.enums.ElementsName;
-import main.model.enums.OrderStatus;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -27,7 +21,7 @@ public class SmartCarApp extends Main {
     private CustomerDao customerDao;
 
     @Autowired
-    private OrderDao orderDao;
+    private CarOrderDao carOrderDao;
 
     @Autowired
     private StockDao stockDao;
@@ -106,7 +100,7 @@ public class SmartCarApp extends Main {
 //        LOGGER.info(stockAnswer.toString());
 //        System.out.println("test test test444444444444444444444444444444444444444444");
 
-//        Order order = new Order();
+//        CarOrder order = new CarOrder();
 //        order.setId(2);
 //        LOGGER.info(order.getId());
 //

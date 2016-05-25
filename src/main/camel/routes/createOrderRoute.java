@@ -37,7 +37,7 @@ public class CreateOrderRoute extends RouteBuilder {
         from("timer:start?period=10s")
             .bean(createOrderBean)
             //.bean(processOrderBean)
-            .to("direct:queryStock");
+            .to("direct:processOrder");
 
 
 //        LOGGER.debug("Starting Jetty server...");
@@ -63,7 +63,7 @@ public class CreateOrderRoute extends RouteBuilder {
 //                .setBody().simple("Invalid data values:\n${exception.message}");
 //
 //        rest("/services/rest").put("/order").consumes("application/json")
-//                .type(Order.class).produces("text/html")
+//                .type(CarOrder.class).produces("text/html")
 //                .to("direct:order_put");
 //
 //        from("direct:order_put").routeId("REST")

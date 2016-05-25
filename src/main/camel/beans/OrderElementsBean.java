@@ -1,7 +1,7 @@
 package main.camel.beans;
 
+import main.dao.CarOrderDao;
 import main.dao.CustomerDao;
-import main.dao.OrderDao;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -9,9 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by maland on 24.05.2016.
- */
 @Component
 public class OrderElementsBean {
 
@@ -24,7 +21,7 @@ public class OrderElementsBean {
     StockDao stockDao;*/
 
     @Autowired
-    OrderDao orderDao;
+    CarOrderDao carOrderDao;
 
     @Handler
     public String process(@Body String order, Exchange exchange)

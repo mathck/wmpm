@@ -1,6 +1,6 @@
 package main.camel.beans;
 
-import main.dao.OrderDao;
+import main.dao.CarOrderDao;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -10,16 +10,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-/**
- * Created by Michael on 23.05.2016.
- */
 @Component
 public class CheckFinancialSolvencyBean {
 
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderBean.class);
 
     @Autowired
-    private OrderDao orderDao;
+    private CarOrderDao carOrderDao;
 
     @Handler
     public void process (@Body String order, Exchange exchange)
@@ -34,6 +31,6 @@ public class CheckFinancialSolvencyBean {
 
         //return order + "bar";
 
-        //orderDao.insertOrder(order);
+        //carOrderDao.insertOrder(order);
     }
 }
