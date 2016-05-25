@@ -16,7 +16,7 @@ The purpose of this project is to create the connection between different depart
 ## How to run
 1. copy git repo to your local machine using a git client of your choice (https://github.com/mathck/wmpm.git)
 2. where the pom.xml file is located run "mvn clean install" ([install maven](https://maven.apache.org/install.html))
-3. import maven project into any Java IDE of your choice (IntelliJ, Eclipse, ...)
+3. open project with any Java IDE of your choice (IntelliJ, Eclipse, ...)
 4. define the run configuration: Java Application, main class: SmartCarApp
 5. Press :arrow_forward: RUN!
 
