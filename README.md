@@ -27,7 +27,7 @@ Process: Order information is extracted from the order and stored in customer da
 Starting condition: Message including customer information (Name, Address, Birthdate) as well as amount of money
 Result: Positive or negative solvency check.
 Process: Using several interfaces, relevant data for the solvency check will be received. During the consolidation process, decision on the solvency will be based on a predefined ruleset and fed back to the main process.
-### Query stock of machine elements
+##### Query stock of machine elements
 Starting condition: The processor will receive the order message after initial payment was completed
 Result:Required machine elements will be ordered if necessary or reserved for production
 Process: The information on the product ordered is extracted from the message and the database is queried for required parts in the production table. Availability of parts is checked in the database. If not enough parts are available, the ordering system is messaged. Otherwise, the production process is notified that production of the order can start right away..
