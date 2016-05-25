@@ -37,7 +37,7 @@ public class CreateOrderRoute extends RouteBuilder {
         from("timer:start?period=10s")
             .bean(createOrderBean)
             //.bean(processOrderBean)
-            .to("direct:queryStock");
+            .to("direct:processOrder");
 
 
 //        LOGGER.debug("Starting Jetty server...");
