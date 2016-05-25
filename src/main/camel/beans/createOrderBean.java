@@ -1,11 +1,8 @@
 package main.camel.beans;
 
 import main.dao.CustomerDao;
-import main.dao.OrderDao;
-import main.model.Customer;
-import main.model.Order;
+import main.dao.CarOrderDao;
 import main.model.enums.CarModel;
-import main.model.enums.OrderStatus;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,7 @@ public class CreateOrderBean {
     private CustomerDao customerDao;
 
     @Autowired
-    private OrderDao orderDao;
+    private CarOrderDao carOrderDao;
 
     @Handler
     public String process()
@@ -39,7 +36,7 @@ public class CreateOrderBean {
 //
 //        customerDao.insertCustomer(customer);
 
-//        Order order = new Order();
+//        CarOrder order = new CarOrder();
 //        order.setCustomerFK(customer);
 //        order.setOrderDate(getOrderTime());
 //        order.setStatus(OrderStatus.NEW);
@@ -48,7 +45,7 @@ public class CreateOrderBean {
 //        order.setHorsepower(getRandomHorsepower());
 //        order.setModel(getRandomCarModel());
 //
-//        orderDao.insertOrder(order);
+//        carOrderDao.insertOrder(order);
 
         LOGGER.debug(this.getClass().getName());
 

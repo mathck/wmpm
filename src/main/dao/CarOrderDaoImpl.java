@@ -1,20 +1,18 @@
 package main.dao;
 
-import main.model.Order;
+import main.model.CarOrder;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 //@Component("orderDao")
-public class OrderDaoImpl implements OrderDao {
+public class CarOrderDaoImpl implements CarOrderDao {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(CarOrderDao.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -23,36 +21,36 @@ public class OrderDaoImpl implements OrderDao {
         return sessionFactory.getCurrentSession();
     }
 
-    public OrderDaoImpl() {
+    public CarOrderDaoImpl() {
 
     }
 
-    public OrderDaoImpl(SessionFactory sessionFactory) {
+    public CarOrderDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     @Transactional
-    public void insertOrder(Order order) {
-        session().save(order);
+    public void insertOrder(CarOrder carOrder) {
+        session().save(carOrder);
     }
 
     @Override
     @Transactional
-    public Order getOrder(int id) {
-        return (Order) session().createQuery("from Order where id = :id")
+    public CarOrder getOrder(int id) {
+        return (CarOrder) session().createQuery("from CarOrder where id = :id")
                 .setParameter("id", id).uniqueResult();
     }
 
     @Override
     @Transactional
-    public void updateOrder(Order order) {
-        session().update(order);
+    public void updateOrder(CarOrder carOrder) {
+        session().update(carOrder);
     }
 
     @Override
     @Transactional
-    public void deleteOrder(Order order) {
-        session().delete(order);
+    public void deleteOrder(CarOrder carOrder) {
+        session().delete(carOrder);
     }
 }

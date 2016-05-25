@@ -1,6 +1,6 @@
 package main.camel.beans;
 
-import main.dao.OrderDao;
+import main.dao.CarOrderDao;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -15,7 +15,7 @@ public class QueryStockBean {
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderBean.class);
 
     @Autowired
-    private OrderDao orderDao;
+    private CarOrderDao carOrderDao;
 
     @Handler
     public void process (@Body String order, Exchange exchange)

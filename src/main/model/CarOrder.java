@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Order", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
-public class Order {
+@Table(name = "CarOrder", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
+public class CarOrder {
 
     @Id
     @GeneratedValue(generator="increment")
@@ -118,7 +118,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "CarOrder{" +
                 "id=" + id +
                 ", customerFK=" + customerFK +
                 ", orderDate=" + orderDate +

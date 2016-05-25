@@ -1,6 +1,6 @@
 package main.camel.beans;
 
-import main.dao.OrderDao;
+import main.dao.CarOrderDao;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -16,7 +16,7 @@ public class CheckFinancialSolvencyBean {
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderBean.class);
 
     @Autowired
-    private OrderDao orderDao;
+    private CarOrderDao carOrderDao;
 
     @Handler
     public void process (@Body String order, Exchange exchange)
@@ -31,6 +31,6 @@ public class CheckFinancialSolvencyBean {
 
         //return order + "bar";
 
-        //orderDao.insertOrder(order);
+        //carOrderDao.insertOrder(order);
     }
 }

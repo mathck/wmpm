@@ -127,10 +127,10 @@ public class SmartCarConfig extends CamelConfiguration {
 
     @Autowired
 
-    @Bean(name = "orderDao")
-    public OrderDao getOrderDao(SessionFactory sessionFactory) {
-        LOGGER.info("in orderDao bean");
-        return new OrderDaoImpl(sessionFactory);
+    @Bean(name = "carOrderDao")
+    public CarOrderDao getOrderDao(SessionFactory sessionFactory) {
+        LOGGER.info("in carOrderDao bean");
+        return new CarOrderDaoImpl(sessionFactory);
     }
 
     @Autowired

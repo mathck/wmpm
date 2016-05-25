@@ -6,7 +6,7 @@ import main.model.enums.OrderStatus;
 public class TestData {
 
     Customer customer;
-    Order order;
+    CarOrder carOrder;
 //    Stock stock;
 
     public Customer createCustomer () {
@@ -23,19 +23,19 @@ public class TestData {
     }
 
 
-    public Order creatTestOrder () {
-        order = new Order();
+    public CarOrder creatTestOrder () {
+        carOrder = new CarOrder();
 
-        order.setId(2);
-        order.setCustomerFK(customer);
-        order.setOrderDate(new java.sql.Timestamp(System.currentTimeMillis()));
-        order.setStatus(OrderStatus.NEW);
-        order.setCreditNeeded(true);
-        order.setColor("red");
-        order.setHorsepower(200);
-        order.setModel(CarModel.VAN);
+        carOrder.setId(2);
+        carOrder.setCustomerFK(customer);
+        carOrder.setOrderDate(new java.sql.Timestamp(System.currentTimeMillis()));
+        carOrder.setStatus(OrderStatus.NEW);
+        carOrder.setCreditNeeded(true);
+        carOrder.setColor("red");
+        carOrder.setHorsepower(200);
+        carOrder.setModel(CarModel.VAN);
 
-        return order;
+        return carOrder;
     }
 
 //    public Stock createTestStock () {
