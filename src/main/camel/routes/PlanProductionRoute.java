@@ -18,20 +18,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlanProductionRoute extends RouteBuilder {
 
-    private ProduceBean produceBean;
-
-    @Autowired
-    public PlanProductionRoute(ProduceBean produceBean) {
-        this.produceBean = produceBean;
-    }
-
     @Autowired
     CarOrderDao carOrderDao;
 
     @Override
     public void configure() throws Exception {
         from("direct:planProduction")
-           .bean(produceBean)
+           .bean(ProduceBean.class)
 //           .process(new Processor() {
 //           @Override
 //           public void process(Exchange exchange) throws Exception {

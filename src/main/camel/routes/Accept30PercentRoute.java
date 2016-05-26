@@ -1,6 +1,5 @@
 package main.camel.routes;
 
-
 import main.camel.beans.Accept30PercentBean;
 import main.camel.beans.InformCustomerBean;
 import main.camel.beans.TestCustomerBean;
@@ -20,22 +19,11 @@ import main.camel.beans.ProcessOrderBean;
 @Component
 public class Accept30PercentRoute extends RouteBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(Accept30PercentRoute.class);
-
-    private Accept30PercentBean accept30PercentBean;
-
-    @Autowired
-    public Accept30PercentRoute(Accept30PercentBean accept30PercentBean) {
-        this.accept30PercentBean = accept30PercentBean;
-    }
-
     @Override
     public void configure() throws Exception {
 
-        //LOGGER.info("taking route: accept30percent -> queryStock");
-
         from("direct:accept30percent")
-                .bean(accept30PercentBean)
+                .bean(Accept30PercentBean.class)
                 .to("direct:queryStock");
     }
 }

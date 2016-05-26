@@ -10,25 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderElementsRoute extends RouteBuilder {
 
-
-    private static final Logger LOGGER = Logger.getLogger(OrderElementsRoute.class);
-
-    private OrderElementsBean orderElementsBean;
-
-    @Autowired
-    public OrderElementsRoute(OrderElementsBean orderElementsBean) {
-        this.orderElementsBean = orderElementsBean;
-    }
-
     @Override
     public void configure() throws Exception {
 
-        //LOGGER.info("taking route: orderElements -> planProduction");
-
         from("direct:orderElements")
-                .bean(orderElementsBean)
+                .bean(OrderElementsBean.class)
                 .to("direct:planProduction");
     }
-
-
 }

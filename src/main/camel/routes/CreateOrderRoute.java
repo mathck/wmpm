@@ -10,24 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateOrderRoute extends RouteBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateOrderRoute.class);
-
-    private ProcessOrderBean processOrderBean;
-    private CreateOrderBean createOrderBean;
-
-    @Autowired
-    public CreateOrderRoute(ProcessOrderBean processOrderBean, CreateOrderBean createOrderBean) {
-        this.processOrderBean = processOrderBean;
-        this.createOrderBean = createOrderBean;
-    }
-
     @Override
     public void configure() throws Exception {
 
-        //LOGGER.info("taking route: CreateOrder -> ProcessOrder");
-
           from("timer:start?period=10s")
-            .bean(createOrderBean)
+            .bean(CreateOrderBean.class)
             //.bean(processOrderBean)
             .to("direct:processOrder");
 

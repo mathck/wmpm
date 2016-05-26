@@ -16,30 +16,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class FinalizeOrderRoute extends RouteBuilder {
 
-    private FinalizeOrderBean finalizeOrderBean;
-
-    @Autowired
-    public FinalizeOrderRoute(FinalizeOrderBean finalizeOrderBean) {
-        this.finalizeOrderBean = finalizeOrderBean;
-    }
-
-
     @Override
     public void configure() throws Exception {
         from("direct:finalizeOrder")
         .to("jms:queue:dispatch");
 
         from("jms:queue:dispatch")
-                .bean(finalizeOrderBean)
-                .choice()
-                .when(header("paid").isEqualTo(false))
-                .to("jms:queue:dispatch")
-                .otherwise()
-                .to("direct:informCustomerAndAccept70Percent");
+            .bean(FinalizeOrderBean.class)
+            .choice()
+            .when(header("paid").isEqualTo(false))
+            .to("jms:queue:dispatch")
+            .otherwise()
+            .to("direct:informCustomerAndAccept70Percent");
 
         from("direct:informCustomerAndAccept70Percent")
-                .multicast()
-                .to("seda:informCustomer")
-                .to("direct:accept70percent");
+            .multicast()
+            .to("seda:informCustomer")
+            .to("direct:accept70percent");
     }
 }
