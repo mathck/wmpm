@@ -17,7 +17,7 @@ import java.util.Random;
 @Component
 public class CreateOrderBean {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateOrderBean.class);
+    private static final Logger LOGGER = Logger.getLogger("FILE");
 
     @Autowired
     private CustomerDao customerDao;
@@ -29,7 +29,7 @@ public class CreateOrderBean {
     public void process(Exchange exchange)
     {
         Customer customer = new Customer();
-        customer.setEmail("mathck@gmail.com");
+        customer.setEmail("test@test.com");
         customer.setFirstName("Matthew");
         customer.setLastName("Gren");
         customer.setAddress("Karlsplatz 13, 1040 Wien");
@@ -47,13 +47,11 @@ public class CreateOrderBean {
 
         carOrderDao.insertOrder(order);
 
-        LOGGER.info(this.getClass().getName());
-
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("orderID", order.getId());
 
-        LOGGER.info(this.getClass().getName());
-        LOGGER.info("New Header:" + exchange.getOut().getHeaders().toString());
+        //logging at the end of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
     }
 
     private java.sql.Timestamp getOrderTime() {

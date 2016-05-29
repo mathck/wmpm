@@ -16,7 +16,8 @@ public class ProduceBean {
 
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {
-        LOGGER.info(this.getClass().getName());
+        //logging at the beginning of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
 //        Integer id = Integer.parseInt(exchange.getIn().getHeader("id").toString());
 //        Calendar calendar = Calendar.getInstance();

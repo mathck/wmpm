@@ -6,7 +6,8 @@ import main.dao.CustomerDao;
 import main.dao.StockDao;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SmartCarApp extends Main {
 
-    private static final Logger LOGGER = Logger.getLogger(SmartCarApp.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("FILE");
 
     @Autowired
     private CustomerDao customerDao;
@@ -31,7 +32,9 @@ public class SmartCarApp extends Main {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
         SmartCarApp smartCarApp = context.getBean(SmartCarApp.class); // new
-
+        LOGGER.info("");
+        LOGGER.info("----- Initial start of Server! -----");
+        LOGGER.info("");
 
         //SmartCarApp smartCarApp = new SmartCarApp();
         // the above line was bad see:

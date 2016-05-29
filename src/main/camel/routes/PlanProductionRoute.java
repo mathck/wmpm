@@ -3,6 +3,7 @@ package main.camel.routes;
 
 import main.camel.beans.ProduceBean;
 import main.dao.CarOrderDao;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,8 @@ public class PlanProductionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:planProduction")
-           .bean(ProduceBean.class)
+             .routeId("PlanProductionRoute")
+             .bean(ProduceBean.class)
 //           .process(new Processor() {
 //           @Override
 //           public void process(Exchange exchange) throws Exception {
@@ -33,6 +35,7 @@ public class PlanProductionRoute extends RouteBuilder {
 //              }
 //           })
                 .delay(2000)
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder")
 //                .process(new Processor() {
 //                    @Override
 //                    public void process(Exchange exchange) throws Exception {

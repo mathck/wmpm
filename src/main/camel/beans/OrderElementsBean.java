@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderElementsBean {
 
-    private static final Logger LOGGER = Logger.getLogger(TestCustomerBean.class);
+    private static final Logger LOGGER = Logger.getLogger("FILE");
 
     @Autowired
     CustomerDao customerDao;
@@ -26,7 +26,9 @@ public class OrderElementsBean {
     @Handler
     public String process(@Body String order, Exchange exchange)
     {
-        LOGGER.info(this.getClass().getName());
+        //logging at the beginning of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+
         return "New ELEMENTS WERE ORDERED - OK!";
     }
 }
