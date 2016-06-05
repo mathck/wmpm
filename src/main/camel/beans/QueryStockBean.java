@@ -20,6 +20,8 @@ public class QueryStockBean {
     @Handler
     public void process (Exchange exchange)
     {
+        //logging at the beginning of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         int orderId=(int)exchange.getIn().getHeader("orderID");
         Random random = new Random();
@@ -27,8 +29,8 @@ public class QueryStockBean {
         exchange.getOut().setHeader("enoughElements", random.nextBoolean());
         carOrderDao.getOrder(orderId);
 
-        LOGGER.info(this.getClass().getName());
-        LOGGER.info("New Header:" + exchange.getOut().getHeaders().toString());
+        //logging at the end of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "\t|\t New Header: enoughElements = " + exchange.getOut().getHeader("enoughElements").toString());
 
     }
 }

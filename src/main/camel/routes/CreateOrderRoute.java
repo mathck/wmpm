@@ -1,10 +1,8 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
-import main.camel.beans.ProcessOrderBean;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,8 +12,10 @@ public class CreateOrderRoute extends RouteBuilder {
     public void configure() throws Exception {
 
           from("timer:start?period=10s")
+            .routeId("CreateOrderRoute")
             .bean(CreateOrderBean.class)
             //.bean(processOrderBean)
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From CreateOrderRoute to ProcessOrderRoute")
             .to("direct:processOrder");
 
 

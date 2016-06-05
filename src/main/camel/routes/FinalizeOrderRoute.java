@@ -2,6 +2,7 @@ package main.camel.routes;
 
 
 import main.camel.beans.FinalizeOrderBean;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,14 +23,19 @@ public class FinalizeOrderRoute extends RouteBuilder {
         .to("jms:queue:dispatch");
 
         from("jms:queue:dispatch")
+            .routeId("FinalizeOrderRoute")
             .bean(FinalizeOrderBean.class)
             .choice()
             .when(header("paid").isEqualTo(false))
-            .to("jms:queue:dispatch")
+                .to("jms:queue:dispatch")
             .otherwise()
-            .to("direct:informCustomerAndAccept70Percent");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
+                .to("direct:informCustomerAndAccept70Percent")
+            .endChoice();
 
         from("direct:informCustomerAndAccept70Percent")
+            .routeId("InformCus&Accept70Per")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
             .multicast()
             .to("seda:informCustomer")
             .to("direct:accept70percent");

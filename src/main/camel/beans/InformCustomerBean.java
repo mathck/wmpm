@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InformCustomerBean {
 
-    private static final Logger LOGGER = Logger.getLogger(InformCustomerBean.class);
+    private static final Logger LOGGER = Logger.getLogger("FILE");
 
     @Autowired
     private JavaMailSender mailSender;
@@ -40,6 +40,9 @@ public class InformCustomerBean {
     @Handler
     public void process(Exchange exchange)
     {
+        //logging at the beginning of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+
         int orderId = (int) exchange.getIn().getHeader("orderID");
 
         CarOrder order = carOrderDao.getOrder(orderId);
@@ -52,9 +55,10 @@ public class InformCustomerBean {
         "Smart Car Company GmbH");
 
         this.mailSender.send(this.confirmationMail);
-        LOGGER.info(this.getClass().getName());
-        LOGGER.info("E-Mail sent ...");
-        LOGGER.info("E-Mail to " + customer.getEmail() + " for OrderID=" + order.getId());
+
+        //logging at the end of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID") + " \t|\t E-Mail sent ...");
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID") + "\t|\t E-Mail to " + customer.getEmail() + " for orderID = " + exchange.getIn().getHeader("orderID"));
 
     }
 }

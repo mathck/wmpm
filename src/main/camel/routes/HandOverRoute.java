@@ -11,6 +11,6 @@ public class HandOverRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("direct:handOverOrder")
-            .to("direct:informCustomer");
+            .to("seda:informCustomer");
     }
 }
