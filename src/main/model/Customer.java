@@ -1,5 +1,4 @@
 package main.model;
-
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
