@@ -5,7 +5,8 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-/*
+
+/**
 Testing route to configure JPA component
  */
 
@@ -20,8 +21,10 @@ public class GenerateCustomerRoute extends RouteBuilder {
 
         from("timer:start?period=10s")
                 .routeId("GenerateCustomerRoute")
+                //here he doesnt see the bean
+                //.beanRef("CreateOrderBean", "generateCustomer")
+                //here he gets a null instead of a Customer and cant save Customer into DB
                 .bean(CreateOrderBean.class)
-                //.bean(CreateOrderBean.class)
                 .log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.id}")
                 .to("jpa:main.model.Customer");
     }
