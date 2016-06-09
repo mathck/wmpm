@@ -27,6 +27,8 @@ public class CreateOrderBean {
         customer.setAddress("Karlsplatz 13, 1040 Wien");
         customer.setPhone("+4369915000596");
 
+        LOGGER.info("CustomerID: " + customer.getId());
+
         //!!customerDao.insertCustomer(customer);
         CarOrder order = new CarOrder();
         order.setCustomerFK(customer);
@@ -44,6 +46,30 @@ public class CreateOrderBean {
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
+    }
+
+    public Customer generateCustomer() {
+
+        Customer newCustomer = new Customer();
+        newCustomer.setEmail("test@test.com");
+        newCustomer.setFirstName("Matthew");
+        newCustomer.setLastName("Gren");
+        newCustomer.setAddress("Karlsplatz 13, 1040 Wien");
+        newCustomer.setPhone("+4369915000596");
+        return newCustomer;
+    }
+
+    public CarOrder generateOrder() {
+
+        CarOrder newOrder = new CarOrder();
+        newOrder.setCustomerFK(generateCustomer());
+        newOrder.setOrderDate(getOrderTime());
+        newOrder.setStatus(OrderStatus.NEW);
+        newOrder.setCreditNeeded(getRandomCreditNeeded());
+        newOrder.setColor(getRandomColor());
+        newOrder.setHorsepower(getRandomHorsepower());
+        newOrder.setModel(getRandomCarModel());
+        return newOrder;
     }
 
     private java.sql.Timestamp getOrderTime() {
