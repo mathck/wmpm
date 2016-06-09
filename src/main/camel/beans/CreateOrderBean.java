@@ -1,7 +1,5 @@
 package main.camel.beans;
 
-import main.dao.CustomerDao;
-import main.dao.CarOrderDao;
 import main.model.CarOrder;
 import main.model.Customer;
 import main.model.enums.CarModel;
@@ -9,7 +7,6 @@ import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -19,11 +16,6 @@ public class CreateOrderBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-    @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
-    private CarOrderDao carOrderDao;
 
     @Handler
     public void process(Exchange exchange)
@@ -35,7 +27,7 @@ public class CreateOrderBean {
         customer.setAddress("Karlsplatz 13, 1040 Wien");
         customer.setPhone("+4369915000596");
 
-        customerDao.insertCustomer(customer);
+        //!!customerDao.insertCustomer(customer);
         CarOrder order = new CarOrder();
         order.setCustomerFK(customer);
         order.setOrderDate(getOrderTime());
@@ -45,7 +37,7 @@ public class CreateOrderBean {
         order.setHorsepower(getRandomHorsepower());
         order.setModel(getRandomCarModel());
 
-        carOrderDao.insertOrder(order);
+        //!!carOrderDao.insertOrder(order);
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("orderID", order.getId());

@@ -1,18 +1,14 @@
 package main.camel.beans;
 
-import main.dao.CarOrderDao;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProduceBean {
     private static final Logger LOGGER = Logger.getLogger(ProduceBean.class);
 
-    @Autowired
-    CarOrderDao carOrderDao;
 
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {

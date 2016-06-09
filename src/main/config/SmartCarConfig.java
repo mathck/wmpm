@@ -1,16 +1,11 @@
 package main.config;
 
-import main.dao.*;
-import main.model.Customer;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,13 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.jms.ConnectionFactory;
-import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
@@ -45,7 +37,6 @@ public class SmartCarConfig extends CamelConfiguration {
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
         camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
-
     }
 
     @Bean
@@ -75,7 +66,7 @@ public class SmartCarConfig extends CamelConfiguration {
         return mailSender;
     }
 
-    @Bean(name = "dataSource")
+    /*@Bean(name = "dataSource")
     public DataSource getDataSource() {
         LOGGER.info("in datasource");
         BasicDataSource dataSource = new BasicDataSource();
@@ -125,7 +116,6 @@ public class SmartCarConfig extends CamelConfiguration {
     }
 
     @Autowired
-
     @Bean(name = "carOrderDao")
     public CarOrderDao getOrderDao(SessionFactory sessionFactory) {
         LOGGER.info("in carOrderDao bean");
@@ -137,7 +127,7 @@ public class SmartCarConfig extends CamelConfiguration {
     public StockDao getStockDao(SessionFactory sessionFactory) {
         LOGGER.info("in stockDao bean");
         return new StockDaoImpl(sessionFactory);
-    }
+    }*/
 
 
     @Bean

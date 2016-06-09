@@ -1,11 +1,8 @@
 package main.camel.beans;
 
-import main.dao.CarOrderDao;
-import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -14,8 +11,6 @@ import java.util.Random;
 public class QueryStockBean {
     private static final Logger LOGGER = Logger.getLogger(ProcessOrderBean.class);
 
-    @Autowired
-    private CarOrderDao carOrderDao;
 
     @Handler
     public void process (Exchange exchange)
@@ -27,7 +22,7 @@ public class QueryStockBean {
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("enoughElements", random.nextBoolean());
-        carOrderDao.getOrder(orderId);
+        //!!carOrderDao.getOrder(orderId);
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "\t|\t New Header: enoughElements = " + exchange.getOut().getHeader("enoughElements").toString());
