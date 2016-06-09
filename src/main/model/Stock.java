@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Stock", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 public class Stock {
 

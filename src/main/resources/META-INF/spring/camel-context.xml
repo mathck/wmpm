@@ -5,11 +5,26 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+    <bean id="CreateOrderBean" class="main.camel.beans.CreateOrderBean"/>
+
     <camelContext messageHistory="true"  trace="true" xmlns="http://camel.apache.org/schema/spring">
-        <package>wmpm.main.camel.routes</package>
+        <package>main.camel.routes</package>
         <!--<route>
             <from uri="file:c:/wmpm/file"></from><to uri="file:c:/wmpm/file2"></to>
         </route>-->
+
+
+        <!-- route that generate new orders and insert them in the database
+        <route id="generateCustomer-route">
+            <from uri="timer:foo?period=15s"/>
+            <transform>
+                <method ref="CreateOrderBean" method="generateCustomer"/>
+            </transform>
+            <to uri="hibernate:main.model.Customer"/>
+            <log message="Inserted new customer ${body.id}"/>
+        </route>-->
+
+
     </camelContext>
 
     <bean id="activemq"
@@ -26,6 +41,6 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="persistenceUnit"/>
+        <property name="persistenceUnitName" value="camel"/>
     </bean>
 </beans>

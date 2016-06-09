@@ -20,12 +20,7 @@ public class CreateOrderBean {
     @Handler
     public void process(Exchange exchange)
     {
-        Customer customer = new Customer();
-        customer.setEmail("test@test.com");
-        customer.setFirstName("Matthew");
-        customer.setLastName("Gren");
-        customer.setAddress("Karlsplatz 13, 1040 Wien");
-        customer.setPhone("+4369915000596");
+        Customer customer = generateCustomer();
 
         LOGGER.info("CustomerID: " + customer.getId());
 
@@ -49,6 +44,7 @@ public class CreateOrderBean {
     }
 
     public Customer generateCustomer() {
+        LOGGER.info("in generateCustomer");
 
         Customer newCustomer = new Customer();
         newCustomer.setEmail("test@test.com");
