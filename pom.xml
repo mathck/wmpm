@@ -199,6 +199,11 @@
           <artifactId>activemq-camel</artifactId>
           <version>LATEST</version>
       </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-solr</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
       <!-- end -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -334,6 +339,14 @@
       <artifactId>javax.mail-api</artifactId>
       <version>1.5.3</version>
     </dependency>
+
+    <!-- solrJ
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-solrj</artifactId>
+      <version>5.5.0</version>
+    </dependency>-->
+
 
 
     <!-- JSON -->

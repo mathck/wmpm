@@ -1,6 +1,7 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
+import main.camel.beans.SolrInsertBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,10 @@ public class CreateOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-          from("timer:start?period=10s")
+          from("timer:start?period=10s&delay=2500")
             .routeId("CreateOrderRoute")
             .bean(CreateOrderBean.class)
+            .bean(SolrInsertBean.class)
             //.bean(processOrderBean)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From CreateOrderRoute to ProcessOrderRoute")
             .to("direct:processOrder");

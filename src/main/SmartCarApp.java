@@ -36,6 +36,28 @@ public class SmartCarApp extends Main {
         LOGGER.info("----- Initial start of Server! -----");
         LOGGER.info("");
 
+        /*
+        String zkHostString = "0.0.0.0:2181,0.0.0.0:2182,0.0.0.0:2183";
+        SolrClient solr = new CloudSolrClient(zkHostString);
+        ((CloudSolrClient) solr).setDefaultCollection("fraudCheck");
+
+
+        String urlString = "solr://localhost:8983/solr/fraudCheck";
+        SolrClient solr = new HttpSolrClient(urlString);
+
+        solr.deleteByQuery("*:*");
+        solr.commit();*/
+
+        //ProducerTemplate template = context.
+        /*HttpClient httpClient = HttpClients.createDefault();
+        HttpGet request = new HttpGet("http://localhost:8983/solr/fraudCheck/update?stream.body='%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E'%26commit%3Dtrue");
+        httpClient.execute(request);
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("http://localhost:8983/solr/fraudCheck/update?stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E%26commit%3Dtrue");
+        httpclient.execute(httppost);
+        */
+
         //SmartCarApp smartCarApp = new SmartCarApp();
         // the above line was bad see:
         // http://stackoverflow.com/questions/3659720/using-spring-3-autowire-in-a-standalone-java-application
