@@ -47,6 +47,7 @@ public class CreateOrderBean {
         LOGGER.info("in generateCustomer");
 
         Customer newCustomer = new Customer();
+        //newCustomer.setId(1);
         newCustomer.setEmail("test@test.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");

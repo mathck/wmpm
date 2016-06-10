@@ -21,10 +21,7 @@ public class GenerateCustomerRoute extends RouteBuilder {
 
         from("timer:start?period=10s")
                 .routeId("GenerateCustomerRoute")
-                //here he doesnt see the bean
-                //.beanRef("CreateOrderBean", "generateCustomer")
-                //here he gets a null instead of a Customer and cant save Customer into DB
-                .bean(CreateOrderBean.class)
+                .bean(CreateOrderBean.class, "generateCustomer")
                 .log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.id}")
                 .to("jpa:main.model.Customer");
     }
