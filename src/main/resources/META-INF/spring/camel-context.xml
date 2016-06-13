@@ -14,17 +14,6 @@
         </route>-->
 
 
-        <!-- route that generate new orders and insert them in the database
-        <route id="generateCustomer-route">
-            <from uri="timer:foo?period=15s"/>
-            <transform>
-                <method ref="CreateOrderBean" method="generateCustomer"/>
-            </transform>
-            <to uri="hibernate:main.model.Customer"/>
-            <log message="Inserted new customer ${body.id}"/>
-        </route>-->
-
-
     </camelContext>
 
     <bean id="activemq"

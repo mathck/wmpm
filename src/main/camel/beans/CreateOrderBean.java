@@ -20,24 +20,17 @@ public class CreateOrderBean {
     @Handler
     public void process(Exchange exchange)
     {
-        Customer customer = generateCustomer();
+        //Customer customer = generateCustomer();
 
-        LOGGER.info("CustomerID: " + customer.getId());
+        //LOGGER.info("CustomerID: " + customer.getId());
 
         //!!customerDao.insertCustomer(customer);
-        CarOrder order = new CarOrder();
-        order.setCustomerFK(customer);
-        order.setOrderDate(getOrderTime());
-        order.setStatus(OrderStatus.NEW);
-        order.setCreditNeeded(getRandomCreditNeeded());
-        order.setColor(getRandomColor());
-        order.setHorsepower(getRandomHorsepower());
-        order.setModel(getRandomCarModel());
 
         //!!carOrderDao.insertOrder(order);
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("orderID", order.getId());
+        //exchange.getOut().setHeader("orderID", order.getId());
+        //exchange.getOut().setBody(generateCustomer());
 
         //logging at the end of a process
         //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
@@ -53,13 +46,14 @@ public class CreateOrderBean {
         newCustomer.setLastName("Gren");
         newCustomer.setAddress("Karlsplatz 13, 1040 Wien");
         newCustomer.setPhone("+4369915000596");
+        LOGGER.info("generated Customer: "+ newCustomer.toString());
         return newCustomer;
     }
 
-    public CarOrder generateOrder() {
-
+    public CarOrder generateOrder(Customer customer) {
+        LOGGER.info("in generateOrder");
         CarOrder newOrder = new CarOrder();
-        newOrder.setCustomerFK(generateCustomer());
+        newOrder.setCustomerFK(customer);
         newOrder.setOrderDate(getOrderTime());
         newOrder.setStatus(OrderStatus.NEW);
         newOrder.setCreditNeeded(getRandomCreditNeeded());

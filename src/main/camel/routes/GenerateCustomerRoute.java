@@ -17,12 +17,11 @@ public class GenerateCustomerRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("ini configure GenerateCustomerRoute");
+        LOGGER.info("in configure GenerateCustomerRoute");
 
-        from("timer:start?period=10s")
+        from("timer:start?period=10s&repeatCount=3")
                 .routeId("GenerateCustomerRoute")
-                .bean(CreateOrderBean.class, "generateCustomer")
-                .log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.id}")
-                .to("jpa:main.model.Customer");
+                .setBody().method(CreateOrderBean.class, "generateCustomer")
+                .to("jpa:Customer").log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.toString()}");
     }
 }
