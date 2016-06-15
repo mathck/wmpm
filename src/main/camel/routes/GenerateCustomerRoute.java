@@ -1,6 +1,7 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
+import main.camel.beans.SolrInsertBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -19,7 +20,8 @@ public class GenerateCustomerRoute extends RouteBuilder {
 
         LOGGER.info("in configure GenerateCustomerRoute");
 
-        from("timer:start?period=10s&repeatCount=3")
+        from("timer:start?period=10s&repeatCount=3&delay=2500")
+                .bean(SolrInsertBean.class)
                 .routeId("GenerateCustomerRoute")
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer").log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.toString()}");
