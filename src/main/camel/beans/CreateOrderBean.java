@@ -1,7 +1,5 @@
 package main.camel.beans;
 
-import main.dao.CustomerDao;
-import main.dao.CarOrderDao;
 import main.model.CarOrder;
 import main.model.Customer;
 import main.model.enums.CarModel;
@@ -9,7 +7,6 @@ import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -19,39 +16,51 @@ public class CreateOrderBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-    @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
-    private CarOrderDao carOrderDao;
 
     @Handler
     public void process(Exchange exchange)
     {
-        Customer customer = new Customer();
-        customer.setEmail("test@test.com");
-        customer.setFirstName("Matthew");
-        customer.setLastName("Gren");
-        customer.setAddress("Karlsplatz 13, 1040 Wien");
-        customer.setPhone("+4369915000596");
+        //Customer customer = generateCustomer();
 
-        customerDao.insertCustomer(customer);
-        CarOrder order = new CarOrder();
-        order.setCustomerFK(customer);
-        order.setOrderDate(getOrderTime());
-        order.setStatus(OrderStatus.NEW);
-        order.setCreditNeeded(getRandomCreditNeeded());
-        order.setColor(getRandomColor());
-        order.setHorsepower(getRandomHorsepower());
-        order.setModel(getRandomCarModel());
+        //LOGGER.info("CustomerID: " + customer.getId());
 
-        carOrderDao.insertOrder(order);
+        //!!customerDao.insertCustomer(customer);
+
+        //!!carOrderDao.insertOrder(order);
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("orderID", order.getId());
+        //exchange.getOut().setHeader("orderID", order.getId());
+        //exchange.getOut().setBody(generateCustomer());
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
+        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
+    }
+
+    public Customer generateCustomer() {
+        LOGGER.info("in generateCustomer");
+
+        Customer newCustomer = new Customer();
+        //newCustomer.setId(1);
+        newCustomer.setEmail("test@test.com");
+        newCustomer.setFirstName("Matthew");
+        newCustomer.setLastName("Gren");
+        newCustomer.setAddress("Karlsplatz 13, 1040 Wien");
+        newCustomer.setPhone("+4369915000596");
+        LOGGER.info("generated Customer: "+ newCustomer.toString());
+        return newCustomer;
+    }
+
+    public CarOrder generateOrder(Customer customer) {
+        LOGGER.info("in generateOrder");
+        CarOrder newOrder = new CarOrder();
+        newOrder.setCustomerFK(customer);
+        newOrder.setOrderDate(getOrderTime());
+        newOrder.setStatus(OrderStatus.NEW);
+        newOrder.setCreditNeeded(getRandomCreditNeeded());
+        newOrder.setColor(getRandomColor());
+        newOrder.setHorsepower(getRandomHorsepower());
+        newOrder.setModel(getRandomCarModel());
+        return newOrder;
     }
 
     private java.sql.Timestamp getOrderTime() {

@@ -1,10 +1,5 @@
 package main.camel.beans;
 
-import main.dao.CarOrderDao;
-import main.dao.CustomerDao;
-import main.model.CarOrder;
-import main.model.Customer;
-import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -29,11 +24,6 @@ public class InformCustomerBean {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    CustomerDao customerDao;
-
-    @Autowired
-    CarOrderDao carOrderDao;
 
     private SimpleMailMessage confirmationMail = new SimpleMailMessage();
 
@@ -45,20 +35,20 @@ public class InformCustomerBean {
 
         int orderId = (int) exchange.getIn().getHeader("orderID");
 
-        CarOrder order = carOrderDao.getOrder(orderId);
+        /*!!CarOrder order = carOrderDao.getOrder(orderId);
         Customer customer = order.getCustomerFK();
 
         this.confirmationMail.setTo(customer.getEmail());
         this.confirmationMail.setSubject(order.getId() + " - " + order.getStatus().name());
         this.confirmationMail.setText("We are pleased to inform you about your car\n\n" +
         order.toString() + "\n\n" +
-        "Smart Car Company GmbH");
+        "Smart Car Company GmbH");*/
 
         this.mailSender.send(this.confirmationMail);
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID") + " \t|\t E-Mail sent ...");
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID") + "\t|\t E-Mail to " + customer.getEmail() + " for orderID = " + exchange.getIn().getHeader("orderID"));
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID") + "\t|\t E-Mail to " + /*!!customer.getEmail() +*/ " for orderID = " + exchange.getIn().getHeader("orderID"));
 
     }
 }

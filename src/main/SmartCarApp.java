@@ -1,14 +1,10 @@
 package main;
 
 import main.config.SmartCarConfig;
-import main.dao.CarOrderDao;
-import main.dao.CustomerDao;
-import main.dao.StockDao;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +14,6 @@ public class SmartCarApp extends Main {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("FILE");
 
-    @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
-    private CarOrderDao carOrderDao;
-
-    @Autowired
-    private StockDao stockDao;
 
     public static void main(String... args) throws Exception {
         BasicConfigurator.configure();

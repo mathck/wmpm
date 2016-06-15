@@ -182,7 +182,16 @@
           <groupId>org.apache.camel</groupId>
           <artifactId>camel-jms</artifactId>
           <version>${camel.version}</version>
-          <!-- use the same version as your Camel core version -->
+      </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jpa</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
+      <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-mail</artifactId>
+          <version>${camel.version}</version>
       </dependency>
       <dependency>
           <groupId>org.apache.activemq</groupId>

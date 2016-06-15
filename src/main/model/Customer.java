@@ -1,6 +1,4 @@
 package main.model;
-
-import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

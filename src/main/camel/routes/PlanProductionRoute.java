@@ -2,10 +2,8 @@ package main.camel.routes;
 
 
 import main.camel.beans.ProduceBean;
-import main.dao.CarOrderDao;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,9 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PlanProductionRoute extends RouteBuilder {
-
-    @Autowired
-    CarOrderDao carOrderDao;
 
     @Override
     public void configure() throws Exception {
