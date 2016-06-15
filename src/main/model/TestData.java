@@ -16,7 +16,6 @@ public class TestData {
         customer.setEmail("demo-user@mail.com");
         customer.setFirstName("demo");
         customer.setLastName("user");
-        customer.setAddress("test address");
         customer.setPhone("+43888888888");
 
         return customer;

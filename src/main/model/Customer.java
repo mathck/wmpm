@@ -3,6 +3,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
@@ -22,58 +23,63 @@ public class Customer implements Serializable
     @Column(name = "LAST_NAME", unique = false, nullable = false, length = 100)
     private String lastName;
 
-    @Column(name = "PHONE", unique = false, nullable = false, length = 100)
+    @Column(name = "PHONE", unique = false, length = 100)
     private String phone;
 
-    @Column(name = "ADDRESS", unique = false, nullable = false, length = 100)
-    private String address;
+    @Column(name = "CITY", unique = false, nullable = false, length = 30)
+    private String city;
 
-    public Integer getId()
-    {
+    @Column(name = "POSTAL_CODE", unique = false, nullable = false, length = 30)
+    private String postalCode;
+
+    @Column(name = "STREET_NAME", unique = false, nullable = false, length = 30)
+    private String streetName;
+
+    @Column(name = "HOUSE_NUMBER", unique = false, nullable = false, length = 10)
+    private String houseNumber;
+
+    @Column(name = "DATE_OF_BIRTH", unique = false)
+    private Timestamp dateOfBirth;
+
+    @Column(name = "INSURANCE_ID", unique = true, nullable = false)
+    private Integer insuranceID;
+
+    @Column(name = "PERSONAL_ID", unique = true, nullable = false, length = 100)
+    private String personalID;
+
+    @Column(name = "FRAUD_HINT", columnDefinition = "TINYINT(1)")
+    private Boolean fraudHint;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getPhone() {
@@ -84,6 +90,70 @@ public class Customer implements Serializable
         this.phone = phone;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public Timestamp getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Timestamp dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getInsuranceID() {
+        return insuranceID;
+    }
+
+    public void setInsuranceID(Integer insuranceID) {
+        this.insuranceID = insuranceID;
+    }
+
+    public String getPersonalID() {
+        return personalID;
+    }
+
+    public void setPersonalID(String personalID) {
+        this.personalID = personalID;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public Boolean getFraudHint() {
+        return fraudHint;
+    }
+
+    public void setFraudHint(Boolean fraudHint) {
+        this.fraudHint = fraudHint;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -92,7 +162,14 @@ public class Customer implements Serializable
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", insuranceID=" + insuranceID +
+                ", personalID='" + personalID + '\'' +
+                ", fraudHint=" + fraudHint +
                 '}';
     }
 }
