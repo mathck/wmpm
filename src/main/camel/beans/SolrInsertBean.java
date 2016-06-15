@@ -1,5 +1,6 @@
 package main.camel.beans;
 
+import main.model.Customer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.camel.ProducerTemplate;
@@ -17,9 +18,10 @@ public class SolrInsertBean{
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
     @Handler
-    public void process(Exchange exchange)
+    public void process(Exchange exchange, Customer c)
     {
         ProducerTemplate template = exchange.getContext().createProducerTemplate();
+        LOGGER.info("FIRSTNAME DES KUNDEN X: " + c.getFirstName());
 
         SolrInputDocument doc = new SolrInputDocument();
         doc.addField("ID", "1");

@@ -20,7 +20,7 @@ public class GenerateOrderRoute extends RouteBuilder {
 
         LOGGER.info("in configure GenerateOrderRoute");
 
-        from("timer:start?period=20s&delay=2500").pollEnrich("jpa:Customer" +
+        from("timer:start?period=20s").pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
                 .routeId("GenerateOrderRoute")
                 .setBody().method(CreateOrderBean.class, "generateOrder")

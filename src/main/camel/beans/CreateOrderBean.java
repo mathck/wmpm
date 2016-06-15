@@ -36,7 +36,7 @@ public class CreateOrderBean {
         //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
     }
 
-    public Customer generateCustomer() {
+    public Customer generateCustomer(Exchange exchange) {
         LOGGER.info("in generateCustomer");
 
         Customer newCustomer = new Customer();

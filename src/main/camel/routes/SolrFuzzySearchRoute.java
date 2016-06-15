@@ -1,6 +1,5 @@
 package main.camel.routes;
 
-import main.camel.beans.SolrSearchBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.solr.SolrConstants;
@@ -19,8 +18,7 @@ public class SolrFuzzySearchRoute extends RouteBuilder {
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_INSERT))
                 .to("solr://localhost:8983/solr/fraudCheck")
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_COMMIT))
-                .to("solr://localhost:8983/solr/fraudCheck")
-                .bean(SolrSearchBean.class);
+                .to("solr://localhost:8983/solr/fraudCheck");
 
         from("timer://runOnce?repeatCount=1&delay=2000")
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_DELETE_BY_QUERY))
