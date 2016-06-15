@@ -1,5 +1,7 @@
 package main.camel.routes;
 
+import main.camel.beans.SolrSearchBean;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.solr.SolrConstants;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,8 @@ public class SolrRoute extends RouteBuilder {
         .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_INSERT))
         .to("solr://localhost:8983/solr/fraudCheck")
         .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_COMMIT))
-        .to("solr://localhost:8983/solr/fraudCheck");
+        .to("solr://localhost:8983/solr/fraudCheck")
+        .bean(SolrSearchBean.class);
 
         from("timer://runOnce?repeatCount=1&delay=2000")
         .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_DELETE_BY_QUERY))
@@ -25,6 +28,11 @@ public class SolrRoute extends RouteBuilder {
         .to("solr://localhost:8983/solr/fraudCheck")
         .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_COMMIT))
         .to("solr://localhost:8983/solr/fraudCheck");
+
+        from("direct:SolrSelect")
+        .setHeader(Exchange.HTTP_METHOD, constant("GET"))
+        .to("http://localhost:8983/solr/fraudCheck_shard1_replica1/select?q=ID:1")
+        .convertBodyTo(String.class);
 
     }
 }

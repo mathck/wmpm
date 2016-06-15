@@ -12,10 +12,10 @@ public class CreateOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-          from("timer:start?period=10s&delay=2500")
+          from("timer:start?period=1s")
             .routeId("CreateOrderRoute")
-            .bean(CreateOrderBean.class)
-            .bean(SolrInsertBean.class)
+            //.bean(CreateOrderBean.class)
+            //.bean(SolrInsertBean.class)
             //.bean(processOrderBean)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From CreateOrderRoute to ProcessOrderRoute")
             .to("direct:processOrder");
