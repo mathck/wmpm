@@ -44,7 +44,13 @@ public class CreateOrderBean {
         newCustomer.setEmail("test@test.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
-        newCustomer.setAddress("Karlsplatz 13, 1040 Wien");
+        newCustomer.setCity("Wien");
+        newCustomer.setStreetName("Karlsplatz");
+        newCustomer.setPostalCode("1040");
+        newCustomer.setHouseNumber("13");
+        newCustomer.setFraudHint(false);
+        newCustomer.setInsuranceID(12345768);
+        newCustomer.setPersonalID("uniqueFirstCustomer");
         newCustomer.setPhone("+4369915000596");
         LOGGER.info("generated Customer: "+ newCustomer.toString());
         return newCustomer;

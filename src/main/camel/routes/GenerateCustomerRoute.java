@@ -19,7 +19,7 @@ public class GenerateCustomerRoute extends RouteBuilder {
 
         LOGGER.info("in configure GenerateCustomerRoute");
 
-        from("timer:start?period=10s&repeatCount=3")
+        from("timer:start?period=10s&repeatCount=1")
                 .routeId("GenerateCustomerRoute")
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer").log(LoggingLevel.INFO,"FILE", "Inserted new customer ${body.toString()}");
