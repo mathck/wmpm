@@ -55,6 +55,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .to("jpa:Order")
                 .log(LoggingLevel.INFO,"FILE", "Retrieved customer ${body.toString()}")
                 .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
+                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
                 .wireTap("seda:backupOrder")
                 .to("direct:processOrder");
 

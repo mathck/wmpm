@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 @Table(name = "CarOrder", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 public class CarOrder {
 
+    public CarOrder() { }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)

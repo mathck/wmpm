@@ -27,15 +27,10 @@ public class ProcessOrderBean {
     public void process (@Body String order, Exchange exchange)
     {
         //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
-
-        Random random = new Random();
-
-        exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("creditNeeded",random.nextBoolean());
+        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "\t|\t New Header: creditNeeded = " + exchange.getOut().getHeader("creditNeeded").toString());
+        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "\t|\t New Header: creditNeeded = " + exchange.getOut().getHeader("creditNeeded").toString());
 
         //return order + "bar";
 
