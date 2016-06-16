@@ -13,6 +13,7 @@ public class InformCustomerRoute extends RouteBuilder {
 
         from("seda:informCustomer")
             .routeId("InformCustomerRoute")
-            .bean(InformCustomerBean.class);
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ");
+            //.bean(InformCustomerBean.class);
     }
 }

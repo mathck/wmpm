@@ -20,24 +20,24 @@ public class FinalizeOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:finalizeOrder")
-        .to("jms:queue:dispatch");
+                .to("jms:queue:dispatch");
 
         from("jms:queue:dispatch")
-            .routeId("FinalizeOrderRoute")
-            .bean(FinalizeOrderBean.class)
-            .choice()
-            .when(header("paid").isEqualTo(false))
+                .routeId("FinalizeOrderRoute")
+                .bean(FinalizeOrderBean.class)
+                .choice()
+                .when(header("paid").isEqualTo(false))
                 .to("jms:queue:dispatch")
-            .otherwise()
+                .otherwise()
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
                 .to("direct:informCustomerAndAccept70Percent")
-            .endChoice();
+                .endChoice();
 
         from("direct:informCustomerAndAccept70Percent")
-            .routeId("InformCus&Accept70Per")
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
-            .multicast()
-            .to("seda:informCustomer")
-            .to("direct:accept70percent");
+                .routeId("InformCus&Accept70Per")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
+                .multicast()
+                .to("seda:informCustomer")
+                .to("direct:accept70percent");
     }
 }
