@@ -37,8 +37,6 @@ public class CreateOrderBean {
     }
 
     public Customer generateCustomer() {
-        LOGGER.info("in generateCustomer");
-
         Customer newCustomer = new Customer();
         //newCustomer.setId(1);
         newCustomer.setEmail("test@test.com");
@@ -52,12 +50,12 @@ public class CreateOrderBean {
         newCustomer.setInsuranceID(12345768);
         newCustomer.setPersonalID("uniqueFirstCustomer");
         newCustomer.setPhone("+4369915000596");
-        LOGGER.info("generated Customer: "+ newCustomer.toString());
+        //LOGGER.info("generated Customer: "+ newCustomer.toString());
         return newCustomer;
     }
 
     public CarOrder generateOrder(Customer customer) {
-        LOGGER.info("in generateOrder");
+        //LOGGER.info("in generateOrder");
         CarOrder newOrder = new CarOrder();
         newOrder.setCustomerFK(customer);
         newOrder.setOrderDate(getOrderTime());
