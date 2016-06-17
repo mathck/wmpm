@@ -3,9 +3,8 @@ package main.camel.routes;
 import main.camel.beans.ProcessOrderBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ProcessOrderRoute extends RouteBuilder {
 
     @Override

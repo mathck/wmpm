@@ -2,7 +2,9 @@ package main.camel.beans;
 
 import main.model.CarOrder;
 import main.model.Customer;
+import main.model.Stock;
 import main.model.enums.CarModel;
+import main.model.enums.ElementsName;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -67,6 +69,13 @@ public class CreateOrderBean {
         return newOrder;
     }
 
+    public Stock generateStock() {
+        LOGGER.info("in generateStock");
+        Stock stock = new Stock();
+        stock.setElementsName(ElementsName.ELEMENTS_FOR_VAN);
+        stock.setAvaliableCount(5);
+        return stock;
+    }
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());
     }

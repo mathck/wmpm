@@ -4,7 +4,6 @@ package main.camel.routes;
 import main.camel.beans.ProduceBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  a.	Starting conditions: Processor receives message containing the exact order.
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
  c.	Result: Production process is scheduled. Finalize order node will be notified once production is completed
 
  */
-@Component
+//@Component
 public class PlanProductionRoute extends RouteBuilder {
 
     @Override

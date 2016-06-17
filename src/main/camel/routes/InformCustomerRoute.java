@@ -2,9 +2,8 @@ package main.camel.routes;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class InformCustomerRoute extends RouteBuilder {
 
     // TODO Mateusz: use properties component here

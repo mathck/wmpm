@@ -1,6 +1,6 @@
 package main.camel.routes;
 
-import main.camel.beans.QueryStockBean;
+import main.camel.beans.MyAggregationStrategy;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -12,8 +12,9 @@ public class QueryStockRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("direct:queryStock")
+                .pollEnrich("jpa:Stock" +
+                "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new MyAggregationStrategy())
                 .routeId("QueryStockRoute")
-                .bean(QueryStockBean.class)
                 .choice()
                 .when(header("enoughElements").isEqualTo(true))
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction")

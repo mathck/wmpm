@@ -4,8 +4,6 @@ package main.camel.routes;
 import main.camel.beans.FinalizeOrderBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  1.	Starting condition: Production finished an order
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Component;
  3.	Result: Payment will be requested. If successful, order will be dispatched
 
  */
-@Component
+//@Component
 public class FinalizeOrderRoute extends RouteBuilder {
 
     @Override

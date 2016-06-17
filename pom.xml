@@ -208,6 +208,11 @@
           <artifactId>activemq-camel</artifactId>
           <version>LATEST</version>
       </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-ftp</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
       <!-- end -->
     <dependency>
       <groupId>org.apache.camel</groupId>

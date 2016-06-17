@@ -1,12 +1,8 @@
 package main.camel.routes;
 
 
-import main.camel.beans.FinalizeOrderBean;
-import main.model.CarOrder;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.file.FileComponent;
-import org.springframework.stereotype.Component;
 
 /**
  1.	Starting condition: Order is received
@@ -14,7 +10,7 @@ import org.springframework.stereotype.Component;
  3.	Result: Backup for order is created in /orders
 
  */
-@Component
+//@Component
 public class backupOrderRoute extends RouteBuilder {
 
     @Override
