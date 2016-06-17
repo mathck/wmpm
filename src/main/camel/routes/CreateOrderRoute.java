@@ -38,10 +38,8 @@ public class CreateOrderRoute extends RouteBuilder {
         from("timer:start?repeatCount=1")
                 .routeId("GenerateStockRoute")
                 .bean(CreateOrderBean.class, "generateStock")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created Stock \t|\t Inserted new customer ${body}")
-//                .multicast()
-//                .to("direct:queryStock")
-                .to("jpa:Stock");
+                .to("jpa:Stock")
+        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created Stock \t|\t Inserted new customer ${body}");
 
         from("timer:start?repeatCount=1")//&delay=2500
                 .log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")

@@ -20,8 +20,7 @@ public class MyAggregationStrategy implements AggregationStrategy {
         CarOrder order = oldExchange.getIn().getBody(CarOrder.class);
         Stock stock = newExchange.getIn().getBody(Stock.class);
 
-
-        int difference = stock.getAvaliableCount() - 20;
+        int difference = stock.getAvaliableCount() - 10;
         if (difference<0){
             oldExchange.getOut().setHeader("enoughElements", false);
         }else {

@@ -18,7 +18,7 @@ public class FinalizeOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:finalizeOrder")
-                .to("jms:queue:dispatch");
+                .log(LoggingLevel.INFO,"FILE", "HUI nachalo").to("jms:queue:dispatch");
 
         from("jms:queue:dispatch")
                 .routeId("FinalizeOrderRoute")

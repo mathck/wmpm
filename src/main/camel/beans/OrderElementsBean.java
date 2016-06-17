@@ -1,10 +1,12 @@
 package main.camel.beans;
 
+import main.model.CarOrder;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
-import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import java.util.Random;
 
 @Component
 public class OrderElementsBean {
@@ -12,12 +14,21 @@ public class OrderElementsBean {
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
 
-    @Handler
-    public String process(@Body String order, Exchange exchange)
-    {
-        //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+    //@Handler
+    public void countDelay(Exchange exchange){
 
-        return "New ELEMENTS WERE ORDERED - OK!";
+        exchange.setOut(exchange.getIn());
+
+        Random rnd = new Random(System.currentTimeMillis());
+        int number = 1 + rnd.nextInt(10);
+        exchange.getOut().setHeader("delay", number);
     }
-}
+
+    public void makeOrder(@Body String body, Exchange exchange)
+    {
+        CarOrder order = exchange.getIn().getBody(CarOrder.class);
+        exchange.getOut().setBody("PLZ, deliver as soon as possible");
+        exchange.getOut().setHeader(exchange.FILE_NAME, "orderedfor_" +order.getModel().toString() + ".txt");
+    }
+
+ }

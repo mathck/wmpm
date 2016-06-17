@@ -11,14 +11,13 @@ public class QueryStockRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:queryStock")
-                .pollEnrich("jpa:Stock" +
+        from("direct:queryStock").pollEnrich("jpa:Stock" +
                 "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new MyAggregationStrategy())
                 .routeId("QueryStockRoute")
                 .choice()
                 .when(header("enoughElements").isEqualTo(true))
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction")
-                    .to("seda:planProduction")
+                    .to("jms:queue:planProduction")
                 .otherwise()
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements")
                     .to("direct:orderElements")

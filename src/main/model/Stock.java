@@ -3,7 +3,6 @@ package main.model;
 import main.model.enums.ElementsName;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Stock", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
@@ -20,9 +19,6 @@ public class Stock {
     @Column(name = "AVAILABLE_COUNT", unique = false)
     private Integer avaliableCount;
 
-    @Column(name = "DELIVERY_TIME", unique = false)
-    private Integer deliveryTime;
-
 
     public Integer getId() {
         return id;
@@ -34,10 +30,6 @@ public class Stock {
 
     public Integer getAvaliableCount() {
         return avaliableCount;
-    }
-
-    public Integer getDeliveryTime() {
-        return deliveryTime;
     }
 
 
@@ -53,9 +45,6 @@ public class Stock {
         this.avaliableCount = avaliableCount;
     }
 
-    public void setDeliveryTime(Integer deliveryTime) {
-        this.deliveryTime = deliveryTime;
-    }
 
     @Override
     public String toString() {
@@ -63,7 +52,6 @@ public class Stock {
                 "id=" + id +
                 ", ELEMENTS_NAME='" + elementsName + '\'' +
                 ", AVAILABLE_COUNT='" + avaliableCount + '\'' +
-                ", DELIVERY_TIME='" + deliveryTime + '\'' +
                 '}';
     }
 //    @Column(name = "ELEMENTS_FOR_COUPE", unique = false)
