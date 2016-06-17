@@ -16,5 +16,6 @@ public class Accept30PercentRoute extends RouteBuilder {
                 .bean(Accept30PercentBean.class)
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
                 .to("direct:queryStock");
+
     }
 }

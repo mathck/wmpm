@@ -43,7 +43,8 @@ public class CreateOrderRoute extends RouteBuilder {
         from("timer:start?period=5s&repeatCount=1&delay=2500")
                 .log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")
                 .routeId("GenerateCustomerRoute")
-                .setBody().method(CreateOrderBean.class, "generateCustomer")
+                .setBody()
+                    .method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName}");
 
@@ -51,7 +52,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
                 .routeId("GenerateOrderRoute")
                 .setBody()
-                .method(CreateOrderBean.class, "generateOrder")
+                    .method(CreateOrderBean.class, "generateOrder")
                 .to("jpa:Order")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
                 .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
