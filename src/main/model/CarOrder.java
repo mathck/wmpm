@@ -5,11 +5,12 @@ import main.model.enums.OrderStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "CarOrder", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
-public class CarOrder {
+public class CarOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

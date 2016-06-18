@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Michael on 05.06.2016.
  */
@@ -21,16 +23,19 @@ public class SolrInsertBean{
     public void process(Exchange exchange, Customer c)
     {
         ProducerTemplate template = exchange.getContext().createProducerTemplate();
-        LOGGER.info("FIRSTNAME DES KUNDEN X: " + c.getFirstName());
 
+        long dateOfBirth=c.getDateOfBirth().getTime();
+        long timezone=60*60*1000;
+        Timestamp dateOfBirthPlusTimezone= new Timestamp(dateOfBirth+timezone);
         SolrInputDocument doc = new SolrInputDocument();
+
         doc.addField("ID", "1");
-        doc.addField("FIRST_NAME", "Michael");
-        doc.addField("LAST_NAME", "Lazarus");
-        doc.addField("DATE_OF_BIRTH", "1993-02-09T00:00:00Z");
-        doc.addField("STREET_NAME", "Roschegasse");
-        doc.addField("HOUSE_NUMBER", "11/2");
-        doc.addField("CITY", "Wien");
+        doc.addField("FIRST_NAME", c.getFirstName());
+        doc.addField("LAST_NAME", c.getLastName());
+        doc.addField("DATE_OF_BIRTH", dateOfBirthPlusTimezone);
+        doc.addField("STREET_NAME", c.getStreetName());
+        doc.addField("HOUSE_NUMBER", c.getHouseNumber());
+        doc.addField("CITY", c.getCity());
 
         template.sendBodyAndHeader("direct:SolrInsert", doc, SolrConstants.OPERATION, SolrConstants.OPERATION_INSERT);
 

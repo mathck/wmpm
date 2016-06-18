@@ -1,6 +1,8 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
+import main.model.CarOrder;
+import main.model.Customer;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
@@ -18,13 +20,17 @@ public class GenerateOrderRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        LOGGER.info("in configure GenerateOrderRoute");
-
-        from("timer:start?period=20s").pollEnrich("jpa:Customer" +
+        from("timer:start?period=20s&delay=2500").pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
                 .routeId("GenerateOrderRoute")
                 .setBody().method(CreateOrderBean.class, "generateOrder")
                 .to("jpa:Order")
-                .log(LoggingLevel.INFO,"FILE", "Retrieved customer ${body.toString()}");
+                .setHeader("orderID",body().convertTo(CarOrder.class).method("getId"))
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t\t|\t Retrieved customer ${body.toString()}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t\t|\t From GenerateCustomerRoute to CheckCustomerData")
+                .to("direct:CheckCustomerData");
+        /*
+        .to(CheckCustomerData) is only temporary in this route!! Please Add the CheckCustomerData to the according position (after Process Order/Credit needed check) --> First Step in Solvency Check!
+         */;
     }
 }
