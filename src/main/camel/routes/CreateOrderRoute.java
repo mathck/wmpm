@@ -1,7 +1,6 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
-import main.model.CarOrder;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -38,9 +37,8 @@ public class CreateOrderRoute extends RouteBuilder {
             .to("direct:processOrder");*/
         from("timer:start?repeatCount=1")
                 .routeId("GenerateStockRoute")
-                .bean(CreateOrderBean.class, "generateStock")
-                .to("jpa:Stock")
-        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created Stock \t|\t Inserted new customer ${body}");
+                .bean(CreateOrderBean.class, "generateStock");
+               // .to("jpa:Stock");
 
         from("timer:start?repeatCount=1")//&delay=2500
                 .log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")
@@ -55,15 +53,16 @@ public class CreateOrderRoute extends RouteBuilder {
                 .setBody()
                 .method(CreateOrderBean.class, "generateOrder")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created order \t|\t Inserted order ${body}")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
-                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
-                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
-                .wireTap("seda:backupOrder")
-                .to("direct:processOrder");
+                .multicast()
+                .to("direct:queryStock")
+                .to("jpa:Order");
 
-//                .multicast()
-//                .to("direct:queryStock")
-//                .to("jpa:Order");
+//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
+//                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
+//                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
+//                .wireTap("seda:backupOrder")
+//                .to("direct:processOrder");
+
 
 
         /*rest("/services/rest").put("/order").consumes("application/json")

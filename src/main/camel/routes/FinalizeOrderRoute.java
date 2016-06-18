@@ -26,7 +26,7 @@ public class FinalizeOrderRoute extends RouteBuilder {
                 .routeId("FinalizeOrderRoute")
                 .bean(FinalizeOrderBean.class)
                 .choice()
-                .when(header("paid").isEqualTo(false))
+                .when(header("testDriveDone").isEqualTo(false))
                 .to("jms:queue:dispatch?messageConverter=#myMessageConverter")
                 .otherwise()
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")

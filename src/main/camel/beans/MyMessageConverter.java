@@ -34,6 +34,7 @@ public class MyMessageConverter implements MessageConverter{
         MapMessage mapMessage = (MapMessage) message;
         CarOrder messageObject = order;
 
+
         return messageObject;
     }
 }

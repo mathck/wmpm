@@ -14,16 +14,17 @@ public class FinalizeOrderBean {
 
     @Handler
     public void process(Exchange exchange) throws Exception {
+
         //getting information about payment
         exchange.setOut(exchange.getIn());
         //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("paid", random.nextBoolean());
+        exchange.getOut().setHeader("testDriveDone", random.nextBoolean());
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: paid = " + exchange.getOut().getHeader("paid").toString());
+       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: paid = " + exchange.getOut().getHeader("paid").toString());
     }
 }

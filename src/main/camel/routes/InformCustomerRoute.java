@@ -21,12 +21,12 @@ public class InformCustomerRoute extends RouteBuilder {
 
         from("seda:informCustomer")
             .routeId("InformCustomerRoute")
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
-            .to("smtp://smtp.gmail.com" +
-                    "?port=587" +
-                    "&username=smartcarcompany@gmail.com" +
-                    "&password=supersecuritypassword" +
-                    "&mail.smtp.auth=true&mail.smtp.starttls.enable=true" + // required for TLS
-                    "&to=" + recipient);
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ");
+            //.to("smtp://smtp.gmail.com" +
+//                    "?port=587" +
+//                    "&username=smartcarcompany@gmail.com" +
+//                    "&password=supersecuritypassword" +
+//                    "&mail.smtp.auth=true&mail.smtp.starttls.enable=true" + // required for TLS
+//                    "&to=" + recipient);
     }
 }

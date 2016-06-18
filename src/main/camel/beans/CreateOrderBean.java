@@ -11,6 +11,10 @@ import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.Random;
 
 @Component
@@ -68,13 +72,36 @@ public class CreateOrderBean {
         newOrder.setModel(getRandomCarModel());
         return newOrder;
     }
+    public void generateStock() {
 
-    public Stock generateStock() {
-        LOGGER.info("in generateStock");
+        EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("camel");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+
+        userTransaction.begin();
+
         Stock stock = new Stock();
-        stock.setElementsName(ElementsName.ELEMENTS_FOR_VAN);
-        stock.setAvaliableCount(5);
-        return stock;
+        stock.setAvaliableCount(10);
+        stock.setElementsName(ElementsName.ELEMENTS_FOR_CABRIO);
+        System.out.println("COMMITING");
+        em.persist(stock);
+
+
+        Stock stock2 = new Stock();
+        stock2.setAvaliableCount(10);
+        stock2.setElementsName(ElementsName.ELEMENTS_FOR_VAN);
+        System.out.println("COMMITING");
+        em.persist(stock);
+
+        Stock stock3 = new Stock();
+        stock3.setAvaliableCount(10);
+        stock3.setElementsName(ElementsName.ELEMENTS_FOR_COUPE);
+        System.out.println("COMMITING");
+
+        userTransaction.commit();
+
+        entityManagerFactory.close();
+
     }
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());

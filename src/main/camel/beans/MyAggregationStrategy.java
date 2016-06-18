@@ -24,6 +24,7 @@ public class MyAggregationStrategy implements AggregationStrategy {
         if (difference<0){
             oldExchange.getOut().setHeader("enoughElements", false);
         }else {
+            oldExchange.getOut().setHeader("enoughElements", true);
             stock.setAvaliableCount(difference);
         }
 

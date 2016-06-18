@@ -32,6 +32,7 @@ public class SmartCarConfig extends CamelConfiguration {
     @Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
+        //camelContext.addComponent("twitter", new TwitterComponent());
         camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
         PropertiesComponent pc = new PropertiesComponent();
         pc.setLocation("myprop.properties");

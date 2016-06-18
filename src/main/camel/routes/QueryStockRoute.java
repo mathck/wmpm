@@ -11,7 +11,8 @@ public class QueryStockRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:queryStock").pollEnrich("jpa:Stock" +
+        from("direct:queryStock").multicast() .log(LoggingLevel.INFO,"FILE", "HELLO")
+                .pollEnrich("jpa:Stock" +
                 "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new MyAggregationStrategy())
                 .routeId("QueryStockRoute")
                 .choice()
@@ -21,6 +22,6 @@ public class QueryStockRoute extends RouteBuilder {
                 .otherwise()
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements")
                     .to("direct:orderElements")
-                .endChoice(); //TODO OrderElementsRoute
+                .endChoice();
     }
 }
