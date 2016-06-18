@@ -10,7 +10,6 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 public class AddRecievedQuantity implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-        System.out.println("HUI 4");
 
         if (oldExchange == null) {
             return newExchange;

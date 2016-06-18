@@ -19,11 +19,11 @@ public class PlanProductionRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("jms:queue:planProduction")
+        from("jms:queue:planProduction?messageConverter=#myMessageConverter")
              .routeId("PlanProductionRoute")
              .bean(ProduceBean.class)
                 .delay(simple("${header.delay}"))
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder")
-         .to("direct:finalizeOrder");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder");
+         //.to("direct:finalizeOrder");
     }
 }

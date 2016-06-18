@@ -13,8 +13,6 @@ public class OrderElementsBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-
-    //@Handler
     public void countDelay(Exchange exchange){
 
         exchange.setOut(exchange.getIn());
