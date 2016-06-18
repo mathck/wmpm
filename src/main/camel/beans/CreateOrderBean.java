@@ -4,17 +4,12 @@ import main.model.CarOrder;
 import main.model.Customer;
 import main.model.Stock;
 import main.model.enums.CarModel;
-import main.model.enums.ElementsName;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.Random;
 
 @Component
@@ -72,36 +67,24 @@ public class CreateOrderBean {
         newOrder.setModel(getRandomCarModel());
         return newOrder;
     }
-    public void generateStock() {
+    public Stock generateStock() {
 
-        EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("camel");
-        EntityManager em = entityManagerFactory.createEntityManager();
-        EntityTransaction userTransaction = em.getTransaction();
-
-        userTransaction.begin();
-
-        Stock stock = new Stock();
-        stock.setAvaliableCount(10);
-        stock.setElementsName(ElementsName.ELEMENTS_FOR_CABRIO);
-        System.out.println("COMMITING");
-        em.persist(stock);
-
-
-        Stock stock2 = new Stock();
-        stock2.setAvaliableCount(10);
-        stock2.setElementsName(ElementsName.ELEMENTS_FOR_VAN);
-        System.out.println("COMMITING");
-        em.persist(stock);
-
-        Stock stock3 = new Stock();
-        stock3.setAvaliableCount(10);
-        stock3.setElementsName(ElementsName.ELEMENTS_FOR_COUPE);
-        System.out.println("COMMITING");
-
-        userTransaction.commit();
-
-        entityManagerFactory.close();
-
+//        EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("camel");
+//        EntityManager em = entityManagerFactory.createEntityManager();
+//        EntityTransaction userTransaction = em.getTransaction();
+//        userTransaction.begin();
+//        Stock stock = new Stock();
+//        stock.setAvaliableCount(7);
+//        stock.setStockName("CarDetailStock");
+//        System.out.println("COMMITING");
+//        em.persist(stock);
+//        userTransaction.commit();
+//        entityManagerFactory.close();
+//        //LOGGER.info("in generateOrder");
+            Stock stock = new Stock();
+            stock.setStockName("CarStockDetails");
+            stock.setAvaliableCount(7);
+        return stock;
     }
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());

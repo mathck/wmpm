@@ -14,18 +14,21 @@ public class MyAggregationStrategy implements AggregationStrategy {
         if (oldExchange == null) {
             return newExchange;
         }
-        oldExchange.getOut().setBody(oldExchange.getIn().getBody());
-        oldExchange.getOut().setHeaders(oldExchange.getIn().getHeaders());
+        oldExchange.setOut(oldExchange.getIn());
+        newExchange.setOut(newExchange.getIn());
 
         CarOrder order = oldExchange.getIn().getBody(CarOrder.class);
         Stock stock = newExchange.getIn().getBody(Stock.class);
+        System.out.println("Available details: " + stock.getAvaliableCount());
 
         int difference = stock.getAvaliableCount() - 10;
         if (difference<0){
             oldExchange.getOut().setHeader("enoughElements", false);
+            stock.setAvaliableCount(stock.getAvaliableCount() + 7);
         }else {
             oldExchange.getOut().setHeader("enoughElements", true);
-            stock.setAvaliableCount(difference);
+            stock.setAvaliableCount(stock.getAvaliableCount() - 10);
+
         }
 
         return oldExchange;

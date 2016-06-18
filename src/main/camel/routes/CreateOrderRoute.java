@@ -37,8 +37,8 @@ public class CreateOrderRoute extends RouteBuilder {
             .to("direct:processOrder");*/
         from("timer:start?repeatCount=1")
                 .routeId("GenerateStockRoute")
-                .bean(CreateOrderBean.class, "generateStock");
-               // .to("jpa:Stock");
+                .bean(CreateOrderBean.class, "generateStock")
+                .to("jpa:Stock");
 
         from("timer:start?repeatCount=1")//&delay=2500
                 .log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")
@@ -47,17 +47,16 @@ public class CreateOrderRoute extends RouteBuilder {
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName}");
 
-        from("timer:start?repeatCount=1").pollEnrich("jpa:Customer" +
+        from("timer:start?repeatCount=20").pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
                 .routeId("GenerateOrderRoute")
                 .setBody()
                 .method(CreateOrderBean.class, "generateOrder")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created order \t|\t Inserted order ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
                 .multicast()
                 .to("direct:queryStock")
                 .to("jpa:Order");
-
-//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
 //                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
 //                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
 //                .wireTap("seda:backupOrder")

@@ -1,5 +1,6 @@
 package main.camel.routes;
 
+import main.camel.beans.TwitterBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.twitter.TwitterComponent;
@@ -26,10 +27,9 @@ public class HandOverRoute extends RouteBuilder {
         from("direct:handOverOrder")
             .routeId("handOverOrderRoute")
             .log(LoggingLevel.INFO,"FILE", "test ${routeId}")
-//            .multicast()
-                .to("seda:informCustomer");
-//                .bean(TwitterBean.class)
-//                .to("twitter://timeline/user");
+            .to("seda:informCustomer")
+            .bean(TwitterBean.class)
+            .to("twitter://timeline/user");
 
     }
 }
