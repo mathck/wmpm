@@ -1,6 +1,7 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
+import main.model.CarOrder;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -54,14 +55,15 @@ public class CreateOrderRoute extends RouteBuilder {
                 .setBody()
                 .method(CreateOrderBean.class, "generateOrder")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Created order \t|\t Inserted order ${body}")
-                .multicast()
-                .to("direct:queryStock")
-                .to("jpa:Order");
-//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
-//                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
-//                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
-//                .wireTap("seda:backupOrder")
-//                .to("direct:processOrder");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
+                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
+                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
+                .wireTap("seda:backupOrder")
+                .to("direct:processOrder");
+
+//                .multicast()
+//                .to("direct:queryStock")
+//                .to("jpa:Order");
 
 
         /*rest("/services/rest").put("/order").consumes("application/json")

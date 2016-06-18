@@ -3,8 +3,9 @@ package main.camel.routes;
 import main.camel.beans.CheckFinancialSolvencyBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class CheckFinancialSolvencyRoute extends RouteBuilder {
 
     @Override

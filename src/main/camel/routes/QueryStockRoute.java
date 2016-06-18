@@ -17,7 +17,7 @@ public class QueryStockRoute extends RouteBuilder {
                 .choice()
                 .when(header("enoughElements").isEqualTo(true))
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction")
-                    .to("jms:queue:planProduction")
+                    .to("jms:queue:planProduction?messageConverter=#myMessageConverter")
                 .otherwise()
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements")
                     .to("direct:orderElements")

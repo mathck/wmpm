@@ -13,12 +13,14 @@ public class Accept30PercentBean {
 
 
     @Handler
-    public String process (@Body String order, Exchange exchange)
+    public void process (@Body String order, Exchange exchange)
     {
+
+        exchange.setOut(exchange.getIn());
+
         //logging at the beginning of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
-        return "New ELEMENTS WERE ORDERED - OK!";
     }
 
 }

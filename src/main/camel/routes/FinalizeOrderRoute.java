@@ -4,6 +4,7 @@ package main.camel.routes;
 import main.camel.beans.FinalizeOrderBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  1.	Starting condition: Production finished an order
@@ -12,20 +13,21 @@ import org.apache.camel.builder.RouteBuilder;
  3.	Result: Payment will be requested. If successful, order will be dispatched
 
  */
-//@Component
+@Component
 public class FinalizeOrderRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:finalizeOrder")
-                .log(LoggingLevel.INFO,"FILE", "HUI nachalo").to("jms:queue:dispatch");
 
-        from("jms:queue:dispatch")
+        from("direct:finalizeOrder")
+                .to("jms:queue:dispatch?messageConverter=#myMessageConverter");
+
+        from("jms:queue:dispatch?messageConverter=#myMessageConverter")
                 .routeId("FinalizeOrderRoute")
                 .bean(FinalizeOrderBean.class)
                 .choice()
                 .when(header("paid").isEqualTo(false))
-                .to("jms:queue:dispatch")
+                .to("jms:queue:dispatch?messageConverter=#myMessageConverter")
                 .otherwise()
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
                 .to("direct:informCustomerAndAccept70Percent")

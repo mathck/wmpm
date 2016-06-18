@@ -2,12 +2,13 @@ package main.camel.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
 Testing route to configure JPA component
  */
 
-//@Component
+@Component
 public class GenerateOrderRoute extends RouteBuilder {
 
     private static final Logger LOGGER = Logger.getLogger(GenerateOrderRoute.class);

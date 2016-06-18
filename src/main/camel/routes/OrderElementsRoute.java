@@ -21,7 +21,8 @@ public class OrderElementsRoute extends RouteBuilder {
                 .to("direct:makeOrder")
                 .to("jms:queue:waitDelivery?messageConverter=#myMessageConverter");
 
-        from("direct:makeOrder").bean(OrderElementsBean.class, "makeOrder")
+        from("direct:makeOrder")
+                .bean(OrderElementsBean.class, "makeOrder")
                 .to("{{ftp.server}}");
 
         from("jms:queue:waitDelivery?messageConverter=#myMessageConverter").delay(simple("${header.delay}"))

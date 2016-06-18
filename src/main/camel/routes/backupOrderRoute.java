@@ -3,6 +3,7 @@ package main.camel.routes;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.stereotype.Component;
 
 /**
  1.	Starting condition: Order is received
@@ -10,7 +11,7 @@ import org.apache.camel.builder.RouteBuilder;
  3.	Result: Backup for order is created in /orders
 
  */
-//@Component
+@Component
 public class backupOrderRoute extends RouteBuilder {
 
     @Override
