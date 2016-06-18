@@ -8,10 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class Accept30PercentBean {
+public class Accept70PercentBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
-
 
     @Handler
     public void process(Exchange exchange) throws Exception {
@@ -21,11 +20,10 @@ public class Accept30PercentBean {
 
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("is30percentPaid", random.nextBoolean());
+        exchange.getOut().setHeader("is70percentPaid", random.nextBoolean());
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is30percentPaid = " + exchange.getOut().getHeader("is30percentPaid").toString());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " + exchange.getOut().getHeader("is70percentPaid").toString());
 
     }
-
 }

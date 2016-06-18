@@ -60,7 +60,10 @@ public class CreateOrderBean {
         newOrder.setCustomerFK(customer);
         newOrder.setOrderDate(getOrderTime());
         newOrder.setStatus(OrderStatus.NEW);
-        newOrder.setCreditNeeded(getRandomCreditNeeded());
+
+//        newOrder.setCreditNeeded(getRandomCreditNeeded());
+        newOrder.setCreditNeeded(false);
+
         newOrder.setColor(getRandomColor());
         newOrder.setHorsepower(getRandomHorsepower());
         newOrder.setModel(getRandomCarModel());
