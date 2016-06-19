@@ -14,6 +14,7 @@ public class CreateOrderRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        errorHandler(deadLetterChannel("seda:errors"));
 
         /*// define and add the jetty component
         restConfiguration().component("jetty")

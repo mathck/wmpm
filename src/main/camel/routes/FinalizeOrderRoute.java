@@ -26,18 +26,18 @@ public class FinalizeOrderRoute extends RouteBuilder {
                 .routeId("FinalizeOrderRoute")
                 .bean(FinalizeOrderBean.class)
                 .choice()
-                .when(header("testDriveDone").isEqualTo(false))
-                .to("jms:queue:dispatch?messageConverter=#myMessageConverter")
-                .otherwise()
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent \t|\t")
-                .to("direct:informCustomerAndAccept70Percent")
+                    .when(header("testDriveDone").isEqualTo(false))
+                        .to("jms:queue:dispatch?messageConverter=#myMessageConverter")
+                    .otherwise()
+                        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent \t|\t")
+                        .to("direct:informCustomerAndAccept70Percent")
                 .endChoice();
 
         from("direct:informCustomerAndAccept70Percent")
                 .routeId("InformCus&Accept70Per")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent \t|\t")
                 .multicast()
-                .to("seda:informCustomer")
-                .to("direct:accept70percent");
+                    .to("seda:informCustomer")
+                    .to("direct:accept70percent");
     }
 }

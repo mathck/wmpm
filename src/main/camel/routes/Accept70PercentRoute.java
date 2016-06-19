@@ -10,7 +10,7 @@ public class Accept70PercentRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
+        errorHandler(deadLetterChannel("seda:errors"));
 //        from("direct:accept70percent")
 //            .routeId("Accept70PercentRoute")
 //            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept70Percent to HandOverOrder")

@@ -10,7 +10,7 @@ public class Accept30PercentRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
+        errorHandler(deadLetterChannel("seda:errors"));
 //        from("direct:accept30percent")
 //                .routeId("Accept30percentRoute")
 //                .bean(Accept30PercentBean.class)

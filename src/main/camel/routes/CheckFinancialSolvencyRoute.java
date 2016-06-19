@@ -24,9 +24,9 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
         from("direct:solvencyApproval")
                 .routeId("SolvencyApproval")
                 .choice()
-                .when(header("solvencyApproval"))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From SolvencyApproval to Accept30Percent \t|\t")
-                    .to("direct:accept30percent")
+                    .when(header("solvencyApproval"))
+                        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From SolvencyApproval to Accept30Percent \t|\t")
+                        .to("direct:accept30percent")
                 .endChoice();
     }
 }
