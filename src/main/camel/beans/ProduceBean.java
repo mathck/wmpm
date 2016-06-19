@@ -5,6 +5,7 @@ import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
+import org.apache.camel.PropertyInject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,24 @@ import java.util.Calendar;
 @Component
 public class ProduceBean {
     private static final Logger LOGGER = Logger.getLogger(ProduceBean.class);
+
+    @PropertyInject("{{delay.color.red}}")
+    private int delayColorRed;
+
+    @PropertyInject("{{delay.color.any}}")
+    private int delayColorAny;
+
+    @PropertyInject("{{delay.horsepower.high}}")
+    private int delayHorsepowerHigh;
+
+    @PropertyInject("{{delay.horsepower.low}}")
+    private int delayHorsepowerLow;
+
+    @PropertyInject("{{delay.model.coupe}}")
+    private int delayModelCoupe;
+
+    @PropertyInject("{{delay.model.any}}")
+    private int delayModelAny;
 
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {
@@ -26,27 +45,33 @@ public class ProduceBean {
 
         int delay = 0;
 
-        if (carorder.getColor() =="red"){
-            calendar.add(Calendar.DATE, 15);
-            delay = delay + 15;
-         }else {
-            calendar.add(Calendar.DATE, 25);
-            delay = delay + 25;
+        //---------------------------------------
+        // Car Color
+        //---------------------------------------
+        if (carorder.getColor().equals("red")) {
+            calendar.add(Calendar.DATE, delay += delayColorRed);
+        } else {
+            calendar.add(Calendar.DATE, delay += delayColorAny);
         }
-        if (carorder.getHorsepower() > 150){
-            calendar.add(Calendar.DATE, 40);
-            delay = delay + 40;
-         }else{
-            calendar.add(Calendar.DATE, 20);
-            delay = delay + 20;
+
+        //---------------------------------------
+        // Car Horsepower
+        //---------------------------------------
+        if (carorder.getHorsepower() > 150) {
+            calendar.add(Calendar.DATE, delay += delayHorsepowerHigh);
+        } else {
+            calendar.add(Calendar.DATE, delay += delayHorsepowerLow);
         }
-        if (carorder.getModel()== CarModel.COUPE){
-            calendar.add(Calendar.DATE, 60);
-            delay = delay + 60;
-        }else{
-            calendar.add(Calendar.DATE, 40);
-            delay = delay + 40;
+
+        //---------------------------------------
+        // Car Model
+        //---------------------------------------
+        if (carorder.getModel()== CarModel.COUPE) {
+            calendar.add(Calendar.DATE, delay += delayModelCoupe);
+        } else {
+            calendar.add(Calendar.DATE, delay += delayModelAny);
         }
+
         carorder.setDeliveryDate(new Timestamp(calendar.getTimeInMillis()));
         carorder.setStatus(OrderStatus.ASSEMBLING);
 

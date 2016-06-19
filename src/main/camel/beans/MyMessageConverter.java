@@ -18,10 +18,10 @@ public class MyMessageConverter implements MessageConverter {
     public CarOrder order;
 
     @Override
-    public Message toMessage(Object o, Session session) throws JMSException, MessageConversionException {
+    public Message toMessage(Object object, Session session) throws JMSException, MessageConversionException {
 
-        CarOrder messageObject = (CarOrder) o;
-        order = messageObject;
+        CarOrder messageObject = order = (CarOrder) object;
+
         MapMessage message = session.createMapMessage();
         message.setString("message", messageObject.toString());
 
@@ -30,11 +30,6 @@ public class MyMessageConverter implements MessageConverter {
 
     @Override
     public Object fromMessage(Message message) throws JMSException, MessageConversionException {
-
-        MapMessage mapMessage = (MapMessage) message;
-        CarOrder messageObject = order;
-
-
-        return messageObject;
+        return order;
     }
 }
