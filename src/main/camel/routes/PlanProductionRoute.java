@@ -1,6 +1,5 @@
 package main.camel.routes;
 
-
 import main.camel.beans.ProduceBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
