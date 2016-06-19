@@ -21,6 +21,7 @@ public class ProcessOrderRoute extends RouteBuilder {
 
         from("seda:creditRouter")
             .routeId("CreditRouter")
+            .setHeader("creditNeeded", simple("false")) // TODO REMOVE ME, SOLR
             .choice()
                 .when(header("creditNeeded"))
                     .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To CheckFinancialSolvency")

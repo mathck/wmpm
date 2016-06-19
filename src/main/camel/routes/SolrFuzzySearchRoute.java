@@ -20,12 +20,14 @@ public class SolrFuzzySearchRoute extends RouteBuilder {
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_COMMIT))
                 .to("solr://localhost:8983/solr/fraudCheck");
 
+        /* TODO SOLR
         from("timer://runOnce?repeatCount=1&delay=2000")
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_DELETE_BY_QUERY))
                 .setBody(constant("*:*"))
                 .to("solr://localhost:8983/solr/fraudCheck")
                 .setHeader(SolrConstants.OPERATION, constant(SolrConstants.OPERATION_COMMIT))
                 .to("solr://localhost:8983/solr/fraudCheck");
+*/
 
         from("direct:SolrSelect")
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))

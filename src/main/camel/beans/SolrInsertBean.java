@@ -29,7 +29,7 @@ public class SolrInsertBean{
         Timestamp dateOfBirthPlusTimezone= new Timestamp(dateOfBirth+timezone);
         SolrInputDocument doc = new SolrInputDocument();
 
-        doc.addField("ID", "1");
+        doc.addField("ID", c.getId());
         doc.addField("FIRST_NAME", c.getFirstName());
         doc.addField("LAST_NAME", c.getLastName());
         doc.addField("DATE_OF_BIRTH", dateOfBirthPlusTimezone);

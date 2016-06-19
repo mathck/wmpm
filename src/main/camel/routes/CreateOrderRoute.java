@@ -1,6 +1,7 @@
 package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
+import main.camel.beans.SolrInsertBean;
 import main.model.CarOrder;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -45,6 +46,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .routeId("GenerateCustomerRoute")
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer")
+                //.bean(SolrInsertBean.class) // TODO SOLR
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName}");
 
         from("timer:start?period=10s&delay=2500").pollEnrich("jpa:Customer" +

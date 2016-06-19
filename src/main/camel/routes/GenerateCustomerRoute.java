@@ -24,7 +24,7 @@ public class GenerateCustomerRoute extends RouteBuilder {
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t CustomerID.: ${body.id} \t|\t New Customer Inserted")
-                .bean(SolrInsertBean.class);
+
 */
     }
 }
