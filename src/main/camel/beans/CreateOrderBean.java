@@ -80,7 +80,7 @@ public class CreateOrderBean {
 //        em.persist(stock);
 //        userTransaction.commit();
 //        entityManagerFactory.close();
-//        //LOGGER.info("in generateOrder");
+        //LOGGER.info("in generateOrder");
             Stock stock = new Stock();
             stock.setStockName("CarStockDetails");
             stock.setAvaliableCount(7);

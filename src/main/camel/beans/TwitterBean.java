@@ -22,7 +22,7 @@ public class TwitterBean {
     {
         CarOrder order = exchange.getIn().getBody(CarOrder.class);
         String text = "";
-        text = "At "+new Timestamp(new java.util.Date().getTime())+" the magic happened. We have created the new future car!" +
+        text = "At "+new Timestamp(new java.util.Date().getTime())+" the magic has happened. We have created the new future car!" +
                 " Model: " + order.getModel().toString() + "; " +
                 " Color: " + order.getColor().toString() + "; " +
                 " Horsepower: " + order.getHorsepower().toString();

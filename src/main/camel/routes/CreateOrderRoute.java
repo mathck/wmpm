@@ -47,7 +47,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName}");
 
-        from("timer:start?repeatCount=20").pollEnrich("jpa:Customer" +
+        from("timer:start?repeatCount=1").pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
                 .routeId("GenerateOrderRoute")
                 .setBody()
