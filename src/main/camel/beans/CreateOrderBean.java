@@ -2,6 +2,7 @@ package main.camel.beans;
 
 import main.model.CarOrder;
 import main.model.Customer;
+import main.model.Stock;
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
@@ -39,7 +40,7 @@ public class CreateOrderBean {
 
     public Customer generateCustomer() {
         Customer newCustomer = new Customer();
-        newCustomer.setId(1);
+        //newCustomer.setId(1);
         newCustomer.setEmail("test@test.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
@@ -61,10 +62,7 @@ public class CreateOrderBean {
         newOrder.setCustomerFK(customer);
         newOrder.setOrderDate(getOrderTime());
         newOrder.setStatus(OrderStatus.NEW);
-
         newOrder.setCreditNeeded(getRandomCreditNeeded());
-        //newOrder.setCreditNeeded(false);
-
         newOrder.setColor(getRandomColor());
         newOrder.setHorsepower(getRandomHorsepower());
         newOrder.setModel(getRandomCarModel());
@@ -84,6 +82,25 @@ public class CreateOrderBean {
         return newOrder;
     }
 
+    public Stock generateStock() {
+
+//        EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("camel");
+//        EntityManager em = entityManagerFactory.createEntityManager();
+//        EntityTransaction userTransaction = em.getTransaction();
+//        userTransaction.begin();
+//        Stock stock = new Stock();
+//        stock.setAvaliableCount(7);
+//        stock.setStockName("CarDetailStock");
+//        System.out.println("COMMITING");
+//        em.persist(stock);
+//        userTransaction.commit();
+//        entityManagerFactory.close();
+//        //LOGGER.info("in generateOrder");
+            Stock stock = new Stock();
+            stock.setStockName("CarStockDetails");
+            stock.setAvaliableCount(7);
+        return stock;
+    }
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());
     }

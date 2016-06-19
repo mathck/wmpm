@@ -19,25 +19,12 @@ public class PlanProductionRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:planProduction")
+
+        from("jms:queue:planProduction?messageConverter=#myMessageConverter")
              .routeId("PlanProductionRoute")
              .bean(ProduceBean.class)
-//           .process(new Processor() {
-//           @Override
-//           public void process(Exchange exchange) throws Exception {
-//                Integer id = Integer.parseInt(exchange.getIn().getHeader("id").toString());
-//                carOrderDao.getOrder(id).setStatus(OrderStatus.ASSEMBLING);
-//              }
-//           })
-                .delay(2000)
+                .delay(simple("${header.delay}"))
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder")
-//                .process(new Processor() {
-//                    @Override
-//                    public void process(Exchange exchange) throws Exception {
-//                        Integer id = Integer.parseInt(exchange.getIn().getHeader("id").toString());
-//                        carOrderDao.getOrder(id).setStatus(OrderStatus.FINISHED);
-//                    }
-//                })
-                .to("direct:finalizeOrder");
+         .to("direct:finalizeOrder");
     }
 }

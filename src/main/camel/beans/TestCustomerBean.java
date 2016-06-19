@@ -1,6 +1,5 @@
 package main.camel.beans;
 
-import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -13,10 +12,10 @@ public class TestCustomerBean {
 
 
     @Handler
-    public String process(@Body String order, Exchange exchange)
+    public String process(Exchange exchange)
     {
         //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         return "TestCustomerBean - OK!";
     }

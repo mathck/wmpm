@@ -178,6 +178,11 @@
       <version>${camel.version}</version>
     </dependency>
       <!-- begin -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-ftp</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
       <dependency>
           <groupId>org.apache.camel</groupId>
           <artifactId>camel-jms</artifactId>

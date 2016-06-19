@@ -12,7 +12,7 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 @Component
-public class MyMessageConverter implements MessageConverter {
+public class MyMessageConverter implements MessageConverter{
 
     public Customer customer;
     public CarOrder order;
@@ -33,6 +33,7 @@ public class MyMessageConverter implements MessageConverter {
 
         MapMessage mapMessage = (MapMessage) message;
         CarOrder messageObject = order;
+
 
         return messageObject;
     }

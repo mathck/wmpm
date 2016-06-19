@@ -3,7 +3,6 @@ package main.camel.routes;
 import main.camel.beans.Accept70PercentBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component

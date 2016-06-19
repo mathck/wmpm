@@ -22,7 +22,6 @@ public class QueryStockBean {
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("enoughElements", random.nextBoolean());
-        //!!carOrderDao.getOrder(orderId);
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "\t|\t New Header: enoughElements = " + exchange.getOut().getHeader("enoughElements").toString());
