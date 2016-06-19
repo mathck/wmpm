@@ -29,16 +29,16 @@ public class Accept30PercentRoute extends RouteBuilder {
                 .bean(Accept30PercentBean.class)
                 .choice()
                 .when(header("is30percentPaid").isEqualTo(false))
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t ${body}")
                 .to("jms:queue:Accept30percentRouteDispatch")
                 .otherwise()
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t ${body}")
                 .to("jms:direct:informCustomerAndAccept30Percent")
                 .endChoice();
 
         from("jms:direct:informCustomerAndAccept30Percent")
                 .routeId("Accept30percentRoute-Leaving")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t ${body}")
                 .multicast()
                 .to("jms:direct:makeConfirmation")
                 .to("direct:queryStock");

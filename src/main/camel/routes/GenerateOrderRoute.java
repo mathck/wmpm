@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
 Testing route to configure JPA component
  */
-
+// KILL ME
 @Component
 public class GenerateOrderRoute extends RouteBuilder {
 

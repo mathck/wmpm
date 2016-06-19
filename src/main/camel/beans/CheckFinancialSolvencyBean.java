@@ -18,7 +18,7 @@ public class CheckFinancialSolvencyBean {
     {
         //logging at the beginning of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
-
+        exchange.setOut(exchange.getIn());
         Random random = new Random();
 
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());

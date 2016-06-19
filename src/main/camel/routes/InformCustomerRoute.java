@@ -29,7 +29,7 @@ public class InformCustomerRoute extends RouteBuilder {
         //--------------------------------------------------
         from("seda:informCustomer")
                 .routeId("InformCustomerRoute")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t  ${body} ")
                 .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
                 /*.process(new Processor() { TODO Andr
                     @Override

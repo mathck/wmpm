@@ -16,7 +16,7 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
             // should be deleted after implementation big part from Michi
             // next bean
             .bean(CheckFinancialSolvencyBean.class) //TODO Implement FinancialSolvencyBean
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From CheckFinancialSolvency to InformCustomer & SolvencyApproval")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From CheckFinancialSolvency to InformCustomer & SolvencyApproval \t|\t ${body}")
             .multicast()
                 .to("seda:informCustomer") //isn't clear why should we send here message
                 .to("direct:solvencyApproval");
@@ -25,7 +25,7 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
                 .routeId("SolvencyApproval")
                 .choice()
                 .when(header("solvencyApproval"))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From SolvencyApproval to Accept30Percent")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From SolvencyApproval to Accept30Percent \t|\t ${body}")
                     .to("direct:accept30percent")
                 .endChoice();
     }

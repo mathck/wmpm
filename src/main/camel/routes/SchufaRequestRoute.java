@@ -19,7 +19,7 @@ public class SchufaRequestRoute extends RouteBuilder {
 
         from("direct:SchufaRequest")
                 .routeId("SchufaRequest")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} \t|\t ${body}")
                 .process( new Processor(){ public void process(Exchange exchange) throws Exception {
 
                     exchange.getIn().setBody("<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:localhost:smartcarcompany\">\n" +

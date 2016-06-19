@@ -19,6 +19,7 @@ public class Accept30PercentBean {
         //logging at the beginning of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
+        exchange.setOut(exchange.getIn());
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("is30percentPaid", random.nextBoolean());

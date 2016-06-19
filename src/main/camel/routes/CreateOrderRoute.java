@@ -49,7 +49,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .routeId("GenerateCustomerRoute")
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName}");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName} \t|\t ${body}");
 
         from("timer:start?period=10s&repeatCount=1&delay=2500").pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
@@ -57,7 +57,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .setBody()
                 .method(CreateOrderBean.class, "generateOrder")
                 .to("jpa:Order")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t CreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName} \t|\t ${body}")
                 .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
                 .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
                 .wireTap("seda:backupOrder")

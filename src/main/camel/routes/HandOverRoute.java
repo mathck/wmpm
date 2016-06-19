@@ -26,7 +26,7 @@ public class HandOverRoute extends RouteBuilder {
 
         from("direct:handOverOrder")
             .routeId("handOverOrderRoute")
-            .log(LoggingLevel.INFO,"FILE", "test ${routeId}")
+            .log(LoggingLevel.INFO,"FILE", "test ${routeId} \t|\t ${body}")
             .to("seda:informCustomer")
             .bean(TwitterBean.class)
             .to("twitter://timeline/user");
