@@ -13,17 +13,16 @@ public class TwitterBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-
     @Handler
     public String process(Exchange exchange)
     {
         CarOrder order = exchange.getIn().getBody(CarOrder.class);
-        String text = "";
-        text = "At "+new Timestamp(new java.util.Date().getTime())+" the magic happened. We have created the new future car!" +
+        Timestamp now = new Timestamp(new java.util.Date().getTime());
+
+        return  "At " + now +
+                " the magic happened. We have created the new future car!" +
                 " Model: " + order.getModel() + "; " +
                 " Color: " + order.getColor() + "; " +
                 " Horsepower: " + order.getHorsepower().toString();
-
-        return text;
     }
 }
