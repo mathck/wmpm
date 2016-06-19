@@ -15,29 +15,36 @@ import org.springframework.stereotype.Component;
 
  */
 @Component
-public class FinalizeOrderRoute extends RouteBuilder {
+public class    FinalizeOrderRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
         from("direct:finalizeOrder")
-                .to("jms:queue:dispatch");
-
-        from("jms:queue:dispatch")
                 .routeId("FinalizeOrderRoute")
-                .bean(FinalizeOrderBean.class)
-                .choice()
-                .when(header("paid").isEqualTo(false))
-                .to("jms:queue:dispatch")
-                .otherwise()
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
-                .to("direct:informCustomerAndAccept70Percent")
-                .endChoice();
-
-        from("direct:informCustomerAndAccept70Percent")
-                .routeId("InformCus&Accept70Per")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
-                .multicast()
-                .to("seda:informCustomer")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomer & Accept70Percent")
                 .to("direct:accept70percent");
+//        from("direct:finalizeOrder")
+//                .to("jms:queue:dispatch");
+//
+//        from("jms:queue:dispatch")
+//                .routeId("FinalizeOrderRoute")
+//                .bean(FinalizeOrderBean.class)
+//                .choice()
+//                .when(header("paid").isEqualTo(false))
+//                    .to("jms:queue:dispatch")
+//                .otherwise()
+//                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
+//                    .to("direct:informCustomerAndAccept70Percent")
+//                .endChoice();
+//
+//        from("direct:informCustomerAndAccept70Percent")
+//                .routeId("InformCus&Accept70Per")
+//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
+//                .multicast()
+//                .to("seda:informCustomer")
+//                .to("direct:accept70percent");
+
+
     }
 }
