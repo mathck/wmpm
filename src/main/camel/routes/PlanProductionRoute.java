@@ -24,7 +24,7 @@ public class PlanProductionRoute extends RouteBuilder {
              .routeId("PlanProductionRoute")
              .bean(ProduceBean.class)
                 .delay(simple("${header.delay}"))
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder \t|\t ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From PlanProduction to FinalizeOrder \t|\t")
          .to("direct:finalizeOrder");
     }
 }

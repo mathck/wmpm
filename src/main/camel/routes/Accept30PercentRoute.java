@@ -1,5 +1,7 @@
 package main.camel.routes;
 
+import main.camel.beans.Accept30PercentBean;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -16,27 +18,28 @@ public class Accept30PercentRoute extends RouteBuilder {
 //                .to("direct:queryStock");
 
         from("direct:accept30percent")
-//                .routeId("Accept30percentRoute-Entrance")
-//                .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter");
-//
-//        from("jms:queue:Accept30percentRouteDispatch").delay(5000)
-//                .routeId("Accept30percentRouteDispatch")
-//                .bean(Accept30PercentBean.class)
-//                .choice()
-//                .when(header("is30percentPaid").isEqualTo(false))
-//                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t ${body}")
-//                .to("jms:queue:Accept30percentRouteDispatch")
-//                .otherwise()
-//                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t ${body}")
-//                .to("jms:direct:informCustomerAndAccept30Percent")
-//                .endChoice();
-//
-//        from("jms:direct:informCustomerAndAccept30Percent")
-//                .routeId("Accept30percentRoute-Leaving")
-//                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t ${body}")
-//                .multicast()
-//                .to("jms:direct:makeConfirmation")
-                .to("direct:queryStock");
+                .routeId("Accept30percentRoute-Entrance")
+                .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter");
+
+        from("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter").delay(5000)
+                .routeId("Accept30percentRouteDispatch")
+                .bean(Accept30PercentBean.class)
+                .choice()
+                .when(header("is30percentPaid").isEqualTo(false))
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t")
+                    .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter")
+                .otherwise()
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t")
+                    .to("jms:direct:informCustomerAndAccept30Percent?messageConverter=#myMessageConverter")
+                .endChoice();
+
+        from("jms:direct:informCustomerAndAccept30Percent?messageConverter=#myMessageConverter")
+                .routeId("Accept30percentRoute-Leaving")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t")
+                .multicast()
+                    .to("jms:direct:makeConfirmation")
+                    .to("direct:queryStock");
+
 
         // @andrey TODO remove jpa call, and just take the customer from the body
 //        from("jms:direct:makeConfirmation")

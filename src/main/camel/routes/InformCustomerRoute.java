@@ -21,7 +21,7 @@ public class InformCustomerRoute extends RouteBuilder {
     {
         // the mail component takes the body and sends it
 
-        String recipient = "mathck@gmail.com"; // for multiple may be seperated by ","
+        String recipient = "maland89@yandex.ru"; // for multiple may be seperated by ","
         String body = "Hi Mateusz, ich funktioniere :)";
 
         //--------------------------------------------------
@@ -29,7 +29,7 @@ public class InformCustomerRoute extends RouteBuilder {
         //--------------------------------------------------
         from("seda:informCustomer")
                 .routeId("InformCustomerRoute")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t  ${body} ")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t")
                 .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
                 /*.process(new Processor() { TODO Andr
                     @Override
@@ -50,7 +50,7 @@ public class InformCustomerRoute extends RouteBuilder {
 /*
         from("seda:informCustomerClever") TODO Andr
                 .routeId("InformCustomerRouteClever")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
           //      .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
                 .process(new Processor() {
                     @Override

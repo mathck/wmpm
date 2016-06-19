@@ -15,7 +15,7 @@ public class OrderElementsRoute extends RouteBuilder {
 
         from("direct:orderElements")
                 .routeId("orderElementsRoute")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction \t|\t ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction \t|\t")
                 .bean(OrderElementsBean.class, "countDelay")
                 .multicast()
                 .to("direct:makeOrder")

@@ -14,7 +14,7 @@ public class ProcessOrderRoute extends RouteBuilder {
         from("direct:processOrder")
             .routeId("ProcessOrderRoute")
             .bean(ProcessOrderBean.class)
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t From ProcessOrderRoute to InformCustomer & CreditRouter and Credit is: ${header.creditNeeded} \t|\t ${body}")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From ProcessOrderRoute to InformCustomer & CreditRouter and Credit is: ${header.creditNeeded} \t|\t")
             .multicast()
                 .to("seda:informCustomer")
                 .to("seda:creditRouter");
@@ -24,10 +24,10 @@ public class ProcessOrderRoute extends RouteBuilder {
             .setHeader("creditNeeded", simple("false")) // TODO REMOVE ME, SOLR
             .choice()
                 .when(header("creditNeeded"))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To CheckFinancialSolvency \t|\t ${body}")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To CheckFinancialSolvency \t|\t")
                     .to("direct:checkFinancialSolvency")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To Accept30Percent \t|\t ${body}")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To Accept30Percent \t|\t")
                     .to("direct:accept30percent")
             .endChoice();
     }

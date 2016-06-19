@@ -29,17 +29,17 @@ public class CheckCustomerDataRoute extends RouteBuilder {
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t creditNeeded = ${body.creditNeeded}") //Current Body: ${body} | Current Header: ${headers}")
                 .choice()
                 .when(simple("true"))//body().convertTo(CarOrder.class).method("getCreditNeeded") Commented for working with Financial Solvency Check!
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Credit is needed | From CheckCustomerData To CheckCustomerData-Split \t|\t ${body}")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Credit is needed | From CheckCustomerData To CheckCustomerData-Split \t|\t")
                     .to("direct:CheckCustomerData-Split")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Credit is not needed | From CheckCustomerData To Accept30Percent \t|\t ${body}")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Credit is not needed | From CheckCustomerData To Accept30Percent \t|\t")
                     //.to("direct:accept30percent")
                     // Commented for working with Financial Solvency Check!
                 .endChoice();
 
         from("direct:CheckCustomerData-Split")
                 .routeId("CheckCustomerData-Split")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t")
                 .split()
                     .method(OrderSplitterBean.class,"splitOrder")
                     .choice()

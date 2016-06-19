@@ -22,7 +22,7 @@ public class KSVRequestRoute extends RouteBuilder {
 
         from("direct:KSVRequest")
                 .routeId("KSVRequest")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} \t|\t ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} \t|\t")
                 .process( new Processor(){ public void process(Exchange exchange) throws Exception {
 
                     exchange.getIn().setBody("<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:localhost:smartcarcompany\">\n" +
@@ -40,7 +40,7 @@ public class KSVRequestRoute extends RouteBuilder {
                 }
                 })
                 .to("cxf://http://localhost:8080/KSV/?dataFormat=MESSAGE")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | ${body}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} |")
                 ;
 
     }

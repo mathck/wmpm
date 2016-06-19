@@ -15,7 +15,7 @@ public class TestCustomerBean {
     public String process(Exchange exchange)
     {
         //logging at the beginning of a process
-       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         return "TestCustomerBean - OK!";
     }

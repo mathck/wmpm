@@ -26,8 +26,8 @@ public class GenerateOrderRoute extends RouteBuilder {
                 .setBody().method(CreateOrderBean.class, "generateOrder")
                 .to("jpa:Order")
                 .setHeader("orderID",body().convertTo(CarOrder.class).method("getId"))
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t\t|\t Retrieved customer ${body.toString()}")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t\t|\t From GenerateCustomerRoute to CheckCustomerData")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t\t|\t Retrieved customer ${body.toString()}")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t\t|\t From GenerateCustomerRoute to CheckCustomerData")
                 .to("direct:CheckCustomerData");
  */       /*
         .to(CheckCustomerData) is only temporary in this route!! Please Add the CheckCustomerData to the according position (after Process Order/Credit needed check) --> First Step in Solvency Check!

@@ -16,7 +16,7 @@ public class QueryStockBean {
     public void process (Exchange exchange)
     {
         //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
 
         int orderId=(int)exchange.getIn().getHeader("orderID");
         Random random = new Random();
