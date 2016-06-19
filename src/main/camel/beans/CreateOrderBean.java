@@ -9,6 +9,7 @@ import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 @Component
@@ -38,10 +39,11 @@ public class CreateOrderBean {
 
     public Customer generateCustomer() {
         Customer newCustomer = new Customer();
-        //newCustomer.setId(1);
+        newCustomer.setId(1);
         newCustomer.setEmail("test@test.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
+        newCustomer.setDateOfBirth(Timestamp.valueOf("1992-01-01 00:00:00"));
         newCustomer.setCity("Wien");
         newCustomer.setStreetName("Karlsplatz");
         newCustomer.setPostalCode("1040");
@@ -55,7 +57,6 @@ public class CreateOrderBean {
     }
 
     public CarOrder generateOrder(Customer customer) {
-        //LOGGER.info("in generateOrder");
         CarOrder newOrder = new CarOrder();
         newOrder.setCustomerFK(customer);
         newOrder.setOrderDate(getOrderTime());
@@ -64,6 +65,19 @@ public class CreateOrderBean {
         newOrder.setColor(getRandomColor());
         newOrder.setHorsepower(getRandomHorsepower());
         newOrder.setModel(getRandomCarModel());
+        return newOrder;
+    }
+
+    public CarOrder parseOrder(CarOrder order) {
+        CarOrder newOrder = new CarOrder();
+        newOrder.setId(order.getId());
+        newOrder.setCustomerFK(order.getCustomerFK());
+        newOrder.setOrderDate(order.getOrderDate());
+        newOrder.setStatus(order.getStatus());
+        newOrder.setCreditNeeded(order.getCreditNeeded());
+        newOrder.setColor(order.getColor());
+        newOrder.setHorsepower(order.getHorsepower());
+        newOrder.setModel(order.getModel());
         return newOrder;
     }
 
