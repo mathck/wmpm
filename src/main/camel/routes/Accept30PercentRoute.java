@@ -20,7 +20,6 @@ public class Accept30PercentRoute extends RouteBuilder {
 //                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
 //                .to("direct:queryStock");
 
-
         from("direct:accept30percent")
                 .routeId("Accept30percentRoute-Entrance")
                 .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter");
