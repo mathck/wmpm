@@ -2,6 +2,8 @@ package main.camel.routes;
 
 import main.camel.beans.Accept30PercentBean;
 import main.camel.beans.MakeConfirmationBean;
+import main.model.CarOrder;
+import main.model.Customer;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -42,14 +44,15 @@ public class Accept30PercentRoute extends RouteBuilder {
                 .to("jms:direct:makeConfirmation")
                 .to("direct:queryStock");
 
-
+        // @andrey TODO remove jpa call, and just take the customer from the body
         from("jms:direct:makeConfirmation")
-        .routeId("MakeConfirmationRouter")
-                .pollEnrich("jpa:Customer" +
-                        "?consumer.query=select c from Customer c where c.id=1&consumeDelete=false")
-        .bean(MakeConfirmationBean.class, "makeConfirmation")
-                .multicast()
-                .to("file://C:\\Users\\maland\\AppData\\Roaming\\SmartCompany\\30PercentConfirmation")
-                .to("seda:informCustomerClever");
+            .routeId("MakeConfirmationRouter")
+                    .pollEnrich("jpa:Customer" +
+                            "?consumer.query=select c from Customer c where c.id=1&consumeDelete=false")
+            .bean(MakeConfirmationBean.class, "makeConfirmation")
+                    .multicast()
+                    .to("file:backup/30percent/?fileName=${date:now:yyyyMMdd}-${in.header.orderID}.txt&autoCreate=true")
+                    //.to("file://C:\\Users\\maland\\AppData\\Roaming\\SmartCompany\\30PercentConfirmation")
+                    .to("seda:informCustomer"); // TODO route to clever
     }
 }

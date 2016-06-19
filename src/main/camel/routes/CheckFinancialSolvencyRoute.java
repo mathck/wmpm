@@ -12,12 +12,12 @@ public class CheckFinancialSolvencyRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("direct:checkFinancialSolvency")
-                .routeId("CheckFinancialSolvencyRoute")
-               // should be deleted after implementation big part from Michi
-               // next bean
-                .bean(CheckFinancialSolvencyBean.class) //TODO Implement FinancialSolvencyBean
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From CheckFinancialSolvency to InformCustomer & SolvencyApproval")
-                .multicast()
+            .routeId("CheckFinancialSolvencyRoute")
+            // should be deleted after implementation big part from Michi
+            // next bean
+            .bean(CheckFinancialSolvencyBean.class) //TODO Implement FinancialSolvencyBean
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From CheckFinancialSolvency to InformCustomer & SolvencyApproval")
+            .multicast()
                 .to("seda:informCustomer") //isn't clear why should we send here message
                 .to("direct:solvencyApproval");
 

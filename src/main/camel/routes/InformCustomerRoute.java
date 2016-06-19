@@ -31,13 +31,13 @@ public class InformCustomerRoute extends RouteBuilder {
                 .routeId("InformCustomerRoute")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
                 .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
-                .process(new Processor() {
+                /*.process(new Processor() { TODO Andr
                     @Override
                     public void process(Exchange exchange) throws Exception {
 
                         exchange.getIn().addAttachment("logo.jpeg", new DataHandler(new FileDataSource("C:\\logo.jpeg")));
                     }
-                })
+                })*/
                 .to("smtp://smtp.gmail.com" +
                         "?port={{mail.port}}" +
                         "&username={{mail.username}}" +
@@ -47,10 +47,8 @@ public class InformCustomerRoute extends RouteBuilder {
                         "&mail.smtp.starttls.enable={{mail.smtp.starttls.enable}}" +
                         "&to=" + recipient);
 
-
-
-
-        from("seda:informCustomerClever")
+/*
+        from("seda:informCustomerClever") TODO Andr
                 .routeId("InformCustomerRouteClever")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
           //      .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
@@ -74,13 +72,8 @@ public class InformCustomerRoute extends RouteBuilder {
                         "&mail.smtp.auth={{mail.smtp.auth}}" +
                         "&mail.smtp.starttls.enable={{mail.smtp.starttls.enable}}" +
                         "&to=" + recipient);
-
+*/
     }
-
-
-
-
-
 
     private String getEmailBody(String customerName, String orderStatus) {
         return "Dear " + customerName + ",\n" +

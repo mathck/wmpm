@@ -62,8 +62,8 @@ public class CreateOrderBean {
         newOrder.setOrderDate(getOrderTime());
         newOrder.setStatus(OrderStatus.NEW);
 
-//        newOrder.setCreditNeeded(getRandomCreditNeeded());
-        newOrder.setCreditNeeded(false);
+        newOrder.setCreditNeeded(getRandomCreditNeeded());
+        //newOrder.setCreditNeeded(false);
 
         newOrder.setColor(getRandomColor());
         newOrder.setHorsepower(getRandomHorsepower());
