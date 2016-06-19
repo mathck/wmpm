@@ -1,6 +1,7 @@
 package main.camel.routes;
 
 import main.camel.beans.Accept30PercentBean;
+import main.camel.beans.MakeConfirmationBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -38,9 +39,17 @@ public class Accept30PercentRoute extends RouteBuilder {
                 .routeId("Accept30percentRoute-Leaving")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock")
                 .multicast()
-                .to("direct:queryStock")
-                .to("seda:informCustomer");
+                .to("jms:direct:makeConfirmation")
+                .to("direct:queryStock");
 
 
+        from("jms:direct:makeConfirmation")
+        .routeId("MakeConfirmationRouter")
+                .pollEnrich("jpa:Customer" +
+                        "?consumer.query=select c from Customer c where c.id=1&consumeDelete=false")
+        .bean(MakeConfirmationBean.class, "makeConfirmation")
+                .multicast()
+                .to("file://C:\\Users\\maland\\AppData\\Roaming\\SmartCompany\\30PercentConfirmation")
+                .to("seda:informCustomerClever");
     }
 }

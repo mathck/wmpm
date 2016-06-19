@@ -1,5 +1,6 @@
 package main.camel.routes;
 
+import main.model.Customer;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
@@ -23,6 +24,8 @@ public class InformCustomerRoute extends RouteBuilder {
         //--------------------------------------------------
         // ROUTE
         //--------------------------------------------------
+
+
         from("seda:informCustomer")
                 .routeId("InformCustomerRoute")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
@@ -30,6 +33,7 @@ public class InformCustomerRoute extends RouteBuilder {
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
+
                         exchange.getIn().addAttachment("logo.jpeg", new DataHandler(new FileDataSource("C:\\logo.jpeg")));
                     }
                 })
@@ -41,7 +45,41 @@ public class InformCustomerRoute extends RouteBuilder {
                         "&mail.smtp.auth={{mail.smtp.auth}}" +
                         "&mail.smtp.starttls.enable={{mail.smtp.starttls.enable}}" +
                         "&to=" + recipient);
+
+
+
+
+        from("seda:informCustomerClever")
+                .routeId("InformCustomerRouteClever")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
+          //      .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+
+                        Customer customer = exchange.getIn().getBody(Customer.class);
+
+                        String path = new String();
+                        path = "C:\\Users\\maland\\AppData\\Roaming\\SmartCompany\\30PercentConfirmation" + "\\"+ exchange.getIn().getHeader("fileName").toString();
+
+                        exchange.getIn().addAttachment(exchange.getIn().getHeader("fileName").toString(), new DataHandler(new FileDataSource(path)));
+                    }
+                })
+                .to("smtp://smtp.gmail.com" +
+                        "?port={{mail.port}}" +
+                        "&username={{mail.username}}" +
+                        "&password={{mail.password}}" +
+                        "&subject=Your Order" +
+                        "&mail.smtp.auth={{mail.smtp.auth}}" +
+                        "&mail.smtp.starttls.enable={{mail.smtp.starttls.enable}}" +
+                        "&to=" + recipient);
+
     }
+
+
+
+
+
 
     private String getEmailBody(String customerName, String orderStatus) {
         return "Dear " + customerName + ",\n" +
