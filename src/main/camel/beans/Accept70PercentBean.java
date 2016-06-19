@@ -24,6 +24,5 @@ public class Accept70PercentBean {
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " + exchange.getOut().getHeader("is70percentPaid").toString());
-
     }
 }

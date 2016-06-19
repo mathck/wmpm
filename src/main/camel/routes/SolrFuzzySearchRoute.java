@@ -5,9 +5,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.solr.SolrConstants;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Michael on 05.06.2016.
- */
 @Component
 public class SolrFuzzySearchRoute extends RouteBuilder {
 
@@ -33,6 +30,5 @@ public class SolrFuzzySearchRoute extends RouteBuilder {
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                 .to("http://localhost:8983/solr/fraudCheck_shard1_replica1/select?q=ID:1")
                 .convertBodyTo(String.class);
-
     }
 }

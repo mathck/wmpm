@@ -8,58 +8,66 @@ import org.apache.camel.impl.DefaultMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Michael on 16.06.2016.
- */
 public class OrderSplitterBean {
 
     public List<Message> splitOrder(@Body CarOrder body) {
 
-        List<Message> messages = new ArrayList<Message>();
-        DefaultMessage messageA = new DefaultMessage();
-        DefaultMessage messageB = new DefaultMessage();
-        DefaultMessage messageC = new DefaultMessage();
-        DefaultMessage messageD = new DefaultMessage();
+        //---------------------------------------
+        // Setup
+        //---------------------------------------
+        List<Message> allMessages = new ArrayList<Message>();
+        DefaultMessage ksv = new DefaultMessage();
+        DefaultMessage schufa = new DefaultMessage();
+        DefaultMessage solr = new DefaultMessage();
+        DefaultMessage extSol = new DefaultMessage();
 
-        messageA.setHeader("orderID", body.getId());
-        messageB.setHeader("orderID", body.getId());
-        messageC.setHeader("orderID", body.getId());
-        messageD.setHeader("orderID", body.getId());
+        ksv.setHeader("orderID", body.getId());
+        schufa.setHeader("orderID", body.getId());
+        solr.setHeader("orderID", body.getId());
+        extSol.setHeader("orderID", body.getId());
 
+        //---------------------------------------
         // KSV Request
-        messageA.setHeader("datasource", "KSV");
-        messageA.setBody(body.getCustomerFK().getFirstName());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getLastName());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getDateOfBirth().toString());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getStreetName());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getHouseNumber());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getCity());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getPostalCode());
+        //---------------------------------------
+        ksv.setHeader("datasource", "KSV");
+        ksv.setBody(body.getCustomerFK().getFirstName());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getLastName());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getDateOfBirth().toString());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getStreetName());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getHouseNumber());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getCity());
+        ksv.setBody(ksv.getBody() + "," + body.getCustomerFK().getPostalCode());
 
-        messages.add(messageA);
+        allMessages.add(ksv);
 
+        //---------------------------------------
         // Schufa Request
-        messageB.setHeader("datasource", "Schufa");
-        messageB.setBody(body.getCustomerFK().getFirstName());
-        messageB.setBody(messageB.getBody() + "," + body.getCustomerFK().getLastName());
-        messageB.setBody(messageB.getBody() + "," + body.getCustomerFK().getPersonalID());
+        //---------------------------------------
+        schufa.setHeader("datasource", "Schufa");
+        schufa.setBody(body.getCustomerFK().getFirstName());
+        schufa.setBody(schufa.getBody() + "," + body.getCustomerFK().getLastName());
+        schufa.setBody(schufa.getBody() + "," + body.getCustomerFK().getPersonalID());
 
-        messages.add(messageB);
+        allMessages.add(schufa);
 
+        //---------------------------------------
         // Solr Request
-        messageC.setHeader("datasource", "Solr");
-        messageC.setBody(body);
+        //---------------------------------------
+        solr.setHeader("datasource", "Solr");
+        solr.setBody(body);
 
-        messages.add(messageC);
+        allMessages.add(solr);
 
+        //---------------------------------------
         // External Solvency Request
-        messageD.setHeader("datasource", "ExtSol");
-        messageD.setBody(body.getCustomerFK().getFirstName());
-        messageD.setBody(messageD.getBody() + "," + body.getCustomerFK().getLastName());
-        messageD.setBody(messageD.getBody() + "," + body.getCustomerFK().getInsuranceID());
+        //---------------------------------------
+        extSol.setHeader("datasource", "ExtSol");
+        extSol.setBody(body.getCustomerFK().getFirstName());
+        extSol.setBody(extSol.getBody() + "," + body.getCustomerFK().getLastName());
+        extSol.setBody(extSol.getBody() + "," + body.getCustomerFK().getInsuranceID());
 
-        messages.add(messageD);
+        allMessages.add(extSol);
 
-        return messages;
+        return allMessages;
     }
 }

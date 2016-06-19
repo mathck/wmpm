@@ -4,9 +4,6 @@ import main.model.Stock;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
-/**
- * Created by Mnishko Sergei on 17.06.2016.
- */
 public class AddRecievedQuantity implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {

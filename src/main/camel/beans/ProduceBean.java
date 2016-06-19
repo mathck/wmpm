@@ -15,7 +15,6 @@ import java.util.Calendar;
 public class ProduceBean {
     private static final Logger LOGGER = Logger.getLogger(ProduceBean.class);
 
-
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {
 

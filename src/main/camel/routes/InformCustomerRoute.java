@@ -21,8 +21,7 @@ public class InformCustomerRoute extends RouteBuilder {
     {
         // the mail component takes the body and sends it
 
-        String recipient = "maland89@yandex.ru"; // for multiple may be seperated by ","
-        String body = "Hi Mateusz, ich funktioniere :)";
+        String recipient = "mathck@gmail.com"; // for multiple may be seperated by ","
 
         //--------------------------------------------------
         // ROUTE

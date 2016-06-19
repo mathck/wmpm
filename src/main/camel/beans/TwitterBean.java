@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
-/**
- * Created by Mnishko Sergei on 18.06.2016.
- */
 @Component
 public class TwitterBean {
 
@@ -29,5 +26,4 @@ public class TwitterBean {
 
         return text;
     }
-
 }

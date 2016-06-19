@@ -22,18 +22,14 @@ public class CreateOrderBean {
     @Handler
     public void process(Exchange exchange)
     {
-        //Customer customer = generateCustomer();
-
-        //LOGGER.info("CustomerID: " + customer.getId());
-
-        //!!customerDao.insertCustomer(customer);
-
-        //!!carOrderDao.insertOrder(order);
-
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
+
+        //Customer customer = generateCustomer();
+        //LOGGER.info("CustomerID: " + customer.getId());
+        //!!customerDao.insertCustomer(customer);
+        //!!carOrderDao.insertOrder(order);
         //exchange.getOut().setHeader("orderID", order.getId());
         //exchange.getOut().setBody(generateCustomer());
-
         //logging at the end of a process
         //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
     }
@@ -53,7 +49,6 @@ public class CreateOrderBean {
         newCustomer.setInsuranceID(12345768);
         newCustomer.setPersonalID("uniqueFirstCustomer");
         newCustomer.setPhone("+4369915000596");
-        //LOGGER.info("generated Customer: "+ newCustomer.toString());
         return newCustomer;
     }
 
@@ -84,21 +79,10 @@ public class CreateOrderBean {
 
     public Stock generateStock() {
 
-//        EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("camel");
-//        EntityManager em = entityManagerFactory.createEntityManager();
-//        EntityTransaction userTransaction = em.getTransaction();
-//        userTransaction.begin();
-//        Stock stock = new Stock();
-//        stock.setAvaliableCount(7);
-//        stock.setStockName("CarDetailStock");
-//        System.out.println("COMMITING");
-//        em.persist(stock);
-//        userTransaction.commit();
-//        entityManagerFactory.close();
-//        //LOGGER.info("in generateOrder");
-            Stock stock = new Stock();
-            stock.setStockName("CarStockDetails");
-            stock.setAvaliableCount(7);
+        Stock stock = new Stock();
+        stock.setStockName("CarStockDetails");
+        stock.setAvaliableCount(7);
+
         return stock;
     }
     private java.sql.Timestamp getOrderTime() {

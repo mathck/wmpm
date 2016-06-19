@@ -12,7 +12,6 @@ public class Accept30PercentBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-
     @Handler
     public void process(Exchange exchange) throws Exception {
         //getting information about payment
@@ -25,7 +24,5 @@ public class Accept30PercentBean {
 
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is30percentPaid = " + exchange.getOut().getHeader("is30percentPaid").toString());
-
     }
-
 }

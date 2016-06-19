@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
-/**
- * Created by Michael on 05.06.2016.
- */
 @Component
 public class SolrInsertBean{
 
@@ -25,7 +22,7 @@ public class SolrInsertBean{
         ProducerTemplate template = exchange.getContext().createProducerTemplate();
 
         long dateOfBirth=c.getDateOfBirth().getTime();
-        long timezone=60*60*1000;
+        long timezone = 60 * 60 * 1000;
         Timestamp dateOfBirthPlusTimezone= new Timestamp(dateOfBirth+timezone);
         SolrInputDocument doc = new SolrInputDocument();
 
@@ -40,5 +37,4 @@ public class SolrInsertBean{
         template.sendBodyAndHeader("direct:SolrInsert", doc, SolrConstants.OPERATION, SolrConstants.OPERATION_INSERT);
 
     }
-
 }

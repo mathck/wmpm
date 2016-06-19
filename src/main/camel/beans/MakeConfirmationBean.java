@@ -22,7 +22,4 @@ public class MakeConfirmationBean {
         exchange.getOut().setHeader("fileName", customer.getId().toString() + ".txt");
         exchange.getOut().setBody("Dear " + customer.getFirstName() + " " + customer.getLastName()+ " " + "It is your confirmation of 30% payment. Your order is on the way!");
     }
-
 }
-
-

@@ -5,9 +5,6 @@ import main.model.Stock;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
-/**
- * Created by Mnishko Sergei on 16.06.2016.
- */
 public class MyAggregationStrategy implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
@@ -22,10 +19,10 @@ public class MyAggregationStrategy implements AggregationStrategy {
         System.out.println("Available details: " + stock.getAvaliableCount());
 
         int difference = stock.getAvaliableCount() - 10;
-        if (difference<0){
+        if (difference < 0){
             oldExchange.getOut().setHeader("enoughElements", false);
             stock.setAvaliableCount(stock.getAvaliableCount() + 7);
-        }else {
+        } else {
             oldExchange.getOut().setHeader("enoughElements", true);
             stock.setAvaliableCount(stock.getAvaliableCount() - 10);
 

@@ -16,7 +16,6 @@ public class Accept70PercentRoute extends RouteBuilder {
 //            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept70Percent to HandOverOrder")
 //            .to("direct:handOverOrder");
 
-
         from("direct:accept70percent")
                 .routeId("Accept70percentRoute-Entrance")
                 .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter");
@@ -39,6 +38,5 @@ public class Accept70PercentRoute extends RouteBuilder {
                 .multicast()
                     .to("direct:handOverOrder")
                     .to("seda:informCustomer");
-
     }
 }

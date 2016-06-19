@@ -6,9 +6,6 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Michael on 05.06.2016.
- */
 @Component
 public class SolrSearchBean{
 
@@ -30,9 +27,5 @@ public class SolrSearchBean{
         //logging at the end of a process
         LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID"));
         LOGGER.info(exchange.getOut().getBody());
-
-
-
     }
-
 }

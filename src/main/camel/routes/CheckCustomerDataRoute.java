@@ -8,9 +8,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Michael on 15.06.2016.
- */
 @Component
 public class CheckCustomerDataRoute extends RouteBuilder {
 
@@ -58,5 +55,4 @@ public class CheckCustomerDataRoute extends RouteBuilder {
 
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | ${body}");
     }
-
 }
