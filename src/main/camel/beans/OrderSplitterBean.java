@@ -30,11 +30,9 @@ public class OrderSplitterBean {
         messageA.setHeader("datasource", "KSV");
         messageA.setBody(body.getCustomerFK().getFirstName());
         messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getLastName());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getDateOfBirth().toString());
         messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getStreetName());
         messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getHouseNumber());
         messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getCity());
-        messageA.setBody(messageA.getBody() + "," + body.getCustomerFK().getPostalCode());
 
         messages.add(messageA);
 
