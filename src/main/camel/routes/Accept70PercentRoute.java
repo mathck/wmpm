@@ -18,21 +18,21 @@ public class Accept70PercentRoute extends RouteBuilder {
 
         from("direct:accept70percent")
                 .routeId("Accept70percentRoute-Entrance")
-                .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter");
+                .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#orderJMSConverter");
 
-        from("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter").delay(5000)
+        from("jms:queue:Accept70percentRouteDispatch?messageConverter=#orderJMSConverter").delay(5000)
                 .routeId("Accept70percentRouteDispatch")
                 .bean(Accept70PercentBean.class)
                 .choice()
                 .when(header("is70percentPaid").isEqualTo(false))
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to Accept70percentRouteDispatch - LOOP \t|\t")
-                    .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter")
+                    .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#orderJMSConverter")
                 .otherwise()
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to InformCustomerAndAccept70Percent \t|\t ")
-                    .to("jms:direct:informCustomerAndAccept70Percent?messageConverter=#myMessageConverter")
+                    .to("jms:direct:informCustomerAndAccept70Percent?messageConverter=#orderJMSConverter")
                 .endChoice();
 
-        from("jms:direct:informCustomerAndAccept70Percent?messageConverter=#myMessageConverter")
+        from("jms:direct:informCustomerAndAccept70Percent?messageConverter=#orderJMSConverter")
                 .routeId("Accept70percentRoute-Leaving")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & QueryStock \t|\t")
                 .multicast()

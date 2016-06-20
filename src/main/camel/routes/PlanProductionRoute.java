@@ -19,7 +19,7 @@ public class PlanProductionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("jms:queue:planProduction?messageConverter=#myMessageConverter")
+        from("jms:queue:planProduction?messageConverter=#orderJMSConverter")
              .routeId("PlanProductionRoute")
              .bean(ProduceBean.class)
                 .delay(simple("${header.delay}"))

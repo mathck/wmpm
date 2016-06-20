@@ -12,7 +12,7 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 @Component
-public class MyMessageConverter implements MessageConverter {
+public class OrderJMSConverter implements MessageConverter {
 
     public Customer customer;
     public CarOrder order;

@@ -19,25 +19,25 @@ public class Accept30PercentRoute extends RouteBuilder {
 
         from("direct:accept30percent")
                 .routeId("Accept30percentRoute-Entrance")
-                .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter");
+                .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#orderJMSConverter");
 
-        from("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter").delay(5000)
+        from("jms:queue:Accept30percentRouteDispatch?messageConverter=#orderJMSConverter").delay(5000)
                 .routeId("Accept30percentRouteDispatch")
                 .bean(Accept30PercentBean.class)
                 .choice()
                 .when(header("is30percentPaid").isEqualTo(false))
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t")
-                    .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#myMessageConverter")
+                    .to("jms:queue:Accept30percentRouteDispatch?messageConverter=#orderJMSConverter")
                 .otherwise()
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t")
-                    .to("jms:direct:informCustomerAndAccept30Percent?messageConverter=#myMessageConverter")
+                    .to("jms:direct:informCustomerAndAccept30Percent?messageConverter=#orderJMSConverter")
                 .endChoice();
 
-        from("jms:direct:informCustomerAndAccept30Percent?messageConverter=#myMessageConverter")
+        from("jms:direct:informCustomerAndAccept30Percent?messageConverter=#orderJMSConverter")
                 .routeId("Accept30percentRoute-Leaving")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t")
                 .multicast()
-                    .to("jms:direct:makeConfirmation")
+                    .to("jms:direct:makeConfirmation?messageConverter=#orderJMSConverter")
                     .to("direct:queryStock");
 
 

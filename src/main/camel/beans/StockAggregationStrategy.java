@@ -4,7 +4,7 @@ import main.model.Stock;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
-public class MyAggregationStrategy implements AggregationStrategy {
+public class StockAggregationStrategy implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         if (oldExchange == null) {
