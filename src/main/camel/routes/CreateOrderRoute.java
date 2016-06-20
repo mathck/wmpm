@@ -40,6 +40,9 @@ public class CreateOrderRoute extends RouteBuilder {
             //.bean(processOrderBean)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From CreateOrderRoute to ProcessOrderRoute")
             .to("direct:processOrder");*/
+
+
+
         from("timer:start?repeatCount=1")
                 .routeId("GenerateStockRoute")
                 .bean(CreateOrderBean.class, "generateStock")
@@ -64,6 +67,9 @@ public class CreateOrderRoute extends RouteBuilder {
                 .wireTap("seda:backupOrder")
                 .to("direct:processOrder");
 
+
+
+
         /*rest("/services/rest").put("/order").consumes("application/json")
                 .type(CarOrder.class).produces("text/html")
                 .to("direct:order_put");
@@ -72,6 +78,8 @@ public class CreateOrderRoute extends RouteBuilder {
             .log("Received REST message with a simple order")
             .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
             .to("direct:order_processing")
-            .end();*/
+            .end();
+
+            */
     }
 }
