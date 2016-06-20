@@ -20,14 +20,14 @@ public class FinalizeOrderRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("direct:finalizeOrder")
-                .to("jms:queue:dispatch?messageConverter=#myMessageConverter");
+                .to("jms:queue:dispatch?messageConverter=#orderJMSConverter");
 
-        from("jms:queue:dispatch?messageConverter=#myMessageConverter")
+        from("jms:queue:dispatch?messageConverter=#orderJMSConverter")
                 .routeId("FinalizeOrderRoute")
                 .bean(FinalizeOrderBean.class)
                 .choice()
                     .when(header("testDriveDone").isEqualTo(false))
-                        .to("jms:queue:dispatch?messageConverter=#myMessageConverter")
+                        .to("jms:queue:dispatch?messageConverter=#orderJMSConverter")
                     .otherwise()
                         .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent \t|\t")
                         .to("direct:informCustomerAndAccept70Percent")

@@ -17,23 +17,23 @@ public class Accept70PercentRoute extends RouteBuilder {
 //            .to("direct:handOverOrder");
 
         from("direct:accept70percent")
-                .routeId("Accept70percentRoute-Entrance")
-                .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter");
+                .routeId("Accept70percentRouteEntrance")
+                .to("jms:queue:Accept70Route?messageConverter=#accept70JMSConverter");
 
-        from("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter").delay(5000)
-                .routeId("Accept70percentRouteDispatch")
+        from("jms:queue:Accept70Route?messageConverter=#accept70JMSConverter")
+                .routeId("Accept70percentRoute")
                 .bean(Accept70PercentBean.class)
                 .choice()
                 .when(header("is70percentPaid").isEqualTo(false))
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to Accept70percentRouteDispatch - LOOP \t|\t")
-                    .to("jms:queue:Accept70percentRouteDispatch?messageConverter=#myMessageConverter")
+                    .to("jms:queue:Accept70Route?messageConverter=#accept70JMSConverter")
                 .otherwise()
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to InformCustomerAndAccept70Percent \t|\t ")
-                    .to("jms:direct:informCustomerAndAccept70Percent?messageConverter=#myMessageConverter")
+                    .to("direct:inform70Percent")
                 .endChoice();
 
-        from("jms:direct:informCustomerAndAccept70Percent?messageConverter=#myMessageConverter")
-                .routeId("Accept70percentRoute-Leaving")
+        from("direct:inform70Percent")
+                .routeId("Accept70percentRouteLeaving")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & QueryStock \t|\t")
                 .multicast()
                     .to("direct:handOverOrder")

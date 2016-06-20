@@ -20,7 +20,8 @@ public class TwitterBean {
         Timestamp now = new Timestamp(new java.util.Date().getTime());
 
         return  "At " + now +
-                " the magic happened. We have created the new future car!" +
+                " we have created the new future car!" +
+                " OrderId: " + order.getId() + "; " +
                 " Model: " + order.getModel() + "; " +
                 " Color: " + order.getColor() + "; " +
                 " Horsepower: " + order.getHorsepower().toString();

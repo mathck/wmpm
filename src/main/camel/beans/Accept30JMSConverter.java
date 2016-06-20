@@ -1,7 +1,6 @@
 package main.camel.beans;
 
 import main.model.CarOrder;
-import main.model.Customer;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
@@ -11,10 +10,13 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 
+/**
+ * Created by Maland on 20.06.2016.
+ */
 @Component
-public class MyMessageConverter implements MessageConverter {
+public class Accept30JMSConverter  implements MessageConverter {
 
-    public Customer customer;
+
     public CarOrder order;
 
     @Override

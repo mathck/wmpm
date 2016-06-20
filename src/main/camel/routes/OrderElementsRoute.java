@@ -18,16 +18,16 @@ public class OrderElementsRoute extends RouteBuilder {
                 .bean(OrderElementsBean.class, "countDelay")
                 .multicast()
                 .to("direct:makeOrder")
-                .to("jms:queue:waitDelivery?messageConverter=#myMessageConverter");
+                .to("jms:queue:waitDelivery?messageConverter=#orderJMSConverter");
 
         from("direct:makeOrder")
                 .bean(OrderElementsBean.class, "makeOrder")
-                .to("{{ftp.server}}");
+                .to("{{ftp.server.production}}");
 
-        from("jms:queue:waitDelivery?messageConverter=#myMessageConverter").delay(simple("${header.delay}"))
+        from("jms:queue:waitDelivery?messageConverter=#orderJMSConverter").delay(simple("${header.delay}"))
                 .pollEnrich("jpa:Stock" +
                 "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new AddRecievedQuantity())
-                .to("jms:queue:planProduction?messageConverter=#myMessageConverter");
+                .to("jms:queue:planProduction?messageConverter=#orderJMSConverter");
 
     }
 }
