@@ -404,6 +404,14 @@
       <version>4.3.6</version>
     </dependency>
 
+    <!-- XML APIS -->
+    <!-- https://mvnrepository.com/artifact/xml-apis/xmlParserAPIs -->
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xmlParserAPIs</artifactId>
+      <version>2.0.2</version>
+    </dependency>
+
     <!-- testing -->
     <dependency>
       <groupId>junit</groupId>

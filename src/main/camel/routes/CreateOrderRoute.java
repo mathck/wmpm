@@ -1,6 +1,8 @@
 package main.camel.routes;
 
+import main.camel.beans.ControlBusBean;
 import main.camel.beans.CreateOrderBean;
+import main.camel.beans.OrderElementsBean;
 import main.model.CarOrder;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -40,20 +42,29 @@ public class CreateOrderRoute extends RouteBuilder {
             //.bean(processOrderBean)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From CreateOrderRoute to ProcessOrderRoute")
             .to("direct:processOrder");*/
+
         from("timer:start?repeatCount=1")
                 .routeId("GenerateStockRoute")
                 .bean(CreateOrderBean.class, "generateStock")
                 .to("jpa:Stock");
 
+        /*from("timer:start?period=3s&delay=2500")
+                .routeId("ControlBus")
+                .bean(ControlBusBean.class, "process")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t Control Bus \t|\t Control Bus performing analysis \t|\t")
+                .to("file:backup/orders/?fileName=${date:now:yyyyMMdd}-${in.header.orderID}.txt&autoCreate=true");*/
+
         from("timer:start?period=5s&repeatCount=1&delay=2500")
-                .log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")
+                //.log(LoggingLevel.INFO,"FILE","CustomerGeneration started.")
                 .routeId("GenerateCustomerRoute")
                 .setBody().method(CreateOrderBean.class, "generateCustomer")
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName} \t|\t");
 
-        from("timer:start?period=5s&repeatCount=10&delay=2500").pollEnrich("jpa:Customer" +
+        from("timer:start?period=5s&repeatCount=10&delay=2500")
+                .pollEnrich("jpa:Customer" +
                 "?consumer.query=select c from Customer c where c.id = 1&consumeDelete=false")
+                .bean(ControlBusBean.class, "process")
                 .routeId("GenerateOrderRoute")
                 .setBody()
                 .method(CreateOrderBean.class, "generateOrder")
