@@ -26,7 +26,7 @@ public class OrderElementsBean {
     {
         CarOrder order = exchange.getIn().getBody(CarOrder.class);
         exchange.getOut().setBody("We need details, more details!");
-        exchange.getOut().setHeader(exchange.FILE_NAME, "orderedfor" +order.getModel().toString() + ".txt");
+        exchange.getOut().setHeader(exchange.FILE_NAME, "ordered_" +order.getId() +"_model_" + order.getModel().toString() + ".txt");
     }
 
  }

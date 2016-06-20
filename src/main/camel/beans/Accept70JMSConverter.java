@@ -10,8 +10,12 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 
+/**
+ * Created by Maland on 20.06.2016.
+ */
 @Component
-public class OrderJMSConverter implements MessageConverter {
+public class Accept70JMSConverter  implements MessageConverter {
+
 
     public CarOrder order;
 

@@ -22,7 +22,7 @@ public class OrderElementsRoute extends RouteBuilder {
 
         from("direct:makeOrder")
                 .bean(OrderElementsBean.class, "makeOrder")
-                .to("{{ftp.server}}");
+                .to("{{ftp.server.production}}");
 
         from("jms:queue:waitDelivery?messageConverter=#orderJMSConverter").delay(simple("${header.delay}"))
                 .pollEnrich("jpa:Stock" +
