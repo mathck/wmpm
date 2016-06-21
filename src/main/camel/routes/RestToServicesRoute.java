@@ -1,13 +1,11 @@
 package main.camel.routes;
 
 
-import main.model.Customer;
-import main.model.UserPojo;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.codehaus.jackson.map.exc.UnrecognizedPropertyException;
 import org.springframework.stereotype.Component;
-import org.apache.camel.Exchange;
 
 
 @Component
@@ -15,7 +13,7 @@ public class RestToServicesRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
+        //errorHandler(deadLetterChannel("seda:errors"));
 
 
         // define and add the jetty component
@@ -36,10 +34,32 @@ public class RestToServicesRoute extends RouteBuilder {
                 .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
                 .setBody().constant("Invalid json data");
 
+        //JacksonDataFormat jacksondf = new JacksonDataFormat(Blog.class);
 
-        rest("/users/")
-                .post().type(Customer.class)
+        /*rest("/order/")
+                .put("/new/")
+                .consumes("application/json")
+                .type(CarOrder.class).produces("application/json")
+                .to("direct:order_put");
+
+        from("direct:order_put").routeId("REST")
+                .log("REST message with a car order received")
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
+                .to("direct:createOrder")
+                .log("Response received : ${body}")
+                .end();
+
+        /*rest("/user").put("/carOrder").consumes("application/json")
+                .type(CarOrder.class).produces("text/html")
                 .to("direct:handOverOrder");
+
+        /*from("direct:order_put").routeId("REST")
+                .log("Received REST message with a simple order")
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
+                .bean(idGeneratorBean)
+                .inOnly("seda:confirmation-email.queue")
+                .to("direct:order_processing")
+                .end();*/
 
       /*  rest("/rest")
                 .post("/customer").consumes("application/json")

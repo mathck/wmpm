@@ -4,20 +4,27 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd ">
 
-    <bean id="CreateOrderBean" class="main.camel.beans.CreateOrderBean"/>
-
     <camelContext messageHistory="true"  trace="true" xmlns="http://camel.apache.org/schema/spring">
         <package>main.camel.routes</package>
-        <!--<route>
-            <from uri="file:c:/wmpm/file"></from><to uri="file:c:/wmpm/file2"></to>
-        </route>-->
-
+        <jmxAgent id="agent" disabled="false"/>
 
     </camelContext>
 
-    <bean id="activemq"
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="vm://broker?broker.persistent=false"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!--<bean id="activemq"
           class="org.apache.activemq.camel.component.ActiveMQComponent">
         <property name="brokerURL" value="vm://broker?broker.persistent=false"/>
+    </bean>-->
+
+    <bean id="properties" class="org.apache.camel.component.properties.PropertiesComponent">
+        <property name="location" value="main/resources/settings.properties"/>
     </bean>
 
 

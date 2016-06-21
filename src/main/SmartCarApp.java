@@ -1,11 +1,11 @@
 package main;
 
-import main.config.SmartCarConfig;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 
@@ -18,7 +18,8 @@ public class SmartCarApp extends Main {
     public static void main(String... args) throws Exception {
         BasicConfigurator.configure();
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
+
+        AbstractXmlApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/camel-context.xml");
         SmartCarApp smartCarApp = context.getBean(SmartCarApp.class); // new
         LOGGER.info("");
         LOGGER.info("----- Initial start of Server! -----");

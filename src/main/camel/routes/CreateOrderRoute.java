@@ -2,11 +2,8 @@ package main.camel.routes;
 
 import main.camel.beans.CreateOrderBean;
 import main.model.CarOrder;
-import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
-import org.codehaus.jackson.map.exc.UnrecognizedPropertyException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -67,7 +64,8 @@ public class CreateOrderRoute extends RouteBuilder {
                 .wireTap("seda:backupOrder")
                 .to("direct:processOrder");
 
-
+        /*from("direct:createOrder")
+                .routeId("CreateOrderFromREST").*/
 
 
         /*rest("/services/rest").put("/order").consumes("application/json")

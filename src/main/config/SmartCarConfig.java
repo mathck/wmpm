@@ -1,9 +1,6 @@
 package main.config;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
-import org.apache.camel.component.jms.JmsComponent;
-import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.spring.SpringCamelContext;
 import org.apache.camel.spring.javaconfig.CamelConfiguration;
 import org.apache.log4j.Logger;
@@ -13,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.jms.ConnectionFactory;
 
 @Configuration
 @ComponentScan("main")
@@ -29,19 +24,19 @@ public class SmartCarConfig extends CamelConfiguration {
         return new SpringCamelContext(getApplicationContext());
     }
 
-    @Override
+    /*@Override
     protected void setupCamelContext(CamelContext camelContext) throws Exception {
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
+		//ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
 
-        camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+        //camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
         //--------------------------------------
         // Properties Component
         //--------------------------------------
-        PropertiesComponent pc = new PropertiesComponent();
+        /*PropertiesComponent pc = new PropertiesComponent();
         pc.setLocation("settings.properties");
         camelContext.addComponent("properties", pc);
-    }
+    }*/
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
