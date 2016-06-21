@@ -9,7 +9,7 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apach1e.camel.model.rest.RestBindingMode;
+import org.apache.camel.model.rest.RestBindingMode;
 import org.codehaus.jackson.map.annotate.JsonView;
 import org.codehaus.jackson.map.exc.UnrecognizedPropertyException;
 import org.springframework.stereotype.Component;
@@ -63,12 +63,12 @@ public class RestToServicesRoute extends RouteBuilder {
 
 
         from("jetty:http://localhost:8181/mytestservice?httpMethodRestrict=POST")
-                .log(LoggingLevel.INFO,"${body}")
+                //.log(LoggingLevel.INFO,"${body}") dont use the logger here
                 .bean(SergeiBean.class)
                 .marshal()
                     .json(PersonPojo.class, Views.Public.class)
                 .bean(SergeiBean.class, "test")
-                .log(LoggingLevel.INFO,"${body}")
+                //.log(LoggingLevel.INFO,"${body}")
               .to("direct:processOrder");
 
 

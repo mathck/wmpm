@@ -1,5 +1,4 @@
 package main.model;
-import com.google.gson.annotations.Expose;
 import org.codehaus.jackson.map.annotate.JsonView;
 import org.hibernate.annotations.GenericGenerator;
 

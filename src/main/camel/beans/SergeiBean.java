@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 /**
@@ -28,9 +29,15 @@ public class SergeiBean {
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
     @Handler
-    public void process (Exchange exchange) throws IOException {
+    public void process (@Body InputStreamCache inputStreamCache, Exchange exchange) throws IOException {
         exchange.setOut(exchange.getIn());
-        exchange.getOut().setBody(exchange.getIn().getBody(PersonPojo.class));
+
+        int n = inputStreamCache.available();
+        byte[] bytes = new byte[n];
+        inputStreamCache.read(bytes, 0, n);
+        String s = new String(bytes, StandardCharsets.UTF_8);
+
+        exchange.getOut().setBody(s);
     }
 
     public void test (Exchange exchange)
