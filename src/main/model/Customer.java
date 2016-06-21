@@ -1,4 +1,6 @@
 package main.model;
+import com.google.gson.annotations.Expose;
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ public class Customer implements Serializable
 
     @Column(name = "EMAIL", unique = false, nullable = false, length = 100)
     private String email;
+
 
     @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
     private String firstName;

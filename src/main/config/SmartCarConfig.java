@@ -34,6 +34,7 @@ public class SmartCarConfig extends CamelConfiguration {
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://broker?broker.persistent=false");
 
         camelContext.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+        camelContext.setStreamCaching(false);
 
         //--------------------------------------
         // Properties Component
