@@ -1,6 +1,6 @@
 package main.camel.beans;
 
-import jdk.internal.org.xml.sax.InputSource;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.camel.ProducerTemplate;
