@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateOrderRoute extends RouteBuilder {
 
-    private boolean AUTO_GENERATION = false;
+    private boolean AUTO_GENERATION = true;
 
     @Override
     public void configure() throws Exception {
