@@ -49,6 +49,7 @@ public class CreateOrderBean {
         newCustomer.setInsuranceID(12345768);
         newCustomer.setPersonalID("uniqueFirstCustomer");
         newCustomer.setPhone("+4369915000596");
+
         return newCustomer;
     }
 

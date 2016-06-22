@@ -2,6 +2,7 @@ package main.camel.routes;
 
 
 import main.camel.beans.SergeiBean;
+import main.camel.beans.StockAggregationStrategy;
 import main.model.Customer;
 import main.model.PersonPojo;
 import main.model.Views;
@@ -63,13 +64,15 @@ public class RestToServicesRoute extends RouteBuilder {
 
 
         from("jetty:http://localhost:8181/mytestservice?httpMethodRestrict=POST")
-                //.log(LoggingLevel.INFO,"${body}") dont use the logger here
                 .bean(SergeiBean.class)
-                .marshal()
-                    .json(PersonPojo.class, Views.Public.class)
+                .unmarshal()
+                    .json(Customer.class, Views.Customer.class)
                 .bean(SergeiBean.class, "test")
-                //.log(LoggingLevel.INFO,"${body}")
-              .to("direct:processOrder");
+                .log(LoggingLevel.INFO,"${body}")
+                .to("jpa:Customer")
+                .pollEnrich("jpa:Customer" +
+                        "?consumer.query=select c from Customer c where c.id = 2&consumeDelete=false")
+                .bean(SergeiBean.class, "test");
 
 
 

@@ -2,6 +2,7 @@ package main;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import main.config.SmartCarConfig;
+import main.model.Customer;
 import main.model.PersonPojo;
 import main.model.Views;
 import org.apache.camel.spring.Main;
@@ -21,6 +22,7 @@ public class SmartCarApp extends Main {
 
     public static void main(String... args) throws Exception {
 
+
         PersonPojo pers = new PersonPojo();
         pers.setId(1);
         pers.setFirstName("first");
@@ -28,10 +30,12 @@ public class SmartCarApp extends Main {
 
         ObjectMapper mapper = new ObjectMapper();
 
-
         String result = mapper.writerWithView(Views.Public.class).writeValueAsString(pers);
 
+        ObjectMapper mapperTest = new ObjectMapper();
+
         PersonPojo persTest = new PersonPojo();
+        persTest = mapper.readValue(result, PersonPojo.class);
 
 
         BasicConfigurator.configure();

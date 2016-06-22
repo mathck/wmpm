@@ -7,6 +7,7 @@ import org.apache.camel.Handler;
 import org.apache.camel.converter.stream.InputStreamCache;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -38,10 +39,22 @@ public class SergeiBean {
         String s = new String(bytes, StandardCharsets.UTF_8);
 
         exchange.getOut().setBody(s);
+  //      ObjectMapper mapper = new ObjectMapper();
+  //      exchange.getOut().setBody( mapper.readValue(s, PersonPojo.class));
     }
 
     public void test (Exchange exchange)
     {
         exchange.setOut(exchange.getIn());
+        int i = 8;
+//        PersonPojo person = new PersonPojo();
+//       // person = (PersonPojo) exchange.getOut().getBody();
+//
+//        PersonPojo pers = new PersonPojo();
+//        pers.setId(1);
+//        pers.setFirstName("first");
+//        pers.setLastName("second");
+//
+//        exchange.getOut().setBody(pers);
     }
 }
