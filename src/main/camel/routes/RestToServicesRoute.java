@@ -34,9 +34,6 @@ public class RestToServicesRoute extends RouteBuilder {
                     .json(Customer.class, Views.Customer.class)
                 .to("jpa:Customer")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName} \t|\t");;
-//                .pollEnrich("jpa:Customer" +
-//                        "?consumer.query=select c from Customer c where c.id = 2&consumeDelete=false")
-//                .bean(SergeiBean.class, "test");
 
         from("jetty:http://localhost:8181/order?httpMethodRestrict=POST")
                 .routeId("RESTInterfaceOrderRouter")
@@ -46,7 +43,6 @@ public class RestToServicesRoute extends RouteBuilder {
                 .json(CarOrder.class, Views.Order.class)
                 .setBody()
                 .method(GenerateOrderRESTBean.class, "generateOrder")
-                .bean(RESTInterfaceConverterBean.class, "test")
                 .to("jpa:Order")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t RESTCreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName} \t|\t")
                 .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))

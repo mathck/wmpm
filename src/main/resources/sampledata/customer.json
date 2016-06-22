@@ -1,0 +1,14 @@
+{
+   "email":"test_rest@test_rest.com",
+   "firstName":"Andrey",
+   "lastName":"Maltsev",
+   "phone":"+4369915000596",
+   "city":"Wien",
+   "postalCode":"1200",
+   "streetName":"Karlsplatz",
+   "houseNumber":"13",
+   "dateOfBirth":"1989-01-01",
+   "insuranceID":"87654321",
+   "personalID":"uniqueFirstCustomerRest",
+   "fraudHint":"false"
+}
