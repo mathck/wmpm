@@ -1,6 +1,5 @@
 package main.camel.beans;
 
-import main.model.PersonPojo;
 import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
@@ -25,7 +24,7 @@ import java.util.Random;
  * solvency is initialized or advance payment is initialized.
  */
 @Component
-public class SergeiBean {
+public class RESTInterfaceConverterBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 

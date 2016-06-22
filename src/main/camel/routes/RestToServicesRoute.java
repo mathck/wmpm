@@ -1,10 +1,12 @@
 package main.camel.routes;
 
 
-import main.camel.beans.SergeiBean;
+import main.camel.beans.CreateOrderBean;
+import main.camel.beans.GenerateOrderRESTBean;
+import main.camel.beans.RESTInterfaceConverterBean;
 import main.camel.beans.StockAggregationStrategy;
+import main.model.CarOrder;
 import main.model.Customer;
-import main.model.PersonPojo;
 import main.model.Views;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
@@ -23,104 +25,35 @@ public class RestToServicesRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-/*
 
-        // define and add the jetty component
-        restConfiguration().component("jetty")
-                .host("localhost")
-                .port("8181")
-                .bindingMode(RestBindingMode.auto);
-
-        // DEFINE BEHAVIOR ON DATA MODEL PROBLEMS
-        onException(Exception.class).handled(true)
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
-                .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
-                .setBody().simple("Invalid data values:\n${exception.message}");
-
-        // DEFINE BEHAVIOR ON JSON SCHEMA PROBLEMS
-        onException(UnrecognizedPropertyException.class).handled(true)
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
-                .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
-                .setBody().constant("Invalid json data");
-
-
-        rest("/users/")
-                .post().type(Customer.class)
-                .to("direct:handOverOrder");
-
-        */
-
-
-      /*  rest("/rest")
-                .post("/customer").consumes("application/json")
-                .type(Customer.class).produces("text/html")
-                .to("direct:handOverOrder");
-
-        from("direct:order_put").routeId("REST")
-            .log("Received REST message with a simple order")
-            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
-            .to("direct:processOrder");*/
-
-
-
-        from("jetty:http://localhost:8181/mytestservice?httpMethodRestrict=POST")
-                .bean(SergeiBean.class)
+        from("jetty:http://localhost:8181/customer?httpMethodRestrict=POST")
+                .routeId("RESTInterfaceCustomerRouter")
+                .bean(RESTInterfaceConverterBean.class)
+                .log(LoggingLevel.INFO,"FILE","${routeId} \t\t| Request to generate a customer")
                 .unmarshal()
                     .json(Customer.class, Views.Customer.class)
-                .bean(SergeiBean.class, "test")
-                .log(LoggingLevel.INFO,"${body}")
                 .to("jpa:Customer")
-                .pollEnrich("jpa:Customer" +
-                        "?consumer.query=select c from Customer c where c.id = 2&consumeDelete=false")
-                .bean(SergeiBean.class, "test");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t INITIALIZE \t|\t Inserted new customer ${body.getFirstName} ${body.getLastName} \t|\t");;
+//                .pollEnrich("jpa:Customer" +
+//                        "?consumer.query=select c from Customer c where c.id = 2&consumeDelete=false")
+//                .bean(SergeiBean.class, "test");
 
+        from("jetty:http://localhost:8181/order?httpMethodRestrict=POST")
+                .routeId("RESTInterfaceOrderRouter")
+                .bean(RESTInterfaceConverterBean.class)
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t| Request to generate an order")
+                .unmarshal()
+                .json(CarOrder.class, Views.Order.class)
+                .setBody()
+                .method(GenerateOrderRESTBean.class, "generateOrder")
+                .bean(RESTInterfaceConverterBean.class, "test")
+                .to("jpa:Order")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t RESTCreateOrder \t|\t Received order for customer ${body.getCustomerFK.getFirstName} ${body.getCustomerFK.getLastName} \t|\t")
+                .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
+                .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
+                .wireTap("seda:backupOrder")
+                .to("direct:processOrder");
 
-
-
-/*
-        .process(
-                new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        String message = exchange.getIn().getBody(String.class);
-                        System.out.println("Hello Mr :" + message);
-                        exchange.getOut().setBody("Hello world Mr " + message);
-                    }
-                });
-
-*/
-
-
-//        restConfiguration().component("jetty").host("0.0.0.0").port("9191").bindingMode(RestBindingMode.json).dataFormatProperty("prettyPrint", "true");
-//        restConfiguration().component("jetty").host("0.0.0.0").port("9191").bindingMode(RestBindingMode.json).dataFormatProperty("prettyPrint", "true");
-//        rest("/say")
-//                .get("/hello").to("direct:hello")
-//                .get("/bye").consumes("application/json").to("direct:bye")
-//                .post("/bye").to("mock:update");
-//
-//        from("direct:hello")
-//                .transform().constant("Hello World");
-//        from("direct:bye")
-//                .transform().constant("Bye World");
-
-        /*rest("/services/rest").put("/order").consumes("application/json")
-                .type(CarOrder.class).produces("text/html")
-                .to("direct:order_put");
-
-        from("direct:order_put").routeId("REST")
-            .log("Received REST message with a simple order")
-            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
-            .to("direct:order_processing")
-            .end();*/
-
-//        rest("/user").description("User rest service")
-//                .consumes("application/json").produces("application/json")
-//                .get("/{id}").description("Find user by id").outType()
-//                .to("bean:userService?method=getUser(${header.id})");
-//                .put().description("Updates or create a user").type(Stock.class)
-//                .to("bean:userService?method=updateUser")
-//                .get("/findAll").description("Find all users").outTypeList(Stock.class)
-//                .to("bean:userService?method=listUsers");
 
     }
 

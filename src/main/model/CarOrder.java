@@ -2,6 +2,7 @@ package main.model;
 
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class CarOrder implements Serializable {
 
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "CUSTOMER_FK", columnDefinition = "INT(11)")
+    @JsonView(Views.Order.class)
     private Customer customerFK;
 
     @Column(name = "ORDER_DATE", unique = false, nullable = false)
@@ -34,16 +36,20 @@ public class CarOrder implements Serializable {
     private OrderStatus status;
 
     @Column(name = "CREDIT_NEEDED", columnDefinition = "TINYINT(1)")
+    @JsonView(Views.Order.class)
     private Boolean creditNeeded;
 
     @Column(name = "COLOR", unique = false, nullable = false, length = 100)
+    @JsonView(Views.Order.class)
     private String color;
 
     @Column(name = "HORSEPOWER", unique = false, nullable = false)
+    @JsonView(Views.Order.class)
     private Integer horsepower;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "MODEL", unique = false, nullable = false)
+    @JsonView(Views.Order.class)
     private CarModel model;
 
     public Integer getId() {

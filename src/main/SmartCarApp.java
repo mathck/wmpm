@@ -1,13 +1,8 @@
 package main;
 
-import com.fasterxml.jackson.databind.MapperFeature;
 import main.config.SmartCarConfig;
-import main.model.Customer;
-import main.model.PersonPojo;
-import main.model.Views;
 import org.apache.camel.spring.Main;
 import org.apache.log4j.BasicConfigurator;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -21,23 +16,6 @@ public class SmartCarApp extends Main {
 
 
     public static void main(String... args) throws Exception {
-
-
-        PersonPojo pers = new PersonPojo();
-        pers.setId(1);
-        pers.setFirstName("first");
-        pers.setLastName("second");
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        String result = mapper.writerWithView(Views.Public.class).writeValueAsString(pers);
-
-        ObjectMapper mapperTest = new ObjectMapper();
-
-        PersonPojo persTest = new PersonPojo();
-        persTest = mapper.readValue(result, PersonPojo.class);
-
-
         BasicConfigurator.configure();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SmartCarConfig.class);
@@ -45,12 +23,9 @@ public class SmartCarApp extends Main {
         LOGGER.info("");
         LOGGER.info("----- Initial start of Server! -----");
 
-
-
         //SmartCarApp smartCarApp = new SmartCarApp();
         //the above line was bad see:
         //http://stackoverflow.com/questions/3659720/using-spring-3-autowire-in-a-standalone-java-application
-
 
         smartCarApp.setApplicationContext(context);
 //        smartCarApp.run();

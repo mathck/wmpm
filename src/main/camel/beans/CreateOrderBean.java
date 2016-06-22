@@ -53,6 +53,7 @@ public class CreateOrderBean {
         return newCustomer;
     }
 
+
     public CarOrder generateOrder(Customer customer) {
         CarOrder newOrder = new CarOrder();
         newOrder.setCustomerFK(customer);
