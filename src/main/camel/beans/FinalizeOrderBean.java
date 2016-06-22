@@ -17,9 +17,6 @@ public class FinalizeOrderBean {
 
         //getting information about payment
         exchange.setOut(exchange.getIn());
-        //logging at the beginning of a process
-       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
-
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
         exchange.getOut().setHeader("testDriveDone", random.nextBoolean());

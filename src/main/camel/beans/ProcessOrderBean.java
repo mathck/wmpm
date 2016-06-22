@@ -4,9 +4,6 @@ import org.apache.camel.Body;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
-
-import java.util.Random;
 
 /**
  * Starting condition: CarOrder has been received
@@ -17,7 +14,7 @@ import java.util.Random;
  * in customer database. According to order information, check for financial
  * solvency is initialized or advance payment is initialized.
  */
-@Component
+//@Component
 public class ProcessOrderBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");

@@ -7,19 +7,17 @@ import org.apache.camel.Exchange;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
-
 @Component
 public class MakeConfirmationBean {
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
     public void makeConfirmation(@Body String body, Exchange exchange)
     {
-        Customer customer = exchange.getIn().getBody(Customer.class);
+        exchange.setOut(exchange.getIn());
+        CarOrder order = exchange.getIn().getBody(CarOrder.class);
+        Customer customer = order.getCustomerFK();
 
-        exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-
-        exchange.getOut().setHeader("fileName", customer.getId().toString() + ".txt");
+        exchange.getOut().setHeader(exchange.FILE_NAME, customer.getFirstName() +"_order_"+order.getId()+".txt");
         exchange.getOut().setBody("Dear " + customer.getFirstName() + " " + customer.getLastName()+ " " + "It is your confirmation of 30% payment. Your order is on the way!");
     }
 }
