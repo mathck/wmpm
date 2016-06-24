@@ -1,0 +1,138 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+  <style>
+    .inputdemoErrors .inputErrorsApp {
+      min-height: 48px; }
+    .inputdemoErrors md-input-container > p {
+      font-size: 0.8em;
+      text-align: left;
+      width: 100%; }
+    img {
+      padding: 30px;
+      height: 100px;
+      width: 100px;
+    }
+    h1 {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body ng-app="SmartCarClient" ng-cloak>
+
+  <div layout="row">
+    <div flex="30">&nbsp;</div>
+    <div flex="40">
+      <div layout="row">
+        <div flex="20">
+          <img src="http://findicons.com/files/icons/2787/beautiful_flat_icons/128/car.png" />
+        </div>
+        <div flex="70">
+          <h1 class="md-display-3">Order your new car</h1>
+        </div>
+      </div>
+
+      <div ng-controller="InputCtrl" layout="column" ng-cloak>
+        <md-content layout-padding>
+          <form name="projectForm">
+            <md-input-container class="md-block" style="margin-top: 0px !important;">
+              <p>Do you need a credit?</p>
+              <md-radio-group ng-model="order.creditNeeded">
+                <md-radio-button value="true">Yes</md-radio-button>
+                <md-radio-button value="false"> No </md-radio-button>
+              </md-radio-group>
+            </md-input-container>
+            <md-input-container class="md-block" style="margin-top: 0px !important;">
+              <p>What color should your car be?</p>
+              <md-radio-group ng-model="order.color">
+                <md-radio-button value="red">Red</md-radio-button>
+                <md-radio-button value="black">Black</md-radio-button>
+                <md-radio-button value="white">White</md-radio-button>
+                <md-radio-button value="green">Green</md-radio-button>
+              </md-radio-group>
+            </md-input-container>
+            <md-input-container class="md-block" style="margin-top: 0px !important;">
+              <p>What model should it be?</p>
+              <md-radio-group ng-model="order.model">
+                <md-radio-button value="VAN">Van</md-radio-button>
+                <md-radio-button value="CABRIO">Cabrio</md-radio-button>
+                <md-radio-button value="COUPE">Coupe</md-radio-button>
+              </md-radio-group>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Horse Power</label>
+              <input required name="horsepower" ng-model="order.horsepower">
+            </md-input-container>
+          </form>
+
+          <md-button ng-click="send()" class="md-raised md-primary" style="float:right;">Send</md-button>
+
+          <h3>JSON preview</h3>
+          <p>{{ order | json }}</p>
+        </md-content>
+      </div>
+    </div>
+    <div flex="30">&nbsp;</div>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+  <script type="text/javascript">
+    angular
+            .module('SmartCarClient', ['ngMaterial', 'ngMessages'])
+            .controller('InputCtrl', function($scope, $http) {
+
+              // hardcoded customer
+              $scope.customer =
+              {
+                id:           "1",
+                email:        "mathck@gmail.com",
+                firstName:    "Matthew",
+                lastName:     "Gren",
+                phone:        "+4369915000596",
+                city:         "Wien",
+                postalCode:   "1200",
+                streetName:   "Karlsplatz",
+                houseNumber:  "13",
+                dateOfBirth:  "1989-01-01",
+                insuranceID:  "87654321",
+                personalID:   "uniqueFirstCustomerRest",
+                fraudHint:    "false"
+              };
+
+              $scope.order = {
+                creditNeeded: "true",
+                color:        "red",
+                horsepower:   "150",
+                model:        "COUPE",
+                customerFK: $scope.customer
+              };
+
+              // hardcoded customer is inserted when the page is loaded automatically
+              $http({
+                url: 'http://localhost:8181/customer',
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.customer
+              });
+
+              // send function to send the current order object with the customerFK
+              $scope.send = function () {
+                $http({
+                  url: 'http://localhost:8181/order',
+                  method: "POST",
+                  headers: {'Content-Type': 'application/json'},
+                  data: $scope.order
+                });
+              };
+            });
+  </script>
+  
+</body>
+</html>
