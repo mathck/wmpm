@@ -1,4 +1,5 @@
 package main.model;
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,39 +16,52 @@ public class Customer implements Serializable
     private Integer id;
 
     @Column(name = "EMAIL", unique = false, nullable = false, length = 100)
+    @JsonView(Views.Customer.class)
     private String email;
 
+
     @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
+    @JsonView(Views.Customer.class)
     private String firstName;
 
     @Column(name = "LAST_NAME", unique = false, nullable = false, length = 100)
+    @JsonView(Views.Customer.class)
     private String lastName;
 
     @Column(name = "PHONE", unique = false, length = 100)
+    @JsonView(Views.Customer.class)
     private String phone;
 
     @Column(name = "CITY", unique = false, nullable = false, length = 30)
+    @JsonView(Views.Customer.class)
     private String city;
 
     @Column(name = "POSTAL_CODE", unique = false, nullable = false, length = 30)
+    @JsonView(Views.Customer.class)
     private String postalCode;
 
     @Column(name = "STREET_NAME", unique = false, nullable = false, length = 30)
+    @JsonView(Views.Customer.class)
     private String streetName;
 
     @Column(name = "HOUSE_NUMBER", unique = false, nullable = false, length = 10)
+    @JsonView(Views.Customer.class)
     private String houseNumber;
 
     @Column(name = "DATE_OF_BIRTH", unique = false)
+    @JsonView(Views.Customer.class)
     private Timestamp dateOfBirth;
 
     @Column(name = "INSURANCE_ID", unique = true, nullable = false)
+    @JsonView(Views.Customer.class)
     private Integer insuranceID;
 
     @Column(name = "PERSONAL_ID", unique = true, nullable = false, length = 100)
+    @JsonView(Views.Customer.class)
     private String personalID;
 
     @Column(name = "FRAUD_HINT", columnDefinition = "TINYINT(1)")
+    @JsonView(Views.Customer.class)
     private Boolean fraudHint;
 
     public Integer getId() {

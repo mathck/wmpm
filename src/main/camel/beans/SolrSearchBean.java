@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-/**
- * Created by Michael on 05.06.2016.
- */
 @Component
 public class SolrSearchBean{
 

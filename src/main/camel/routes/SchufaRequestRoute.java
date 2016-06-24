@@ -7,9 +7,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by Michael on 16.06.2016.
- */
 @Component()
 public class SchufaRequestRoute extends RouteBuilder {
     private static final Logger LOGGER = Logger.getLogger("FILE");

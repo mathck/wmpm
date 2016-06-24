@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Michael on 16.06.2016.
- */
 @Component()
 public class KSVRequestRoute extends RouteBuilder {
     private static final Logger LOGGER = Logger.getLogger("FILE");

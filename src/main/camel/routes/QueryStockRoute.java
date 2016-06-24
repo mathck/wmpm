@@ -1,6 +1,6 @@
 package main.camel.routes;
 
-import main.camel.beans.QueryStockBean;
+import main.camel.beans.StockAggregationStrategy;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -13,14 +13,15 @@ public class QueryStockRoute extends RouteBuilder {
 
         from("direct:queryStock")
                 .routeId("QueryStockRoute")
-                .bean(QueryStockBean.class)
+                .pollEnrich("jpa:Stock" +
+                "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new StockAggregationStrategy())
                 .choice()
                 .when(header("enoughElements").isEqualTo(true))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction")
-                    .to("seda:planProduction")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction \t|\t")
+                    .to("jms:queue:planProduction?messageConverter=#orderJMSConverter")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements \t|\t")
                     .to("direct:orderElements")
-                .endChoice(); //TODO OrderElementsRoute
+                .endChoice();
     }
 }

@@ -1,32 +1,53 @@
 package main.camel.routes;
 
 import main.camel.beans.Accept30PercentBean;
-import main.camel.beans.InformCustomerBean;
-import main.camel.beans.TestCustomerBean;
+import main.camel.beans.MakeConfirmationBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import main.camel.beans.InformCustomerBean;
-import main.camel.beans.ProcessOrderBean;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import main.camel.beans.ProcessOrderBean;
 
 @Component
 public class Accept30PercentRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+        errorHandler(deadLetterChannel("seda:errors"));
+//        from("direct:accept30percent")
+//                .routeId("Accept30percentRoute")
+//                .bean(Accept30PercentBean.class)
+//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
+//                .to("direct:queryStock");
 
         from("direct:accept30percent")
-                .routeId("Accept30percentRoute")
+                .routeId("Accept30percentRouteEntrance")
+                .to("jms:queue:Accept30Route?messageConverter=#accept30JMSConverter");
+
+        from("jms:queue:Accept30Route?messageConverter=#accept30JMSConverter")
+                .routeId("Accept30Route")
                 .bean(Accept30PercentBean.class)
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
-                .to("direct:queryStock");
+                .choice()
+                .when(header("is30percentPaid").isEqualTo(false))
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t")
+                    .to("jms:queue:Accept30Route?messageConverter=#accept30JMSConverter")
+                .otherwise()
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t")
+                    .to("direct:informCustomerAndAccept30Percent")
+                .endChoice();
+
+        from("direct:informCustomerAndAccept30Percent")
+                .routeId("Accept30percentRouteLeaving")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t")
+                .multicast()
+                    .to("direct:makeConfirmation")
+                    .to("direct:queryStock");
+
+
+        from("direct:makeConfirmation")
+            .routeId("MakeConfirmationRouter")
+            .bean(MakeConfirmationBean.class, "makeConfirmation")
+                    .multicast()
+                    .to("{{ftp.server.30PercentConfirmation}}")
+                    //.to("file://C:\\Users\\maland\\AppData\\Roaming\\SmartCompany\\30PercentConfirmation")
+                    .to("seda:informCustomer"); // TODO route to clever
     }
 }

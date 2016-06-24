@@ -2,6 +2,7 @@ package main.camel.beans;
 
 import main.model.CarOrder;
 import main.model.Customer;
+import main.model.Stock;
 import main.model.enums.CarModel;
 import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
@@ -21,27 +22,21 @@ public class CreateOrderBean {
     @Handler
     public void process(Exchange exchange)
     {
-        //Customer customer = generateCustomer();
-
-        //LOGGER.info("CustomerID: " + customer.getId());
-
-        //!!customerDao.insertCustomer(customer);
-
-        //!!carOrderDao.insertOrder(order);
-
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
+
+        //Customer customer = generateCustomer();
+        //LOGGER.info("CustomerID: " + customer.getId());
+        //!!customerDao.insertCustomer(customer);
+        //!!carOrderDao.insertOrder(order);
         //exchange.getOut().setHeader("orderID", order.getId());
         //exchange.getOut().setBody(generateCustomer());
-
         //logging at the end of a process
-        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
+        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
     }
 
-    public Customer generateCustomer(Exchange exchange) {
-        //LOGGER.info("in generateCustomer");
-
+    public Customer generateCustomer() {
         Customer newCustomer = new Customer();
-        newCustomer.setId(1);
+        //newCustomer.setId(1);
         newCustomer.setEmail("test@test.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
@@ -54,9 +49,10 @@ public class CreateOrderBean {
         newCustomer.setInsuranceID(12345768);
         newCustomer.setPersonalID("uniqueFirstCustomer");
         newCustomer.setPhone("+4369915000596");
-        //LOGGER.info("generated Customer: "+ newCustomer.toString());
+
         return newCustomer;
     }
+
 
     public CarOrder generateOrder(Customer customer) {
         CarOrder newOrder = new CarOrder();
@@ -83,6 +79,14 @@ public class CreateOrderBean {
         return newOrder;
     }
 
+    public Stock generateStock() {
+
+        Stock stock = new Stock();
+        stock.setStockName("CarStockDetails");
+        stock.setAvaliableCount(7);
+
+        return stock;
+    }
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());
     }
