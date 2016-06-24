@@ -21,13 +21,12 @@ public class ProcessOrderRoute extends RouteBuilder {
 
         from("seda:creditRouter")
             .routeId("CreditRouter")
-            .setHeader("creditNeeded", simple("false")) // TODO REMOVE ME, SOLR
             .choice()
-                .when(header("creditNeeded"))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To CheckFinancialSolvency \t|\t")
-                    .to("direct:checkFinancialSolvency")
+                .when(simple("${properties:checkSolvency} == 'true' && ${header.creditNeeded} == 'true'"))
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t CreditNeeded: Header-${header.creditNeeded}, Properties-${properties:checkSolvency} | From CreditRouter To CheckFinancialSolvency \t|\t")
+                    .to("direct:CheckCustomerData")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To Accept30Percent \t|\t")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t CreditNeeded: Header-${header.creditNeeded}, Properties-${properties:checkSolvency} | From CreditRouter To Accept30Percent \t|\t")
                     .to("direct:accept30percent")
             .endChoice();
     }
