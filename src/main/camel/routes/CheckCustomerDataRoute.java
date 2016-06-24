@@ -53,11 +53,6 @@ public class CheckCustomerDataRoute extends RouteBuilder {
                     .otherwise()
                         .to("direct:Solr")
                 .end();
-
-        from("direct:Recieve")
-                .routeId("Recieve")
-
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | ${body}");
     }
 
 }

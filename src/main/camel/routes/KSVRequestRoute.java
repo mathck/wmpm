@@ -20,6 +20,13 @@ public class KSVRequestRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
+        onException(java.net.ConnectException.class)
+                .log(LoggingLevel.ERROR,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | Failed! - java.net.ConnectException")
+                .to("direct:Consolidate");
+        onException(Exception.class)
+                .log(LoggingLevel.ERROR,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | Failed! - Unknown Exception")
+                .to("direct:Consolidate");
+
         from("direct:KSVRequest")
                 .routeId("KSVRequest")
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t\t|\t Datasource.: ${header.datasource} | Begin")
