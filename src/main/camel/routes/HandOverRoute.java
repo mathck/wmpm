@@ -23,12 +23,11 @@ public class HandOverRoute extends RouteBuilder {
         tc.setConsumerKey(consumerKey);
         tc.setConsumerSecret(consumerSecret);
 
-        from("direct:handOverOrder")
-            .routeId("handOverOrderRoute")
-            .log(LoggingLevel.INFO,"FILE", "test ${routeId} \t\t\t|\t")
+        from("direct:HandOverOrder")
+            .routeId("HandOverOrderRoute")
             .to("seda:informCustomer")
             .bean(TwitterBean.class)
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Order handed over and finished!  \t|\t")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t Order handed over and finished!")
             .to("twitter://timeline/user");
     }
 }

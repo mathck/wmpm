@@ -22,6 +22,6 @@ public class FinalizeOrderBean {
         exchange.getOut().setHeader("testDriveDone", random.nextBoolean());
 
         //logging at the end of a process
-       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: paid = " + exchange.getOut().getHeader("paid").toString());
+       // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: paid = " + exchange.getOut().getHeader("paid").toString());
     }
 }

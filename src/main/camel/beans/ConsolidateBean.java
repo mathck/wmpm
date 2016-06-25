@@ -15,9 +15,6 @@ import javax.xml.xpath.XPathFactory;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-/**
- * Created by Michael on 20.06.2016.
- */
 @Component
 public class ConsolidateBean {
 
@@ -25,8 +22,6 @@ public class ConsolidateBean {
 
     @Handler
     public void process(Exchange exchange) throws Exception {
-        //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t OrderID.: " + exchange.getIn().getHeader("orderID"));
 
         ArrayList<Object> bodyList = (ArrayList<Object>) exchange.getIn().getBody();
 
@@ -55,9 +50,7 @@ public class ConsolidateBean {
 
         // Get values with XPath
         for(int i=0; i<4; i++){
-
             if(bodyList.get(i) != null){
-
                 if(bodyList.get(i) instanceof String && ((String) bodyList.get(i)).contains("ExtSolRequestResponse")) {
 
                     source = new InputSource(new StringReader((String) bodyList.get(i)));
@@ -106,8 +99,8 @@ public class ConsolidateBean {
                 }
             }
         }
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t OrderID.: " + exchange.getIn().getHeader("orderID") + " || Schufa[" + statusSchufa + ", " + nrOfDunningsSchufa + "], KSV[" + personFoundKSV + ", " + personStatusKSV + "], ExtSol[" + extfraudHintExtSol + ", " + nrOfContractsExtSol + ", " + deptAmountExtSol + "], Solr[" + hitSolr + "]");
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t|\t OrderID.: " + exchange.getIn().getHeader("orderID") + " || " + exchange.getIn().getBody());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t OrderID.: " + exchange.getIn().getHeader("orderID") + "\t|\t Schufa[" + statusSchufa + ", " + nrOfDunningsSchufa + "], KSV[" + personFoundKSV + ", " + personStatusKSV + "], ExtSol[" + extfraudHintExtSol + ", " + nrOfContractsExtSol + ", " + deptAmountExtSol + "], Solr[" + hitSolr + "]");
+
         // Calculate solvencyApproval
 
         // KSV NOTFOUND + Schufa SEVERE + Solr hit

@@ -31,7 +31,7 @@ public class CreateOrderBean {
         //exchange.getOut().setHeader("orderID", order.getId());
         //exchange.getOut().setBody(generateCustomer());
         //logging at the end of a process
-        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
+        //LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t OrderID.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: orderID = " + exchange.getOut().getHeader("orderID").toString());
     }
 
     public Customer generateCustomer() {
@@ -91,7 +91,7 @@ public class CreateOrderBean {
     }
 
     private boolean getRandomCreditNeeded() {
-        return Math.random() < 0.5;
+        return Math.random() < 0.7;
     }
 
     private String getRandomColor() {

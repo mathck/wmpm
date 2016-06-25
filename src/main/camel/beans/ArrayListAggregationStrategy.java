@@ -3,23 +3,15 @@ package main.camel.beans;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 
-import javax.xml.soap.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by Michael on 19.06.2016.
- */
 //simply combines Exchange body values into an ArrayList<Object>
 public class ArrayListAggregationStrategy implements AggregationStrategy {
-
-    private static final Logger LOGGER = Logger.getLogger("FILE");
 
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         Object response;

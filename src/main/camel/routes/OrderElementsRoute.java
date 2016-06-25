@@ -12,9 +12,9 @@ public class OrderElementsRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("direct:orderElements")
-                .routeId("orderElementsRoute")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction \t|\t")
+        from("direct:OrderElements")
+                .routeId("OrderElementsRoute")
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From QueryStock to PlanProduction")
                 .bean(OrderElementsBean.class, "countDelay")
                 .multicast()
                 .to("direct:makeOrder")

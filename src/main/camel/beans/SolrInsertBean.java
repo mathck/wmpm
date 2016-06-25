@@ -1,7 +1,6 @@
 package main.camel.beans;
 
 import main.model.CarOrder;
-import main.model.Customer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.camel.ProducerTemplate;
@@ -36,6 +35,6 @@ public class SolrInsertBean{
         doc.addField("CITY", carOrder.getCustomerFK().getCity());
 
         template.sendBodyAndHeader("direct:SolrInsert", doc, SolrConstants.OPERATION, SolrConstants.OPERATION_INSERT);
-
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t OrderID.: " + exchange.getIn().getHeader("orderID") + "\t|\t Solr Insert Completed");
     }
 }

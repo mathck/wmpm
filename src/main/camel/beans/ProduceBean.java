@@ -37,7 +37,7 @@ public class ProduceBean {
     @Handler
     public void DefineDeliveryTime(Exchange exchange) {
 
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getBody(CarOrder.class).getId());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " + exchange.getIn().getBody(CarOrder.class).getId());
         exchange.setOut(exchange.getIn());
 
         Calendar calendar = Calendar.getInstance();
