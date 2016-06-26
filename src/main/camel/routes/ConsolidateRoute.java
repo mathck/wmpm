@@ -16,8 +16,6 @@ public class ConsolidateRoute extends RouteBuilder{
         from("direct:Consolidate")
             .routeId("ConsolidateRoute")
             .aggregate(header("orderID"),new ArrayListAggregationStrategy()).completionSize(4)
-            .setBody(simple("${body}"))
-            .removeHeader("datasource")
             .bean(ConsolidateBean.class)
             .choice()
             .when(simple("${header.solvencyApproval} == 'false'"))
