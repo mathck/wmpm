@@ -27,12 +27,9 @@ public class Accept30PercentBean {
         if (paymentSuccessful) {
             exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.INITIALPAYMENTACCEPTED);
         }
-
-        //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
-                exchange.getIn().getHeader("orderID") + "  \t|\t New Header: is30percentPaid = " +
-                exchange.getIn().getHeader("is30percentPaid").toString());
         exchange.setOut(exchange.getIn());
 
+        //logging at the end of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is30percentPaid = " + exchange.getOut().getHeader("is30percentPaid").toString());
     }
 }

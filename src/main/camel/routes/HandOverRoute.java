@@ -37,7 +37,7 @@ public class HandOverRoute extends RouteBuilder {
             })
             .wireTap("seda:informCustomer")
             .bean(TwitterBean.class)
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Order handed over and finished!  \t|\t")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t Order handed over and finished!")
             .to("twitter://timeline/user");
     }
 }

@@ -22,6 +22,25 @@
 
     </appender>
 
+    <appender name="CONTROLBUS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <File>${user.home}/Application Data/SmartCompany/SmartCompany_ControlBus.log</File>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>10</maxIndex>
+            <FileNamePattern>${user.home}/Application Data/SmartCompany/SmartCompany_ControlBus.log.%i</FileNamePattern>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1MB</MaxFileSize>
+        </triggeringPolicy>
+
+    </appender>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%-4relative [%thread] %-5level %msg %n</pattern>
@@ -32,7 +51,11 @@
         <appender-ref ref="FILE"/>
     </logger>
 
-    <root level="INFO">
+    <logger name="CONTROLBUS" level="INFO">
+        <appender-ref ref="CONTROLBUS"/>
+    </logger>
+
+    <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
 

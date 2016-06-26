@@ -22,6 +22,7 @@ public class SmartCarApp extends Main {
         SmartCarApp smartCarApp = context.getBean(SmartCarApp.class); // new
         LOGGER.info("");
         LOGGER.info("----- Initial start of Server! -----");
+        LOGGER.info("");
 
         //SmartCarApp smartCarApp = new SmartCarApp();
         //the above line was bad see:

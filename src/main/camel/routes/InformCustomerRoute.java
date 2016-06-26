@@ -19,6 +19,9 @@ public class InformCustomerRoute extends RouteBuilder {
 
         //String recipient = "mathck@gmail.com"; // for multiple may be seperated by ","
 
+        //--------------------------------------------------
+        // ROUTE
+        //--------------------------------------------------
         from("seda:informCustomer")
                 .routeId("InformCustomerRoute")
                 //.setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
@@ -51,7 +54,7 @@ public class InformCustomerRoute extends RouteBuilder {
         /*
         from("seda:informCustomerClever") TODO Andr
                 .routeId("InformCustomerRouteClever")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t ")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t ")
           //      .setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
                 .process(new Processor() {
                     @Override

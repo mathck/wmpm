@@ -17,11 +17,11 @@ public class QueryStockRoute extends RouteBuilder {
                 "?consumer.query=select s from Stock s where s.id=1&consumeDelete=false", new StockAggregationStrategy())
                 .choice()
                 .when(header("enoughElements").isEqualTo(true))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to PlanProduction \t|\t")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From QueryStock to PlanProduction")
                     .to("jms:queue:planProduction?messageConverter=#orderJMSConverter")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From QueryStock to OrderElements \t|\t")
-                    .to("direct:orderElements")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From QueryStock to OrderElements")
+                    .to("direct:OrderElements")
                 .endChoice();
     }
 }

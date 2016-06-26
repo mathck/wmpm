@@ -20,7 +20,8 @@ public class backupOrderRoute extends RouteBuilder {
         from("seda:backupOrder")
                 .routeId("BackupOrder")
                 .convertBodyTo(String.class)
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t\t|\t Order Nr.: ${in.header.orderID} \t|\t Saving Order as ${date:now:yyyyMMdd}-${in.header.orderID}.txt \t|\t")
+                //.convertBodyTo(CarOrder.class).marshal().json()
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t\t|\t OrderID.: ${in.header.orderID} \t|\t Saving Order as ${date:now:yyyyMMdd}-${in.header.orderID}-ID.txt")
                 .to("file:backup/orders/?fileName=${date:now:yyyyMMdd}-${in.header.orderID}.txt&autoCreate=true");
     }
 }

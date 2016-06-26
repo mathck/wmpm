@@ -13,7 +13,7 @@ public class Accept70PercentRoute extends RouteBuilder {
         errorHandler(deadLetterChannel("seda:errors"));
 //        from("direct:accept70percent")
 //            .routeId("Accept70PercentRoute")
-//            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept70Percent to HandOverOrder")
+//            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From Accept70Percent to HandOverOrder")
 //            .to("direct:handOverOrder");
 
         from("direct:accept70percent")
@@ -25,10 +25,10 @@ public class Accept70PercentRoute extends RouteBuilder {
                 .bean(Accept70PercentBean.class)
                 .choice()
                 .when(header("is70percentPaid").isEqualTo(false))
-                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to Accept70percentRouteDispatch - LOOP \t|\t")
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to Accept70percentRouteDispatch - LOOP")
                     .to("jms:queue:Accept70Route?messageConverter=#accept70JMSConverter")
                 .otherwise()
-                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to InformCustomerAndAccept70Percent \t|\t ")
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept70percentRouteDispatch to InformCustomerAndAccept70Percent")
                     .wireTap("seda:informCustomer")
                     .to("direct:inform70Percent")
                 .endChoice();

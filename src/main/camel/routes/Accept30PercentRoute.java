@@ -15,7 +15,7 @@ public class Accept30PercentRoute extends RouteBuilder {
 //        from("direct:accept30percent")
 //                .routeId("Accept30percentRoute")
 //                .bean(Accept30PercentBean.class)
-//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t Order Nr.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
+//                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30Percent to QueryStock")
 //                .to("direct:queryStock");
 
         from("direct:accept30percent")
@@ -27,16 +27,16 @@ public class Accept30PercentRoute extends RouteBuilder {
                 .bean(Accept30PercentBean.class)
                 .choice()
                 .when(header("is30percentPaid").isEqualTo(false))
-                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP \t|\t")
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP")
                     .to("jms:queue:accept30Route?messageConverter=#accept30JMSConverter")
                 .otherwise()
-                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent \t|\t")
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent")
                     .to("direct:informCustomerAndAccept30Percent")
                 .endChoice();
 
         from("direct:informCustomerAndAccept30Percent")
                 .routeId("Accept30percentRouteLeaving")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t|\t Order Nr.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock \t|\t")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock")
                 .multicast()
                     .to("direct:storeConfirmation")
                     .to("direct:queryStock")

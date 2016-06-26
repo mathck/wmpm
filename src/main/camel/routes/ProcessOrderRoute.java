@@ -14,20 +14,19 @@ public class ProcessOrderRoute extends RouteBuilder {
         from("direct:processOrder")
             .routeId("ProcessOrderRoute")
             .bean(ProcessOrderBean.class)
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t From ProcessOrderRoute to InformCustomer & CreditRouter and Credit is: ${header.creditNeeded} \t|\t")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From ProcessOrder to InformCustomer & CreditRouter")
             .multicast()
                 .to("seda:informCustomer")
                 .to("seda:creditRouter");
 
         from("seda:creditRouter")
             .routeId("CreditRouter")
-            .setHeader("creditNeeded", simple("false")) // TODO REMOVE ME, SOLR
             .choice()
-                .when(header("creditNeeded"))
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To CheckFinancialSolvency \t|\t")
-                    .to("direct:checkFinancialSolvency")
+                .when(simple("${properties:checkSolvency} == 'true' && ${header.creditNeeded} == 'true'"))
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t CreditNeeded: Header-${header.creditNeeded}, Properties-${properties:checkSolvency} | From CreditRouter To CheckCustomerData")
+                    .to("direct:CheckCustomerData")
                 .otherwise()
-                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Credit needed: ${header.creditNeeded} | From CreditRouter To Accept30Percent \t|\t")
+                    .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t CreditNeeded: Header-${header.creditNeeded}, Properties-${properties:checkSolvency} | From CreditRouter To Accept30Percent")
                     .to("direct:accept30percent")
             .endChoice();
     }

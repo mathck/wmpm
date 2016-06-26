@@ -14,7 +14,7 @@ import java.io.*;
 @Component
 public class ControlBusBean {
 
-    private static final Logger LOGGER = Logger.getLogger("FILE");
+    private static final Logger LOGGER = Logger.getLogger("CONTROLBUS");
 
     @Handler
     public void process(Exchange exchange) throws Exception {
@@ -47,30 +47,30 @@ public class ControlBusBean {
                         errorDetected=true;
 
                         LOGGER.info(this.getClass().getName().substring(17) +
-                                "\t\t\t\t\t|\t CONTROL BUS \t| \t ERROR detected in " + eElement.getAttribute("id"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t Status : " + eElement.getAttribute("state"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t exchangesFailed : " +
+                                "\t|\t CONTROL BUS \t|\t ERROR detected in " + eElement.getAttribute("id"));
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t Status : " + eElement.getAttribute("state"));
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t exchangesFailed : " +
                                 eElement.getAttribute("exchangesFailed"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t lastExchangeCompletedTimestamp : " +
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t lastExchangeCompletedTimestamp : " +
                                 eElement.getAttribute("lastExchangeCompletedTimestamp"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t lastExchangeCompletedExchangeId : " +
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t lastExchangeCompletedExchangeId : " +
                                 eElement.getAttribute("lastExchangeCompletedExchangeId"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t firstExchangeFailureTimestamp : " +
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t firstExchangeFailureTimestamp : " +
                                 eElement.getAttribute("firstExchangeFailureTimestamp"));
-                        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t\t|\t CONTROL BUS \t | \t " +
-                                eElement.getAttribute("id") + "\t| \t firstExchangeFailureExchangeId : " +
+                        LOGGER.info(this.getClass().getName().substring(17) + "\t|\t CONTROL BUS \t|\t " +
+                                eElement.getAttribute("id") + "\t|\t firstExchangeFailureExchangeId : " +
                                 eElement.getAttribute("firstExchangeFailureExchangeId"));
                     }
                 }
             }
             if(!errorDetected) {
                 LOGGER.info(this.getClass().getName().substring(17) +
-                        "\t\t\t\t\t|\t CONTROL BUS \t| \t No problems detected.");
+                        "\t|\t CONTROL BUS \t|\t No problems detected.");
             }
         }
         catch (Exception e) {

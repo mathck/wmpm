@@ -29,11 +29,9 @@ public class Accept70PercentBean {
             exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.PAYMENTCOMPLETED);
         }
 
-        //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
-                exchange.getIn().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " +
-                exchange.getIn().getHeader("is70percentPaid").toString());
         exchange.setOut(exchange.getIn());
 
+        //logging at the end of a process
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " + exchange.getOut().getHeader("is70percentPaid").toString());
     }
 }
