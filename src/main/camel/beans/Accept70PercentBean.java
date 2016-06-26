@@ -17,10 +17,6 @@ public class Accept70PercentBean {
     @Handler
     public void process(Exchange exchange) throws Exception {
         //getting information about payment
-        //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
-                exchange.getIn().getHeader("orderID"));
-
         Random random = new Random();
         Boolean paymentSuccessful = random.nextBoolean();
         exchange.getIn().setHeader("is70percentPaid", paymentSuccessful);
@@ -29,9 +25,12 @@ public class Accept70PercentBean {
             exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.PAYMENTCOMPLETED);
         }
 
-        exchange.setOut(exchange.getIn());
+        //exchange.setOut(exchange.getIn());
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " + exchange.getOut().getHeader("is70percentPaid").toString());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t OrderID.: " +
+                exchange.getIn().getHeader("orderID") +
+                "  \t|\t New Header: is70percentPaid = " + exchange.getIn().getHeader("is70percentPaid").toString() +
+                ", new Status:" + exchange.getIn().getBody(CarOrder.class).getStatus());
     }
 }

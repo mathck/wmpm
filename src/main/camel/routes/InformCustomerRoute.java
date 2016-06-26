@@ -22,19 +22,18 @@ public class InformCustomerRoute extends RouteBuilder {
         //--------------------------------------------------
         // ROUTE
         //--------------------------------------------------
-        from("seda:informCustomer")
+        from("direct:informCustomer")
                 .routeId("InformCustomerRoute")
                 //.setBody(simple(getEmailBody("name", "status")))// TODO insert customerName and orderStatus
-                //.log(LoggingLevel.INFO, "FILE", "${routeId}\t\t\t\t|\t Order Nr.: ${header.orderID} 	|	Sending mail - Body is: ${body}")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Sending mail to ${body.getCustomerFK.getEmail} for status: ${body.getStatus}")
+                //.log(LoggingLevel.INFO, "FILE", "${routeId}\t\t\t\t|\t OrderID.: ${header.orderID} 	|	Sending mail - Body is: ${body}")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t Sending mail to ${body.getCustomerFK.getEmail} for status: ${body.getStatus}")
                 .process(new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         CarOrder carOrder = exchange.getIn().getBody(CarOrder.class);
-                        exchange.getOut().setBody(exchange.getIn().getBody());
-                        exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-                        exchange.getOut().setHeader("to", carOrder.getCustomerFK().getEmail());
-                        exchange.getOut().setBody("Dear " + carOrder.getCustomerFK().getFirstName() + ",\n" +
+                        exchange.getIn().setHeader("to", carOrder.getCustomerFK().getEmail());
+                        exchange.getIn().setHeader("status", carOrder.getStatus());
+                        exchange.getIn().setBody("Dear " + carOrder.getCustomerFK().getFirstName() + ",\n" +
                                 "We are pleased to inform you that your order status is " + carOrder.getStatus() +
                                 "\n\n" +
                                 "Kind regards,\n" +
@@ -49,7 +48,9 @@ public class InformCustomerRoute extends RouteBuilder {
                         "&subject=Your Order" +
                         "&mail.smtp.auth={{mail.smtp.auth}}" +
                         "&mail.smtp.starttls.enable={{mail.smtp.starttls.enable}}" +
-                        "&to="+header("to"));
+                        "&to="+header("to"))
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t Saving Mail for Order ${header.orderID} and Status ${header.status} as ${date:now:yyyyMMdd}-${header.orderID}-${header.status}.txt")
+                .to("file:backup/orders/mails/?fileName=${date:now:yyyyMMdd}-${header.orderID}-${header.status}.txt&autoCreate=true");;
 
         /*
         from("seda:informCustomerClever") TODO Andr

@@ -35,7 +35,7 @@ public class HandOverRoute extends RouteBuilder {
                     exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.DELIVERED);
                 }
             })
-            .wireTap("seda:informCustomer")
+            .wireTap("direct:informCustomer")
             .bean(TwitterBean.class)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t Order handed over and finished!")
             .to("twitter://timeline/user");

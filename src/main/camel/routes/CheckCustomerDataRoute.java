@@ -20,7 +20,7 @@ public class CheckCustomerDataRoute extends RouteBuilder {
             .when(simple("${body.customerFK.fraudHint}")) // If fraudHint == true --> no credit will be guaranteed!
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t FraudHint == TRUE | From CheckCustomerData To InformCustomer")
                 .setHeader("solvencyApproval",simple("false"))
-                .to("seda:informCustomer")
+                .to("direct:informCustomer")
             .otherwise()
                 .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t Executing SolvencyCheck | From CheckCustomerData To CheckCustomerData-Split")
                 .to("direct:CheckCustomerData-Split")
@@ -28,7 +28,7 @@ public class CheckCustomerDataRoute extends RouteBuilder {
 
         from("direct:CheckCustomerData-Split")
             .routeId("CheckCustomerData-Split")
-            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t ")
+            .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t")
             .process( new Processor(){ public void process(Exchange exchange) throws Exception {
                 CarOrder carOrder = (CarOrder) exchange.getIn().getBody();
                 carOrder.setStatus(OrderStatus.CREDITCHECK);

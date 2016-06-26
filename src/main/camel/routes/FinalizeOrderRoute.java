@@ -29,15 +29,14 @@ public class FinalizeOrderRoute extends RouteBuilder {
                     .when(header("testDriveDone").isEqualTo(false))
                         .to("jms:queue:dispatch?messageConverter=#orderJMSConverter")
                     .otherwise()
-                        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent")
+                        .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From FinalizeOrder to InformCustomerAndAccept70Percent and status ${body.getStatus}")
                         .to("direct:informCustomerAndAccept70Percent")
                 .endChoice();
 
         from("direct:informCustomerAndAccept70Percent")
                 .routeId("InformCus&Accept70Per")
-                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent")
-                .multicast()
-                    .to("seda:informCustomer")
-                    .to("direct:accept70percent");
+                .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & Accept70Percent and status ${body.getStatus}")
+                .wireTap("direct:informCustomer")
+                .to("direct:accept70percent");
     }
 }

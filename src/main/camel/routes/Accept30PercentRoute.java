@@ -30,17 +30,17 @@ public class Accept30PercentRoute extends RouteBuilder {
                     .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to Accept30percentRouteDispatch - LOOP")
                     .to("jms:queue:accept30Route?messageConverter=#accept30JMSConverter")
                 .otherwise()
-                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent")
+                    .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From Accept30percentRouteDispatch to InformCustomerAndAccept30Percent and status ${body.getStatus}")
                     .to("direct:informCustomerAndAccept30Percent")
                 .endChoice();
 
         from("direct:informCustomerAndAccept30Percent")
                 .routeId("Accept30percentRouteLeaving")
-                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock")
+                .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept30Percent to InformCustomer & QueryStock and status ${body.getStatus}")
+                .wireTap("direct:informCustomer")
                 .multicast()
                     .to("direct:storeConfirmation")
-                    .to("direct:queryStock")
-                    .to("seda:informCustomer");
+                    .to("direct:queryStock");
 
 
         from("direct:storeConfirmation")

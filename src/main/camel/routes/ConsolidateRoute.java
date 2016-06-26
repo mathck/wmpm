@@ -24,6 +24,6 @@ public class ConsolidateRoute extends RouteBuilder{
                 .to("direct:accept30percent")
             .end()
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t solvencyApproval: ${header.solvencyApproval}")
-            .to("seda:informCustomer");
+            .to("direct:informCustomer");
     }
 }

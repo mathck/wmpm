@@ -17,10 +17,6 @@ public class Accept30PercentBean {
     @Handler
     public void process(Exchange exchange) throws Exception {
         //getting information about payment
-        //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
-                exchange.getIn().getHeader("orderID"));
-
         Random random = new Random();
         Boolean paymentSuccessful = random.nextBoolean();
         exchange.getIn().setHeader("is30percentPaid", paymentSuccessful );
