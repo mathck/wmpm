@@ -37,7 +37,7 @@ public class CreateOrderBean {
     public Customer generateCustomer() {
         Customer newCustomer = new Customer();
         //newCustomer.setId(1);
-        newCustomer.setEmail("test@test.com");
+        newCustomer.setEmail("andreas.kocman@gmail.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
         newCustomer.setDateOfBirth(Timestamp.valueOf("1992-01-01 00:00:00"));

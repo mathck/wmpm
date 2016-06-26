@@ -1,7 +1,11 @@
 package main.camel.routes;
 
 import main.camel.beans.TwitterBean;
+import main.model.CarOrder;
+import main.model.enums.OrderStatus;
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.twitter.TwitterComponent;
 import org.springframework.stereotype.Component;
@@ -25,8 +29,13 @@ public class HandOverRoute extends RouteBuilder {
 
         from("direct:handOverOrder")
             .routeId("handOverOrderRoute")
-            .log(LoggingLevel.INFO,"FILE", "test ${routeId} \t\t\t|\t")
-            .to("seda:informCustomer")
+            .process(new Processor() {
+                @Override
+                public void process(Exchange exchange) throws Exception {
+                    exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.DELIVERED);
+                }
+            })
+            .wireTap("seda:informCustomer")
             .bean(TwitterBean.class)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t Order Nr.: ${header.orderID} \t|\t Order handed over and finished!  \t|\t")
             .to("twitter://timeline/user");

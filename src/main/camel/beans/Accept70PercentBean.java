@@ -1,5 +1,7 @@
 package main.camel.beans;
 
+import main.model.CarOrder;
+import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -16,13 +18,22 @@ public class Accept70PercentBean {
     public void process(Exchange exchange) throws Exception {
         //getting information about payment
         //logging at the beginning of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getIn().getHeader("orderID"));
-        exchange.setOut(exchange.getIn());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
+                exchange.getIn().getHeader("orderID"));
 
         Random random = new Random();
-        exchange.getOut().setHeader("is70percentPaid", random.nextBoolean());
+        Boolean paymentSuccessful = random.nextBoolean();
+        exchange.getIn().setHeader("is70percentPaid", paymentSuccessful);
+
+        if (paymentSuccessful) {
+            exchange.getIn().getBody(CarOrder.class).setStatus(OrderStatus.PAYMENTCOMPLETED);
+        }
 
         //logging at the end of a process
-        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " + exchange.getOut().getHeader("is70percentPaid").toString());
+        LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " +
+                exchange.getIn().getHeader("orderID") + "  \t|\t New Header: is70percentPaid = " +
+                exchange.getIn().getHeader("is70percentPaid").toString());
+        exchange.setOut(exchange.getIn());
+
     }
 }

@@ -1,5 +1,7 @@
 package main.camel.beans;
 
+import main.model.CarOrder;
+import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
@@ -19,7 +21,13 @@ public class FinalizeOrderBean {
         exchange.setOut(exchange.getIn());
         Random random = new Random();
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-        exchange.getOut().setHeader("testDriveDone", random.nextBoolean());
+
+        Boolean testDriveCompleted = random.nextBoolean();
+        exchange.getOut().setHeader("testDriveDone", testDriveCompleted);
+
+        if (testDriveCompleted) {
+            exchange.getOut().getBody(CarOrder.class).setStatus(OrderStatus.ASSEMBLINGFINISHED);
+        }
 
         //logging at the end of a process
        // LOGGER.info(this.getClass().getName().substring(17) + "\t\t\t\t|\t Order Nr.: " + exchange.getOut().getHeader("orderID") + "  \t|\t New Header: paid = " + exchange.getOut().getHeader("paid").toString());
