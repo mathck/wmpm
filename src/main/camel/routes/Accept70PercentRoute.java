@@ -35,7 +35,8 @@ public class Accept70PercentRoute extends RouteBuilder {
         from("direct:inform70Percent")
                 .routeId("Accept70percentRouteLeaving")
                 .log(LoggingLevel.INFO, "FILE", "${routeId} \t\t|\t OrderID.: ${header.orderID} \t|\t From InformCustomerAndAccept70Percent to InformCustomer & HandOverOrder and status: ${body.getStatus}")
-                .wireTap("direct:informCustomer")
-                .to("direct:handOverOrder");
+                .multicast()
+                    .to("direct:informCustomer")
+                    .to("direct:handOverOrder");
     }
 }

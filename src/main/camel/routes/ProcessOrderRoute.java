@@ -15,8 +15,9 @@ public class ProcessOrderRoute extends RouteBuilder {
             .routeId("ProcessOrderRoute")
             .bean(ProcessOrderBean.class)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From ProcessOrder to InformCustomer & CreditRouter")
-            .wireTap("direct:informCustomer")
-            .to("seda:creditRouter");
+            .multicast()
+                .to("direct:informCustomer")
+                .to("seda:creditRouter");
 
         from("seda:creditRouter")
             .routeId("CreditRouter")
