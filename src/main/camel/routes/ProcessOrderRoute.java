@@ -1,6 +1,5 @@
 package main.camel.routes;
 
-import main.camel.beans.ProcessOrderBean;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,6 @@ public class ProcessOrderRoute extends RouteBuilder {
 
         from("direct:processOrder")
             .routeId("ProcessOrderRoute")
-            .bean(ProcessOrderBean.class)
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t\t|\t OrderID.: ${header.orderID} \t|\t From ProcessOrder to InformCustomer & CreditRouter")
             .multicast()
                 .to("direct:informCustomer")

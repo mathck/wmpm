@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
  */
 @Component
-public class backupOrderRoute extends RouteBuilder {
+public class BackupOrderRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

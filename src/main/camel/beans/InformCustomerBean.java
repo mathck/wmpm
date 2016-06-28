@@ -36,7 +36,7 @@ public class InformCustomerBean {
                     status = "your credit solvency is currently checked by our partners.";
                 }else {
                     status = "your credit check yielded the result " +
-                            (exchange.getIn().getHeader("creditCheck") == "true" ? "passed" : "failed");
+                            (exchange.getIn().getHeader("solvencyApproval") == "true" ? "passed" : "failed");
                 }
                 break;
             case CREDITDENIED:
