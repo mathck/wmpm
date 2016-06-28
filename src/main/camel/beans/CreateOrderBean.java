@@ -18,7 +18,6 @@ public class CreateOrderBean {
 
     private static final Logger LOGGER = Logger.getLogger("FILE");
 
-
     @Handler
     public void process(Exchange exchange)
     {
@@ -37,7 +36,7 @@ public class CreateOrderBean {
     public Customer generateCustomer() {
         Customer newCustomer = new Customer();
         //newCustomer.setId(1);
-        newCustomer.setEmail("andreas.kocman@gmail.com");
+        newCustomer.setEmail("mathck@gmail.com");
         newCustomer.setFirstName("Matthew");
         newCustomer.setLastName("Gren");
         newCustomer.setDateOfBirth(Timestamp.valueOf("1992-01-01 00:00:00"));
@@ -86,6 +85,7 @@ public class CreateOrderBean {
 
         return stock;
     }
+
     private java.sql.Timestamp getOrderTime() {
         return new java.sql.Timestamp(System.currentTimeMillis());
     }
