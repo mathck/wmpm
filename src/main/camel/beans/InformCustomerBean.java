@@ -5,6 +5,7 @@ import main.model.enums.OrderStatus;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.log4j.Logger;
+import org.apache.xpath.operations.Bool;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -31,16 +32,12 @@ public class InformCustomerBean {
             case INITIALPAYMENTACCEPTED:
                 status = "your initial payment has been transferred.";
                 break;
-            case CREDITCHECK:
-                if (exchange.getIn().getHeader("creditCheck")==null) {
-                    status = "your credit solvency is currently checked by our partners.";
+            case CREDITRESULT:
+                if ((Boolean)exchange.getIn().getHeader("solvencyApproval")) {
+                    status = "your credit check yielded the result: Passed!";
                 }else {
-                    status = "your credit check yielded the result " +
-                            (exchange.getIn().getHeader("solvencyApproval") == "true" ? "passed" : "failed");
+                    status = "your order has been received. Unfortunately your credit was denied. Please contact us.";
                 }
-                break;
-            case CREDITDENIED:
-                status = "your order has been received. Unfortunately your credit was denied. Please contact us.";
                 break;
             case ASSEMBLING:
                 status = "your car is currently being assembled.";
@@ -53,6 +50,7 @@ public class InformCustomerBean {
                 break;
             case DELIVERED:
                 status = "your car is on its way to you. Enjoy and drive safely!";
+
         }
 
         exchange.getIn().setBody("Dear " + carOrder.getCustomerFK().getFirstName() + ",\n" +

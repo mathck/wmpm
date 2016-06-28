@@ -29,12 +29,6 @@ public class CheckCustomerDataRoute extends RouteBuilder {
         from("direct:CheckCustomerData-Split")
             .routeId("CheckCustomerData-Split")
             .log(LoggingLevel.INFO,"FILE", "${routeId} \t\t\t|\t OrderID.: ${header.orderID} \t|\t")
-            .process( new Processor(){ public void process(Exchange exchange) throws Exception {
-                CarOrder carOrder = (CarOrder) exchange.getIn().getBody();
-                carOrder.setStatus(OrderStatus.CREDITCHECK);
-                exchange.getIn().setBody(carOrder);
-            }
-            })
             .split()
                 .method(OrderSplitterBean.class,"splitOrder")
                 .parallelProcessing()
