@@ -1,10 +1,7 @@
 package main.camel.routes;
 
 
-import main.camel.beans.CreateOrderBean;
-import main.camel.beans.GenerateOrderRESTBean;
-import main.camel.beans.RESTInterfaceConverterBean;
-import main.camel.beans.StockAggregationStrategy;
+import main.camel.beans.*;
 import main.model.CarOrder;
 import main.model.Customer;
 import main.model.Views;
@@ -48,6 +45,7 @@ public class RestToServicesRoute extends RouteBuilder {
                 .setHeader("orderID", body().convertTo(CarOrder.class).method("getId"))
                 .setHeader("creditNeeded", body().convertTo(CarOrder.class).method("getCreditNeeded"))
                 .wireTap("seda:backupOrder")
+                .bean(ControlBusBean.class, "process")
                 .to("direct:processOrder");
 
 
